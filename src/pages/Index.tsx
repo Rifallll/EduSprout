@@ -67,11 +67,7 @@ const Index = () => {
           <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-200">
             Jelajahi peluang tanpa batas: event, beasiswa, lowongan, dan banyak lagi untuk masa depan cerahmu!
           </p>
-          <div className="opacity-0 animate-fade-in-up delay-400">
-            <Button size="lg" className="px-8 py-3 text-lg shadow-lg hover:scale-105 transition-transform duration-300 bg-white text-primary hover:bg-gray-100">
-              Jelajahi EduSprout
-            </Button>
-          </div>
+          {/* Tombol "Jelajahi EduSprout" dihapus */}
         </div>
       </section>
 
@@ -302,9 +298,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Newsletter Signup Section dihapus */}
-      {/* <NewsletterSignup /> */}
     </div>
   );
 };

@@ -12,12 +12,13 @@ import {
   Plane,
   Megaphone,
   Award,
-  Upload, // Import Upload icon
-  Handshake, // Import Handshake icon
-  Briefcase, // Import Briefcase icon
+  Upload,
+  Handshake,
+  Briefcase,
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
-import { useCountUp } from "@/hooks/useCountUp"; // Import the new hook
+import NewsletterSignup from "@/components/NewsletterSignup"; // Import NewsletterSignup
+import { useCountUp } from "@/hooks/useCountUp";
 
 const dummyNews = [
   {
@@ -301,6 +302,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Newsletter Signup Section */}
+      <NewsletterSignup />
     </div>
   );
 };

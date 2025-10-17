@@ -63,9 +63,18 @@ const dummyScholarships = [
 const Scholarships = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date-desc"); // Default sort by date descending
+  const [selectedCategory, setSelectedCategory] = useState("all"); // New state for category filter
 
   const filteredAndSortedScholarships = useMemo(() => {
-    let filtered = dummyScholarships.filter((scholarship) => {
+    let filtered = dummyScholarships;
+
+    // 1. Filter by Category
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(scholarship => scholarship.category === selectedCategory);
+    }
+
+    // 2. Filter by Search Term
+    filtered = filtered.filter((scholarship) => {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
       return (
         scholarship.title.toLowerCase().includes(lowerCaseSearchTerm) ||
@@ -92,6 +101,7 @@ const Scholarships = () => {
       return new Date(0); // Return a very old date if parsing fails
     };
 
+    // 3. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
         return parseDate(b.date).getTime() - parseDate(a.date).getTime();
@@ -106,7 +116,7 @@ const Scholarships = () => {
     });
 
     return filtered;
-  }, [searchTerm, sortBy]);
+  }, [searchTerm, sortBy, selectedCategory]);
 
   return (
     <div className="container py-8">
@@ -123,6 +133,16 @@ const Scholarships = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-grow"
         />
+        <Select onValueChange={setSelectedCategory} defaultValue="all">
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter Kategori" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Semua Kategori</SelectItem>
+            <SelectItem value="Lokal">Lokal</SelectItem>
+            <SelectItem value="Internasional">Internasional</SelectItem>
+          </SelectContent>
+        </Select>
         <Select onValueChange={setSortBy} defaultValue="date-desc">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Urutkan berdasarkan" />

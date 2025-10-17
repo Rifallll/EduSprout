@@ -8,23 +8,23 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
-        <Link to="/" className="text-lg font-bold">
+        <Link to="/" className="text-xl md:text-2xl font-extrabold tracking-tight text-primary transition-colors duration-200">
           EduSprout
         </Link>
-        <nav className="hidden md:flex items-center space-x-4">
-          <Link to="/events" className="text-sm font-medium hover:text-primary">
+        <nav className="hidden md:flex items-center space-x-6"> {/* Increased space-x for better separation */}
+          <Link to="/events" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Event
           </Link>
-          <Link to="/scholarships" className="text-sm font-medium hover:text-primary">
+          <Link to="/scholarships" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Beasiswa
           </Link>
-          <Link to="/jobs" className="text-sm font-medium hover:text-primary">
+          <Link to="/jobs" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Lowongan
           </Link>
-          <Link to="/news-and-tips" className="text-sm font-medium hover:text-primary">
+          <Link to="/news-and-tips" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Berita & Tips
           </Link>
-          <Link to="/contact" className="text-sm font-medium hover:text-primary">
+          <Link to="/contact" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Kontak
           </Link>
         </nav>
@@ -38,19 +38,19 @@ const Header = () => {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="flex flex-col gap-4 pt-6">
-                <Link to="/events" className="text-lg font-medium hover:text-primary">
+                <Link to="/events" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Event
                 </Link>
-                <Link to="/scholarships" className="text-lg font-medium hover:text-primary">
+                <Link to="/scholarships" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Beasiswa
                 </Link>
-                <Link to="/jobs" className="text-lg font-medium hover:text-primary">
+                <Link to="/jobs" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Lowongan
                 </Link>
-                <Link to="/news-and-tips" className="text-lg font-medium hover:text-primary">
+                <Link to="/news-and-tips" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Berita & Tips
                 </Link>
-                <Link to="/contact" className="text-lg font-medium hover:text-primary">
+                <Link to="/contact" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Kontak
                 </Link>
               </nav>

@@ -27,17 +27,17 @@ const InfoCard: React.FC<InfoCardProps> = ({
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
           <CardTitle className="text-xl font-semibold">{title}</CardTitle>
-          <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary text-primary-foreground">
-            {category}
-          </span>
+          {/* Menampilkan kategori sebagai teks biasa */}
+          <span className="text-sm text-muted-foreground">{category}</span>
         </div>
         <CardDescription className="text-sm text-muted-foreground line-clamp-2">
           {description}
         </CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-gray-600 dark:text-gray-400">
-        {date && <p className="mb-1">Tanggal: {date}</p>}
-        {location && <p>Lokasi: {location}</p>}
+        {/* Menampilkan tanggal dan lokasi tanpa label */}
+        {date && <p className="mb-1">{date}</p>}
+        {location && <p>{location}</p>}
       </CardContent>
       <CardFooter>
         <Link to={link} className="w-full">

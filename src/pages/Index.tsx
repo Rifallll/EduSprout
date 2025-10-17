@@ -1,8 +1,8 @@
 import React from "react";
-import { MadeWithDyad } from "@/components/made-with-dyad";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import InfoCard from "@/components/InfoCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const dummyData = {
   events: [
@@ -78,22 +78,23 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-blue-600 text-white py-20 md:py-32 text-center">
-        <div className="container">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-up">
-            Temukan Informasi Kampus & Komunitas Anda
+      <section className="relative bg-gradient-to-br from-blue-600 to-purple-700 text-white py-24 md:py-40 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-pattern opacity-10"></div> {/* Subtle pattern */}
+        <div className="container relative z-10">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight animate-fade-in-up">
+            Jelajahi Peluang Tanpa Batas
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto animate-fade-in-up delay-200">
-            Event menarik, beasiswa impian, lowongan karir, dan berita penting, semua ada di sini!
+          <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-200">
+            Temukan event kampus, beasiswa impian, lowongan karir, dan berita penting dari komunitas Anda.
           </p>
-          <div className="flex justify-center gap-4 animate-fade-in-up delay-400">
+          <div className="flex justify-center gap-6 opacity-0 animate-fade-in-up delay-400">
             <Link to="/events">
-              <Button variant="secondary" size="lg" className="hover:scale-105 transition-transform">
-                Lihat Event
+              <Button variant="secondary" size="lg" className="px-8 py-3 text-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                Lihat Event Terbaru
               </Button>
             </Link>
             <Link to="/scholarships">
-              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white hover:text-primary hover:scale-105 transition-transform">
+              <Button variant="outline" size="lg" className="px-8 py-3 text-lg text-white border-white hover:bg-white hover:text-primary shadow-lg hover:scale-105 transition-transform duration-300">
                 Cari Beasiswa
               </Button>
             </Link>
@@ -101,53 +102,89 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Latest Updates Section */}
+      {/* Feature Section */}
+      <section className="container py-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">Mengapa Memilih Kami?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-3">Informasi Terlengkap</h3>
+            <p className="text-muted-foreground">Akses ribuan event, beasiswa, dan lowongan dari berbagai sumber terpercaya.</p>
+          </div>
+          <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-3">Mudah Digunakan</h3>
+            <p className="text-muted-foreground">Antarmuka intuitif untuk pencarian cepat dan pengalaman pengguna yang menyenangkan.</p>
+          </div>
+          <div className="p-6 bg-card rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <h3 className="text-xl font-semibold mb-3">Selalu Terupdate</h3>
+            <p className="text-muted-foreground">Dapatkan notifikasi real-time untuk informasi terbaru yang relevan dengan minat Anda.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Updates Section with Tabs */}
       <section className="container py-12 md:py-16">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Update Terbaru</h2>
 
-        {/* Latest Events */}
-        <div className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-semibold">Event & Lomba</h3>
-            <Link to="/events">
-              <Button variant="link" className="text-primary">Lihat Semua Event & Lomba &rarr;</Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dummyData.events.map((event) => (
-              <InfoCard key={event.id} {...event} />
-            ))}
-          </div>
-        </div>
+        <Tabs defaultValue="events" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsTrigger value="events">Event & Lomba</TabsTrigger>
+            <TabsTrigger value="scholarships">Beasiswa</TabsTrigger>
+            <TabsTrigger value="jobs">Lowongan & Karir</TabsTrigger>
+          </TabsList>
 
-        {/* Latest Scholarships */}
-        <div className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-semibold">Beasiswa</h3>
-            <Link to="/scholarships">
-              <Button variant="link" className="text-primary">Lihat Semua Beasiswa &rarr;</Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {dummyData.scholarships.map((scholarship) => (
-              <InfoCard key={scholarship.id} {...scholarship} />
-            ))}
-          </div>
-        </div>
+          <TabsContent value="events">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dummyData.events.slice(0, 3).map((event) => ( // Limit to 3 for cleaner look
+                <InfoCard key={event.id} {...event} />
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link to="/events">
+                <Button variant="outline" className="text-primary hover:bg-primary hover:text-primary-foreground">Lihat Semua Event & Lomba &rarr;</Button>
+              </Link>
+            </div>
+          </TabsContent>
 
-        {/* Latest Jobs */}
-        <div>
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-semibold">Lowongan & Karir</h3>
-            <Link to="/jobs">
-              <Button variant="link" className="text-primary">Lihat Semua Lowongan & Karir &rarr;</Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {dummyData.jobs.map((job) => (
-              <InfoCard key={job.id} {...job} />
-            ))}
-          </div>
+          <TabsContent value="scholarships">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {dummyData.scholarships.slice(0, 2).map((scholarship) => ( // Limit to 2
+                <InfoCard key={scholarship.id} {...scholarship} />
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link to="/scholarships">
+                <Button variant="outline" className="text-primary hover:bg-primary hover:text-primary-foreground">Lihat Semua Beasiswa &rarr;</Button>
+              </Link>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="jobs">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {dummyData.jobs.slice(0, 2).map((job) => ( // Limit to 2
+                <InfoCard key={job.id} {...job} />
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link to="/jobs">
+                <Button variant="outline" className="text-primary hover:bg-primary hover:text-primary-foreground">Lihat Semua Lowongan & Karir &rarr;</Button>
+              </Link>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="bg-muted py-16 text-center">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Siap Menjelajahi Peluang Baru?</h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Daftar sekarang untuk mendapatkan update personal dan jangan lewatkan kesempatan emas!
+          </p>
+          <Link to="/contact"> {/* Or a dedicated signup page */}
+            <Button size="lg" className="px-10 py-4 text-lg shadow-lg hover:scale-105 transition-transform duration-300">
+              Mulai Sekarang
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

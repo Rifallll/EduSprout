@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle"; // Import ThemeToggle
 
 const Header = () => {
   return (
@@ -29,37 +28,34 @@ const Header = () => {
             Kontak
           </Link>
         </nav>
-        <div className="flex items-center gap-2"> {/* Added wrapper for ThemeToggle */}
-          <ThemeToggle />
-          <div className="md:hidden">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Toggle navigation menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <nav className="flex flex-col gap-4 pt-6">
-                  <Link to="/events" className="text-lg font-medium hover:text-primary">
-                    Event
-                  </Link>
-                  <Link to="/scholarships" className="text-lg font-medium hover:text-primary">
-                    Beasiswa
-                  </Link>
-                  <Link to="/jobs" className="text-lg font-medium hover:text-primary">
-                    Lowongan
-                  </Link>
-                  <Link to="/news-and-tips" className="text-lg font-medium hover:text-primary">
-                    Berita & Tips
-                  </Link>
-                  <Link to="/contact" className="text-lg font-medium hover:text-primary">
-                    Kontak
-                  </Link>
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <nav className="flex flex-col gap-4 pt-6">
+                <Link to="/events" className="text-lg font-medium hover:text-primary">
+                  Event
+                </Link>
+                <Link to="/scholarships" className="text-lg font-medium hover:text-primary">
+                  Beasiswa
+                </Link>
+                <Link to="/jobs" className="text-lg font-medium hover:text-primary">
+                  Lowongan
+                </Link>
+                <Link to="/news-and-tips" className="text-lg font-medium hover:text-primary">
+                  Berita & Tips
+                </Link>
+                <Link to="/contact" className="text-lg font-medium hover:text-primary">
+                  Kontak
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

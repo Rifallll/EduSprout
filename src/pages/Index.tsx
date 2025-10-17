@@ -17,7 +17,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
-import NewsletterSignup from "@/components/NewsletterSignup"; // Import NewsletterSignup
+// import NewsletterSignup from "@/components/NewsletterSignup"; // Import NewsletterSignup dihapus
 import { useCountUp } from "@/hooks/useCountUp";
 
 const dummyNews = [
@@ -303,8 +303,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Newsletter Signup Section */}
-      <NewsletterSignup />
+      {/* Newsletter Signup Section dihapus */}
+      {/* <NewsletterSignup /> */}
     </div>
   );
 };

@@ -57,7 +57,7 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary to-green-700 text-white py-24 md:py-40 text-center overflow-hidden">
+      <section className="relative bg-gradient-to-br from-primary to-green-700 text-white py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="container relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight animate-fade-in-up">

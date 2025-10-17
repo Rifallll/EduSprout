@@ -25,8 +25,8 @@ const NewsCard: React.FC<NewsCardProps> = ({
       {imageUrl && (
         <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
       )}
-      <CardHeader className="flex-grow">
-        <div className="flex justify-between items-start mb-2">
+      <CardHeader className="flex-grow text-center"> {/* Added text-center here */}
+        <div className="flex justify-center items-start mb-2"> {/* Changed justify-between to justify-center */}
           <CardTitle className="text-xl font-semibold line-clamp-2">{title}</CardTitle>
           {/* Removed the category span */}
         </div>

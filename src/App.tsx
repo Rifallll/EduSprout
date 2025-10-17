@@ -5,6 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import MainLayout from "./components/layout/MainLayout";
+import Events from "./pages/Events";
+import Scholarships from "./pages/Scholarships";
+import Jobs from "./pages/Jobs";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -15,9 +20,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Index />} />
+            <Route path="events" element={<Events />} />
+            <Route path="scholarships" element={<Scholarships />} />
+            <Route path="jobs" element={<Jobs />} />
+            <Route path="contact" element={<Contact />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

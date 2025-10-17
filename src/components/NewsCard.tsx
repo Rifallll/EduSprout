@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 interface NewsCardProps {
   title: string;
   description: string;
-  category: string;
+  category: string; // Keep category in props if it's used elsewhere or for data, but won't be rendered here
   date: string;
   link: string;
   imageUrl?: string;
@@ -15,7 +15,7 @@ interface NewsCardProps {
 const NewsCard: React.FC<NewsCardProps> = ({
   title,
   description,
-  category,
+  // category, // Removed from destructuring to prevent rendering
   date,
   link,
   imageUrl = "/placeholder.svg", // Default placeholder image
@@ -28,9 +28,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
       <CardHeader className="flex-grow">
         <div className="flex justify-between items-start mb-2">
           <CardTitle className="text-xl font-semibold line-clamp-2">{title}</CardTitle>
-          <span className="text-xs font-medium px-2 py-1 rounded-full bg-secondary text-secondary-foreground">
-            {category}
-          </span>
+          {/* Removed the category span */}
         </div>
         <CardDescription className="text-sm text-muted-foreground line-clamp-3">
           {description}

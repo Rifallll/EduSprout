@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Facebook, Instagram, Twitter, MapPin } from "lucide-react"; // Import icons
 
 const Contact = () => {
   return (
@@ -42,20 +43,24 @@ const Contact = () => {
       </div>
       <div className="mt-12 text-center">
         <h2 className="text-2xl font-semibold mb-4">Informasi Kontak Lainnya</h2>
-        <p className="text-muted-foreground">Email: info@kampuskomunitas.com</p>
+        <p className="text-muted-foreground">Email: info@infokampuskomunitas.com</p>
         <p className="text-muted-foreground">Telepon: (123) 456-7890</p>
         <div className="flex justify-center space-x-4 mt-4">
-          {/* Placeholder for social media icons */}
-          <a href="#" className="text-primary hover:underline">Facebook</a>
-          <a href="#" className="text-primary hover:underline">Instagram</a>
-          <a href="#" className="text-primary hover:underline">TikTok</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
+            <Facebook size={24} />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
+            <Instagram size={24} />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
+            <Twitter size={24} />
+          </a>
         </div>
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-2">Lokasi Kami</h3>
           <p className="text-muted-foreground">Jl. Contoh No. 123, Kota Contoh, Negara Contoh</p>
-          {/* Placeholder for map integration */}
-          <div className="bg-muted h-64 w-full rounded-lg mt-4 flex items-center justify-center text-muted-foreground">
-            Peta Lokasi (Integrasi Google Maps/OpenStreetMap)
+          <div className="bg-muted h-64 w-full rounded-lg mt-4 flex items-center justify-center text-muted-foreground border border-dashed border-gray-400">
+            <MapPin className="h-8 w-8 mr-2" /> Integrasi Peta Lokasi (Google Maps/OpenStreetMap)
           </div>
         </div>
       </div>

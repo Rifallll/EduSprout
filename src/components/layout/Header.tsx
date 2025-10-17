@@ -9,7 +9,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <Link to="/" className="text-lg font-bold">
-          SejutaCita
+          Info Kampus/Komunitas
         </Link>
         <nav className="hidden md:flex items-center space-x-4">
           <Link to="/events" className="text-sm font-medium hover:text-primary">

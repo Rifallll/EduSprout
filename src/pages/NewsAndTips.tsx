@@ -38,6 +38,24 @@ const dummyNews = [
     link: "/news-and-tips/portofolio-online",
     imageUrl: "https://via.placeholder.com/400x200/FF6347/FFFFFF?text=Portofolio",
   },
+  {
+    id: "n5",
+    title: "Strategi Jitu Lolos Wawancara Kerja",
+    description: "Tips dan trik untuk menghadapi wawancara kerja agar Anda tampil percaya diri dan meyakinkan.",
+    category: "Tips Karir",
+    date: "28 September 2024",
+    link: "/news-and-tips/wawancara-kerja",
+    imageUrl: "https://via.placeholder.com/400x200/FFA07A/FFFFFF?text=Wawancara",
+  },
+  {
+    id: "n6",
+    title: "Manfaat Bergabung dengan Komunitas Mahasiswa",
+    description: "Bagaimana komunitas dapat membantu pengembangan diri dan jaringan profesional Anda.",
+    category: "Tips Edukasi",
+    date: "20 September 2024",
+    link: "/news-and-tips/komunitas-mahasiswa",
+    imageUrl: "https://via.placeholder.com/400x200/ADD8E6/FFFFFF?text=Komunitas",
+  },
 ];
 
 const NewsAndTips = () => {

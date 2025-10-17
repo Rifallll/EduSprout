@@ -19,7 +19,8 @@ import {
   Plane,
   Megaphone,
 } from "lucide-react";
-import NewsCard from "@/components/NewsCard"; // Import NewsCard
+import NewsCard from "@/components/NewsCard";
+import { useCountUp } from "@/hooks/useCountUp"; // Import the new hook
 
 const dummyNews = [
   {
@@ -52,6 +53,10 @@ const dummyNews = [
 ];
 
 const Index = () => {
+  const totalEvents = useCountUp({ end: 17556, duration: 3000 });
+  const partnersRating = useCountUp({ end: 3997, duration: 3000 });
+  const registeredStudents = useCountUp({ end: 2548852, duration: 3000 });
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -59,14 +64,14 @@ const Index = () => {
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="container relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight animate-fade-in-up">
-            Aplikasi No. 1 Mahasiswa & Pelajar
+            Platform No. 1 Mahasiswa & Pelajar
           </h1>
           <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-200">
             Jelajahi peluang tanpa batas: event, beasiswa, lowongan, dan banyak lagi untuk masa depan cerahmu!
           </p>
           <div className="opacity-0 animate-fade-in-up delay-400">
             <Button size="lg" className="px-8 py-3 text-lg shadow-lg hover:scale-105 transition-transform duration-300 bg-white text-primary hover:bg-gray-100">
-              Cobain Semua di SejutaCita
+              Jelajahi Info Kampus/Komunitas
             </Button>
           </div>
         </div>
@@ -99,7 +104,7 @@ const Index = () => {
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <MessageSquare className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">MenFezz</CardTitle>
+            <CardTitle className="text-xl font-semibold mb-2">Forum Diskusi</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
               Tempat buat kamu sharing dan diskusi, tanpa perlu difollback & ga pake antri.
             </CardContent>
@@ -115,7 +120,7 @@ const Index = () => {
             <Share2 className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Referral</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
-              Ajak teman gabung di SejutaCita dan dapatkan bonus hingga Rp9.360.000!
+              Ajak teman gabung di Info Kampus/Komunitas dan dapatkan bonus hingga Rp9.360.000!
             </CardContent>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
@@ -138,18 +143,18 @@ const Index = () => {
       {/* Statistics Section */}
       <section className="bg-muted py-16 text-center">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Maju Bersama SejutaCita</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Maju Bersama Info Kampus/Komunitas</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="animate-fade-in-up">
-              <p className="text-5xl font-extrabold text-primary mb-2">17.556</p>
-              <p className="text-lg text-muted-foreground">Total Event di Aplikasi</p>
+              <p className="text-5xl font-extrabold text-primary mb-2">{totalEvents.toLocaleString()}</p>
+              <p className="text-lg text-muted-foreground">Total Event Terdaftar</p>
             </div>
             <div className="animate-fade-in-up delay-100">
-              <p className="text-5xl font-extrabold text-primary mb-2">3.997</p>
+              <p className="text-5xl font-extrabold text-primary mb-2">{partnersRating.toLocaleString()}</p>
               <p className="text-lg text-muted-foreground">Partners Memberikan 5 Bintang</p>
             </div>
             <div className="animate-fade-in-up delay-200">
-              <p className="text-5xl font-extrabold text-primary mb-2">2.548.852</p>
+              <p className="text-5xl font-extrabold text-primary mb-2">{registeredStudents.toLocaleString()}</p>
               <p className="text-lg text-muted-foreground">Mahasiswa & Pelajar Terdaftar</p>
             </div>
           </div>
@@ -161,7 +166,7 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="p-8 flex flex-col justify-between animate-fade-in-up">
             <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-2xl font-bold mb-2">Upload Event di SejutaCita</CardTitle>
+              <CardTitle className="text-2xl font-bold mb-2">Upload Event di Info Kampus/Komunitas</CardTitle>
               <p className="text-muted-foreground">
                 Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
               </p>
@@ -172,7 +177,7 @@ const Index = () => {
             <CardHeader className="p-0 mb-4">
               <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
               <p className="text-muted-foreground">
-                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, SejutaCita bisa bantu semuanya!
+                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, Info Kampus/Komunitas bisa bantu semuanya!
               </p>
             </CardHeader>
             <Button className="w-fit mt-4">Kami Siap Membantumu</Button>
@@ -180,12 +185,12 @@ const Index = () => {
         </div>
         <Card className="p-8 mt-8 flex flex-col justify-between animate-fade-in-up delay-200">
           <CardHeader className="p-0 mb-4">
-            <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di SejutaCita</CardTitle>
+            <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di Info Kampus/Komunitas</CardTitle>
             <p className="text-muted-foreground">
               Dampak kami nyata dalam merevolusi pendidikan & generasi muda Indonesia. Sudah siap berkontribusi?
             </p>
           </CardHeader>
-          <Button className="w-fit mt-4">Lihat Lowongan SejutaCita</Button>
+          <Button className="w-fit mt-4">Lihat Lowongan Info Kampus/Komunitas</Button>
         </Card>
       </section>
 
@@ -217,7 +222,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Naomi Dominique H.</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Pancasila, Event Organizer</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Recommended parah! Awalnya ragu untuk share event di SejutaCita karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di SejutaCita. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
+                “Recommended parah! Awalnya ragu untuk share event di Info Kampus/Komunitas karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di Info Kampus/Komunitas. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
@@ -228,7 +233,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Destilova</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Negeri Semarang, Pengguna Aplikasi</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Yang aku paling suka dari SejutaCita adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
+                “Yang aku paling suka dari Info Kampus/Komunitas adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
@@ -239,7 +244,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Zharfan Akbar</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Diponegoro, Software Engineer</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Bekerja di SejutaCita tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, SejutaCita tempat yang cocok untukmu.”
+                “Bekerja di Info Kampus/Komunitas tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, Info Kampus/Komunitas tempat yang cocok untukmu.”
               </CardContent>
             </Card>
           </div>
@@ -261,7 +266,7 @@ const Index = () => {
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
             <Award className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Beasiswa SejutaCita (BSC)</CardTitle>
+            <CardTitle className="text-xl font-semibold mb-2">Beasiswa Komunitas (BK)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 3x Setahun</p>
             <CardContent className="text-muted-foreground text-sm p-0 mb-4">
               Dapatkan dukungan untuk meringankan biaya pendidikan dan siapkan dirimu untuk masa depan cemerlang. Kesempatan ini menantimu.
@@ -270,7 +275,7 @@ const Index = () => {
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
             <Plane className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">SejutaCita Future Leaders (SFL)</CardTitle>
+            <CardTitle className="text-xl font-semibold mb-2">Future Leaders Program (FLP)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 2x Setahun</p>
             <CardContent className="text-muted-foreground text-sm p-0 mb-4">
               100% Fully-Funded International Leadership Trip ke destinasi terbaik luar negeri selama 6 hari 5 malam. Siap mengikuti perjalanan yang mengubah hidup?
@@ -300,9 +305,9 @@ const Index = () => {
                 <AvatarFallback>DPA</AvatarFallback>
               </Avatar>
               <CardTitle className="text-lg font-semibold">Dimas Putra Adzie</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BIK 2021</p>
+              <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BK 2021</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “BIK merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
+                “BK merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
@@ -311,9 +316,9 @@ const Index = () => {
                 <AvatarFallback>FO</AvatarFallback>
               </Avatar>
               <CardTitle className="text-lg font-semibold">Fatma Oryza</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">UIN Sunan Ampel Surabaya, Pemenang SFL 2020</p>
+              <p className="text-sm text-muted-foreground mb-4">UIN Sunan Ampel Surabaya, Pemenang FLP 2020</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “SFL memberikan pengalaman luar biasa mengelilingi megahnya New York dan merasakan atmosfer belajar di Harvard dan MIT, Boston. Plus, aku melakukannya sambil berjejaring dengan putra-putri terbaik bangsa. Segera daftarkan dirimu di SFL selanjutnya untuk merasakan yang sama!”
+                “FLP memberikan pengalaman luar biasa mengelilingi megahnya New York dan merasakan atmosfer belajar di Harvard dan MIT, Boston. Plus, aku melakukannya sambil berjejaring dengan putra-putri terbaik bangsa. Segera daftarkan dirimu di FLP selanjutnya untuk merasakan yang sama!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
@@ -324,7 +329,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Indah Nurfirmanillah</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Sekolah Tinggi Manajemen PPM, Peserta FMBPI 2021</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece SejutaCita yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus SejutaCita ❤️”
+                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece Info Kampus/Komunitas yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus Info Kampus/Komunitas ❤️”
               </CardContent>
             </Card>
           </div>

@@ -25,19 +25,17 @@ const InfoCard: React.FC<InfoCardProps> = ({
   return (
     <Card className="flex flex-col justify-between h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
-        <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl font-semibold">{title}</CardTitle>
-          {/* Menampilkan kategori sebagai teks biasa */}
-          <span className="text-sm text-muted-foreground">{category}</span>
-        </div>
+        <CardTitle className="text-xl font-semibold mb-2">{title}</CardTitle>
         <CardDescription className="text-sm text-muted-foreground line-clamp-2">
           {description}
         </CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-gray-600 dark:text-gray-400">
-        {/* Menampilkan tanggal dan lokasi tanpa label */}
+        {/* Menampilkan tanggal dan lokasi */}
         {date && <p className="mb-1">{date}</p>}
-        {location && <p>{location}</p>}
+        {location && <p className="mb-1">{location}</p>}
+        {/* Menampilkan kategori di bawah tanggal/lokasi */}
+        <p className="text-xs text-muted-foreground mt-2">{category}</p>
       </CardContent>
       <CardFooter>
         <Link to={link} className="w-full">

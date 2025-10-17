@@ -21,6 +21,9 @@ const Header = () => {
           <Link to="/jobs" className="text-sm font-medium hover:text-primary">
             Lowongan
           </Link>
+          <Link to="/news-and-tips" className="text-sm font-medium hover:text-primary">
+            Berita & Tips
+          </Link>
           <Link to="/contact" className="text-sm font-medium hover:text-primary">
             Kontak
           </Link>
@@ -43,6 +46,9 @@ const Header = () => {
                 </Link>
                 <Link to="/jobs" className="text-lg font-medium hover:text-primary">
                   Lowongan
+                </Link>
+                <Link to="/news-and-tips" className="text-lg font-medium hover:text-primary">
+                  Berita & Tips
                 </Link>
                 <Link to="/contact" className="text-lg font-medium hover:text-primary">
                   Kontak

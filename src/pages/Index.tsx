@@ -19,6 +19,37 @@ import {
   Plane,
   Megaphone,
 } from "lucide-react";
+import NewsCard from "@/components/NewsCard"; // Import NewsCard
+
+const dummyNews = [
+  {
+    id: "n1",
+    title: "10 Tips Sukses Mendapatkan Beasiswa Impian",
+    description: "Panduan lengkap untuk mempersiapkan diri dan aplikasi beasiswa agar peluang diterima lebih besar.",
+    category: "Tips Edukasi",
+    date: "15 Oktober 2024",
+    link: "/news-and-tips/tips-beasiswa",
+    imageUrl: "https://via.placeholder.com/400x200/FFD700/FFFFFF?text=Tips+Beasiswa",
+  },
+  {
+    id: "n2",
+    title: "Tren Karir Paling Diminati di Tahun 2025",
+    description: "Analisis mendalam tentang sektor industri dan jenis pekerjaan yang akan booming di masa depan.",
+    category: "Berita Karir",
+    date: "10 Oktober 2024",
+    link: "/news-and-tips/tren-karir",
+    imageUrl: "https://via.placeholder.com/400x200/87CEEB/FFFFFF?text=Tren+Karir",
+  },
+  {
+    id: "n3",
+    title: "Pentingnya Soft Skill di Dunia Kerja Modern",
+    description: "Mengapa soft skill menjadi kunci keberhasilan di samping hard skill yang Anda miliki.",
+    category: "Tips Edukasi",
+    date: "05 Oktober 2024",
+    link: "/news-and-tips/soft-skill",
+    imageUrl: "https://via.placeholder.com/400x200/90EE90/FFFFFF?text=Soft+Skill",
+  },
+];
 
 const Index = () => {
   return (
@@ -156,6 +187,21 @@ const Index = () => {
           </CardHeader>
           <Button className="w-fit mt-4">Lihat Lowongan Info Kampus/Komunitas</Button>
         </Card>
+      </section>
+
+      {/* Berita & Tips Edukasi Section */}
+      <section className="container py-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Berita & Tips Edukasi</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dummyNews.map((newsItem) => (
+            <NewsCard key={newsItem.id} {...newsItem} />
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Link to="/news-and-tips">
+            <Button variant="outline" className="text-primary hover:bg-primary hover:text-primary-foreground">Lihat Semua Berita & Tips &rarr;</Button>
+          </Link>
+        </div>
       </section>
 
       {/* Testimonials Section */}

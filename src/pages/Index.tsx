@@ -11,6 +11,7 @@ import {
   GraduationCap,
   Plane,
   Megaphone,
+  Award, // Import the Award icon
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import { useCountUp } from "@/hooks/useCountUp"; // Import the new hook

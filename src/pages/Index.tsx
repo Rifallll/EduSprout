@@ -12,9 +12,9 @@ import {
   Plane,
   Megaphone,
   Award,
-  Upload, // New: Import Upload icon
-  Handshake, // New: Import Handshake icon
-  Briefcase, // New: Import Briefcase icon
+  Upload, // Import Upload icon
+  Handshake, // Import Handshake icon
+  Briefcase, // Import Briefcase icon
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import { useCountUp } from "@/hooks/useCountUp"; // Import the new hook
@@ -81,28 +81,28 @@ const Index = () => {
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
             <Calendar className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Event</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
               Daftar ke 2,000+ event pilihan (webinar, lomba, volunteering, dsb).
             </CardContent>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
             <MessageSquare className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Forum Diskusi</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
               Tempat buat kamu sharing dan diskusi, tanpa perlu difollback & ga pake antri.
             </CardContent>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
             <BookOpen className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Booku</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
               200+ ringkasan non-fiksi untuk perluas wawasanmu di mana pun, kapan pun. Ada versi audio & teks, dalam 2 bahasa!
             </CardContent>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <Image className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Twibbon</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
               Peserta acara mau buat twibbon? Lagi ngadain kampanye? Ini pabrik twibbon terbesar anak muda Indonesia!
             </CardContent>
           </Card>
@@ -132,9 +132,9 @@ const Index = () => {
 
       {/* Partnership & Career CTAs */}
       <section className="container py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> {/* Changed to 3 columns for better balance */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
-            <Upload className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
+            <Upload className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-2xl font-bold mb-2">Upload Event di EduSprout</CardTitle>
             <p className="text-muted-foreground text-sm mb-4 flex-grow">
               Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
@@ -142,7 +142,7 @@ const Index = () => {
             <Button className="w-full mt-auto">Upload Event Sekarang</Button>
           </Card>
           <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
-            <Handshake className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
+            <Handshake className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
             <p className="text-muted-foreground text-sm mb-4 flex-grow">
               Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, EduSprout bisa bantu semuanya!
@@ -150,7 +150,7 @@ const Index = () => {
             <Button className="w-full mt-auto">Kami Siap Membantumu</Button>
           </Card>
           <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
-            <Briefcase className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
+            <Briefcase className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di EduSprout</CardTitle>
             <p className="text-muted-foreground text-sm mb-4 flex-grow">
               Dampak kami nyata dalam merevolusi pendidikan & generasi muda Indonesia. Sudah siap berkontribusi?
@@ -187,7 +187,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Naomi Dominique H.</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Pancasila, Event Organizer</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “Recommended parah! Awalnya ragu untuk share event di EduSprout karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di EduSprout. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
               </CardContent>
             </Card>
@@ -198,7 +198,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Destilova</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Negeri Semarang, Pengguna Aplikasi</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “Yang aku paling suka dari EduSprout adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
               </CardContent>
             </Card>
@@ -209,7 +209,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Zharfan Akbar</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Diponegoro, Software Engineer</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “Bekerja di EduSprout tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, EduSprout tempat yang cocok untukmu.”
               </CardContent>
             </Card>
@@ -225,7 +225,7 @@ const Index = () => {
             <GraduationCap className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Student Leaders Forum (SLF)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan Setiap Januari–April</p>
-            <CardContent className="text-muted-foreground text-sm p-0 mb-4">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               Perayaan semangat dalam aksi, prestasi, dan kolaborasi pemimpin muda dari seluruh Indonesia dalam rangkaian sesi talkshow penuh makna. Siap terinspirasi?
             </CardContent>
             <Button variant="link" className="mt-auto">Segera Hadir</Button>
@@ -234,7 +234,7 @@ const Index = () => {
             <Award className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Beasiswa EduSprout (BES)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 3x Setahun</p>
-            <CardContent className="text-muted-foreground text-sm p-0 mb-4">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               Dapatkan dukungan untuk meringankan biaya pendidikan dan siapkan dirimu untuk masa depan cemerlang. Kesempatan ini menantimu.
             </CardContent>
             <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
@@ -243,7 +243,7 @@ const Index = () => {
             <Plane className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Future Leaders Program (FLP)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 2x Setahun</p>
-            <CardContent className="text-muted-foreground text-sm p-0 mb-4">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               100% Fully-Funded International Leadership Trip ke destinasi terbaik luar negeri selama 6 hari 5 malam. Siap mengikuti perjalanan yang mengubah hidup?
             </CardContent>
             <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
@@ -252,7 +252,7 @@ const Index = () => {
             <Megaphone className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Festival Mahasiswa Baru & Pelajar Indonesia (FMBPI)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan Setiap Juni–Agustus</p>
-            <CardContent className="text-muted-foreground text-sm p-0 mb-4">
+            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               Rangkaian sesi talkshow inspiratif dengan pembicara tokoh nasional terbaik, kesempatan lomba, dan dana penunjang pendidikan. Jangan lewatkan!
             </CardContent>
             <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
@@ -272,7 +272,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Dimas Putra Adzie</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BES 2021</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “BES merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
               </CardContent>
             </Card>
@@ -283,7 +283,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Fatma Oryza</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">UIN Sunan Ampel Surabaya, Pemenang FLP 2020</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “FLP memberikan pengalaman luar biasa mengelilingi megahnya New York dan merasakan atmosfer belajar di Harvard dan MIT, Boston. Plus, aku melakukannya sambil berjejaring dengan putra-putri terbaik bangsa. Segera daftarkan dirimu di FLP selanjutnya untuk merasakan yang sama!”
               </CardContent>
             </Card>
@@ -294,7 +294,7 @@ const Index = () => {
               </Avatar>
               <CardTitle className="text-lg font-semibold">Indah Nurfirmanillah</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Sekolah Tinggi Manajemen PPM, Peserta FMBPI 2021</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
+              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
                 “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece EduSprout yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus EduSprout ❤️”
               </CardContent>
             </Card>

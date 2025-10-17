@@ -61,7 +61,7 @@ const dummyJobs = [
 const Jobs = () => {
   return (
     <div className="container py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Info Lowongan & Karir</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Info Lowongan & Karir EduSprout</h1>
       <p className="text-lg text-center text-muted-foreground mb-8">
         Dapatkan informasi lowongan pekerjaan dan peluang karir terbaru dari berbagai perusahaan.
       </p>

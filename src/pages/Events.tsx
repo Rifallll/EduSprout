@@ -61,7 +61,7 @@ const dummyEvents = [
 const Events = () => {
   return (
     <div className="container py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Event Kampus/Komunitas</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Event EduSprout</h1>
       <p className="text-lg text-center text-muted-foreground mb-8">
         Jelajahi berbagai event menarik dari kampus dan komunitas di seluruh Indonesia.
       </p>

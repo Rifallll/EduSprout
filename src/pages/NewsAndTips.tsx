@@ -61,7 +61,7 @@ const dummyNews = [
 const NewsAndTips = () => {
   return (
     <div className="container py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Berita & Tips Edukasi</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Berita & Tips EduSprout</h1>
       <p className="text-lg text-center text-muted-foreground mb-8">
         Dapatkan informasi terbaru, panduan, dan tips untuk mendukung perjalanan pendidikan dan karir Anda.
       </p>

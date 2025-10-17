@@ -55,7 +55,7 @@ const dummyScholarships = [
 const Scholarships = () => {
   return (
     <div className="container py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Info Beasiswa</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Info Beasiswa EduSprout</h1>
       <p className="text-lg text-center text-muted-foreground mb-8">
         Temukan berbagai beasiswa lokal dan internasional untuk mendukung pendidikan Anda.
       </p>

@@ -43,7 +43,7 @@ const Contact = () => {
       </div>
       <div className="mt-12 text-center">
         <h2 className="text-2xl font-semibold mb-4">Informasi Kontak Lainnya</h2>
-        <p className="text-muted-foreground">Email: info@infokampuskomunitas.com</p>
+        <p className="text-muted-foreground">Email: info@edusprout.com</p>
         <p className="text-muted-foreground">Telepon: (123) 456-7890</p>
         <div className="flex justify-center space-x-4 mt-4">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">

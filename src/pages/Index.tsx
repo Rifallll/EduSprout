@@ -5,16 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Calendar,
-  Award,
-  FileText,
   MessageSquare,
-  Languages,
-  Share2,
   BookOpen,
   Image,
-  Star,
-  Users,
-  Briefcase,
   GraduationCap,
   Plane,
   Megaphone,
@@ -64,14 +57,14 @@ const Index = () => {
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="container relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight animate-fade-in-up">
-            Platform No. 1 Mahasiswa & Pelajar
+            Platform Informasi Mahasiswa & Pelajar
           </h1>
           <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-200">
             Jelajahi peluang tanpa batas: event, beasiswa, lowongan, dan banyak lagi untuk masa depan cerahmu!
           </p>
           <div className="opacity-0 animate-fade-in-up delay-400">
             <Button size="lg" className="px-8 py-3 text-lg shadow-lg hover:scale-105 transition-transform duration-300 bg-white text-primary hover:bg-gray-100">
-              Jelajahi Info Kampus/Komunitas
+              Jelajahi EduSprout
             </Button>
           </div>
         </div>
@@ -85,52 +78,24 @@ const Index = () => {
             <Calendar className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Event</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
-              Daftar ke 2,000+ event pilihan (webinar, lomba, volunteering, dsb). Kamu bisa upload dan promosi event juga, lho!
+              Daftar ke 2,000+ event pilihan (webinar, lomba, volunteering, dsb).
             </CardContent>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
-            <Award className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Sertifikat</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
-              Simpan semua sertifikatmu di satu tempat. Nggak perlu ribet, nggak akan hilang.
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
-            <FileText className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">CV Review</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
-              Review dari HR profesional dan berpengalaman di perusahaan besar untuk bantu kamu bagusin CV.
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <MessageSquare className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Forum Diskusi</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
               Tempat buat kamu sharing dan diskusi, tanpa perlu difollback & ga pake antri.
             </CardContent>
           </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
-            <Languages className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Translation</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
-              Butuh terjemahan untuk jurnal, abstrak, atau surat rekomendasi? Kami siap memberikan yang terbaik!
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
-            <Share2 className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Referral</CardTitle>
-            <CardContent className="text-muted-foreground text-sm p-0">
-              Ajak teman gabung di Info Kampus/Komunitas dan dapatkan bonus hingga Rp9.360.000!
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
+          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
             <BookOpen className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Booku</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
               200+ ringkasan non-fiksi untuk perluas wawasanmu di mana pun, kapan pun. Ada versi audio & teks, dalam 2 bahasa!
             </CardContent>
           </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-700">
+          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <Image className="h-12 w-12 text-primary mb-4" />
             <CardTitle className="text-xl font-semibold mb-2">Twibbon</CardTitle>
             <CardContent className="text-muted-foreground text-sm p-0">
@@ -143,7 +108,7 @@ const Index = () => {
       {/* Statistics Section */}
       <section className="bg-muted py-16 text-center">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Maju Bersama Info Kampus/Komunitas</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Maju Bersama EduSprout</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="animate-fade-in-up">
               <p className="text-5xl font-extrabold text-primary mb-2">{totalEvents.toLocaleString()}</p>
@@ -166,7 +131,7 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="p-8 flex flex-col justify-between animate-fade-in-up">
             <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-2xl font-bold mb-2">Upload Event di Info Kampus/Komunitas</CardTitle>
+              <CardTitle className="text-2xl font-bold mb-2">Upload Event di EduSprout</CardTitle>
               <p className="text-muted-foreground">
                 Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
               </p>
@@ -177,7 +142,7 @@ const Index = () => {
             <CardHeader className="p-0 mb-4">
               <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
               <p className="text-muted-foreground">
-                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, Info Kampus/Komunitas bisa bantu semuanya!
+                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, EduSprout bisa bantu semuanya!
               </p>
             </CardHeader>
             <Button className="w-fit mt-4">Kami Siap Membantumu</Button>
@@ -185,12 +150,12 @@ const Index = () => {
         </div>
         <Card className="p-8 mt-8 flex flex-col justify-between animate-fade-in-up delay-200">
           <CardHeader className="p-0 mb-4">
-            <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di Info Kampus/Komunitas</CardTitle>
+            <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di EduSprout</CardTitle>
             <p className="text-muted-foreground">
               Dampak kami nyata dalam merevolusi pendidikan & generasi muda Indonesia. Sudah siap berkontribusi?
             </p>
           </CardHeader>
-          <Button className="w-fit mt-4">Lihat Lowongan Info Kampus/Komunitas</Button>
+          <Button className="w-fit mt-4">Lihat Lowongan EduSprout</Button>
         </Card>
       </section>
 
@@ -222,7 +187,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Naomi Dominique H.</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Pancasila, Event Organizer</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Recommended parah! Awalnya ragu untuk share event di Info Kampus/Komunitas karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di Info Kampus/Komunitas. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
+                “Recommended parah! Awalnya ragu untuk share event di EduSprout karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di EduSprout. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
@@ -233,7 +198,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Destilova</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Negeri Semarang, Pengguna Aplikasi</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Yang aku paling suka dari Info Kampus/Komunitas adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
+                “Yang aku paling suka dari EduSprout adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
@@ -244,7 +209,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Zharfan Akbar</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Universitas Diponegoro, Software Engineer</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Bekerja di Info Kampus/Komunitas tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, Info Kampus/Komunitas tempat yang cocok untukmu.”
+                “Bekerja di EduSprout tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, EduSprout tempat yang cocok untukmu.”
               </CardContent>
             </Card>
           </div>
@@ -266,7 +231,7 @@ const Index = () => {
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
             <Award className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Beasiswa Komunitas (BK)</CardTitle>
+            <CardTitle className="text-xl font-semibold mb-2">Beasiswa EduSprout (BES)</CardTitle>
             <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 3x Setahun</p>
             <CardContent className="text-muted-foreground text-sm p-0 mb-4">
               Dapatkan dukungan untuk meringankan biaya pendidikan dan siapkan dirimu untuk masa depan cemerlang. Kesempatan ini menantimu.
@@ -305,9 +270,9 @@ const Index = () => {
                 <AvatarFallback>DPA</AvatarFallback>
               </Avatar>
               <CardTitle className="text-lg font-semibold">Dimas Putra Adzie</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BK 2021</p>
+              <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BES 2021</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “BK merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
+                “BES merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
               </CardContent>
             </Card>
             <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
@@ -329,7 +294,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Indah Nurfirmanillah</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Sekolah Tinggi Manajemen PPM, Peserta FMBPI 2021</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 p-0">
-                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece Info Kampus/Komunitas yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus Info Kampus/Komunitas ❤️”
+                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece EduSprout yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus EduSprout ❤️”
               </CardContent>
             </Card>
           </div>

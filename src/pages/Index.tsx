@@ -11,7 +11,10 @@ import {
   GraduationCap,
   Plane,
   Megaphone,
-  Award, // Import the Award icon
+  Award,
+  Upload, // New: Import Upload icon
+  Handshake, // New: Import Handshake icon
+  Briefcase, // New: Import Briefcase icon
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import { useCountUp } from "@/hooks/useCountUp"; // Import the new hook
@@ -129,35 +132,32 @@ const Index = () => {
 
       {/* Partnership & Career CTAs */}
       <section className="container py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="p-8 flex flex-col justify-between animate-fade-in-up">
-            <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-2xl font-bold mb-2">Upload Event di EduSprout</CardTitle>
-              <p className="text-muted-foreground">
-                Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
-              </p>
-            </CardHeader>
-            <Button className="w-fit mt-4">Upload Event Sekarang</Button>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> {/* Changed to 3 columns for better balance */}
+          <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
+            <Upload className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
+            <CardTitle className="text-2xl font-bold mb-2">Upload Event di EduSprout</CardTitle>
+            <p className="text-muted-foreground text-sm mb-4 flex-grow">
+              Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
+            </p>
+            <Button className="w-full mt-auto">Upload Event Sekarang</Button>
           </Card>
-          <Card className="p-8 flex flex-col justify-between animate-fade-in-up delay-100">
-            <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
-              <p className="text-muted-foreground">
-                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, EduSprout bisa bantu semuanya!
-              </p>
-            </CardHeader>
-            <Button className="w-fit mt-4">Kami Siap Membantumu</Button>
+          <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
+            <Handshake className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
+            <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
+            <p className="text-muted-foreground text-sm mb-4 flex-grow">
+              Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, EduSprout bisa bantu semuanya!
+            </p>
+            <Button className="w-full mt-auto">Kami Siap Membantumu</Button>
           </Card>
-        </div>
-        <Card className="p-8 mt-8 flex flex-col justify-between animate-fade-in-up delay-200">
-          <CardHeader className="p-0 mb-4">
+          <Card className="p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
+            <Briefcase className="h-12 w-12 text-primary mb-4" /> {/* Added icon */}
             <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di EduSprout</CardTitle>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm mb-4 flex-grow">
               Dampak kami nyata dalam merevolusi pendidikan & generasi muda Indonesia. Sudah siap berkontribusi?
             </p>
-          </CardHeader>
-          <Button className="w-fit mt-4">Lihat Lowongan EduSprout</Button>
-        </Card>
+            <Button className="w-full mt-auto">Lihat Lowongan EduSprout</Button>
+          </Card>
+        </div>
       </section>
 
       {/* Berita & Tips Edukasi Section */}

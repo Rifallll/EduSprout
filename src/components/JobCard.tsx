@@ -41,10 +41,10 @@ const JobCard: React.FC<JobCardProps> = ({
   companyLogoUrl,
 }) => {
   return (
-    <Card className="flex flex-col h-full border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Added border and rounded-lg */}
+    <Card className="group flex flex-col h-full border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Added group class for hover effects */}
       <CardHeader className="pb-2 px-6 pt-6"> {/* Adjusted padding */}
         <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl font-bold leading-tight line-clamp-2 text-foreground">{title}</CardTitle> {/* Ensured text-foreground */}
+          <CardTitle className="text-xl font-bold leading-tight line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">{title}</CardTitle> {/* Ensured text-foreground */}
           {salaryRange && (
             <Badge className="bg-primary/10 text-primary font-semibold whitespace-nowrap px-3 py-1"> {/* Adjusted badge styling */}
               {salaryRange}
@@ -65,8 +65,8 @@ const JobCard: React.FC<JobCardProps> = ({
         <CardDescription className="space-y-1 text-sm text-muted-foreground">
           {company && (
             <div className="flex items-center">
-              {companyLogoUrl && <img src={companyLogoUrl} alt={company} className="h-5 w-5 mr-2 rounded-sm" />}
-              <Building2 className="h-4 w-4 mr-2 flex-shrink-0" />
+              {companyLogoUrl && <img src={companyLogoUrl} alt={company} className="h-5 w-5 mr-2 rounded-sm object-contain" />}
+              {!companyLogoUrl && <Building2 className="h-4 w-4 mr-2 flex-shrink-0" />}
               <span>{company}</span>
             </div>
           )}

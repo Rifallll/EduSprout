@@ -35,6 +35,7 @@ interface JobItem {
   salaryMatch?: string;
   applicantCount?: string;
   skillMatch?: string;
+  companyLogoUrl?: string; // Added companyLogoUrl
 }
 
 const JobDetailPage = () => {
@@ -76,7 +77,9 @@ const JobDetailPage = () => {
               <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground text-base">
                 {job.company && (
                   <span className="flex items-center">
-                    <Building2 className="h-4 w-4 mr-1" /> {job.company}
+                    {job.companyLogoUrl && <img src={job.companyLogoUrl} alt={job.company} className="h-5 w-5 mr-2 rounded-sm object-contain" />}
+                    {!job.companyLogoUrl && <Building2 className="h-4 w-4 mr-1" />}
+                    {job.company}
                   </span>
                 )}
                 {job.location && (
@@ -252,8 +255,7 @@ const JobDetailPage = () => {
                 <CardTitle className="text-xl font-semibold">Profil perusahaan</CardTitle>
                 {job.company && (
                   <CardDescription className="flex items-center gap-2">
-                    {/* Assuming a company logo URL could be added here */}
-                    {/* <img src="/path/to/company-logo.png" alt={job.company} className="h-6 w-6 rounded-full" /> */}
+                    {job.companyLogoUrl && <img src={job.companyLogoUrl} alt={job.company} className="h-6 w-6 rounded-full object-contain" />}
                     <span className="font-medium text-foreground">{job.company}</span>
                     {job.companyIndustry && <Badge variant="secondary">{job.companyIndustry}</Badge>}
                   </CardDescription>
@@ -300,6 +302,7 @@ const JobDetailPage = () => {
                     isPremium={relatedJob.isPremium}
                     isHot={relatedJob.isHot}
                     isActiveRecruiting={relatedJob.isActiveRecruiting}
+                    companyLogoUrl={relatedJob.companyLogoUrl}
                   />
                 </CarouselItem>
               ))}

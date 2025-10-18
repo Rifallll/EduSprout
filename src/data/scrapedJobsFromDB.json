@@ -26,7 +26,8 @@
     ],
     "salaryMatch": "Rp4.000.000 – Rp5.500.000 per bulan",
     "applicantCount": "Jumlah pelamar: 80+",
-    "skillMatch": "Kecocokan keahlian: 75%"
+    "skillMatch": "Kecocokan keahlian: 75%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/007bff/ffffff?text=MB"
   },
   {
     "id": "job_jobstreet_1",
@@ -55,7 +56,8 @@
     ],
     "salaryMatch": "Rp6.500.000 – Rp8.000.000 per bulan",
     "applicantCount": "Jumlah pelamar: 200+",
-    "skillMatch": "Kecocokan keahlian: 90%"
+    "skillMatch": "Kecocokan keahlian: 90%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/ff5722/ffffff?text=TI"
   },
   {
     "id": "job_lokerid_2",
@@ -84,7 +86,8 @@
     ],
     "salaryMatch": "Rp3.500.000 – Rp4.800.000 per bulan",
     "applicantCount": "Jumlah pelamar: 120+",
-    "skillMatch": "Kecocokan keahlian: 85%"
+    "skillMatch": "Kecocokan keahlian: 85%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/673ab7/ffffff?text=GC"
   },
   {
     "id": "job_jobstreet_2",
@@ -113,7 +116,8 @@
     ],
     "salaryMatch": "Rp5.200.000 – Rp6.800.000 per bulan",
     "applicantCount": "Jumlah pelamar: 90+",
-    "skillMatch": "Kecocokan keahlian: 92%"
+    "skillMatch": "Kecocokan keahlian: 92%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/00bcd4/ffffff?text=CS"
   },
   {
     "id": "job_jooble_1",
@@ -142,7 +146,8 @@
     ],
     "salaryMatch": "Rp4.800.000 – Rp6.000.000 per bulan",
     "applicantCount": "Jumlah pelamar: 70+",
-    "skillMatch": "Kecocokan keahlian: 88%"
+    "skillMatch": "Kecocokan keahlian: 88%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/ff9800/ffffff?text=GE"
   },
   {
     "id": "job_jobstreet_3",
@@ -171,7 +176,8 @@
     ],
     "salaryMatch": "Rp7.500.000 – Rp9.500.000 per bulan",
     "applicantCount": "Jumlah pelamar: 180+",
-    "skillMatch": "Kecocokan keahlian: 95%"
+    "skillMatch": "Kecocokan keahlian: 95%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/9c27b0/ffffff?text=DH"
   },
   {
     "id": "job_getredy_1",
@@ -200,7 +206,8 @@
     ],
     "salaryMatch": "Rp5.800.000 – Rp7.500.000 per bulan",
     "applicantCount": "Jumlah pelamar: 110+",
-    "skillMatch": "Kecocokan keahlian: 89%"
+    "skillMatch": "Kecocokan keahlian: 89%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/e91e63/ffffff?text=DAX"
   },
   {
     "id": "job_jooble_2",
@@ -229,7 +236,8 @@
     ],
     "salaryMatch": "Rp4.500.000 – Rp6.500.000 per bulan",
     "applicantCount": "Jumlah pelamar: 60+",
-    "skillMatch": "Kecocokan keahlian: 82%"
+    "skillMatch": "Kecocokan keahlian: 82%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/4caf50/ffffff?text=TS"
   },
   {
     "id": "job_lokerbandung_1",
@@ -258,7 +266,8 @@
     ],
     "salaryMatch": "Rp3.800.000 – Rp5.000.000 per bulan",
     "applicantCount": "Jumlah pelamar: 50+",
-    "skillMatch": "Kecocokan keahlian: 70%"
+    "skillMatch": "Kecocokan keahlian: 70%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/ffc107/000000?text=EC"
   },
   {
     "id": "job_lokerbandung_2",
@@ -287,7 +296,8 @@
     ],
     "salaryMatch": "Rp5.500.000 – Rp7.000.000 per bulan",
     "applicantCount": "Jumlah pelamar: 100+",
-    "skillMatch": "Kecocokan keahlian: 93%"
+    "skillMatch": "Kecocokan keahlian: 93%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/795548/ffffff?text=KM"
   },
   {
     "id": "job_getredy_2",
@@ -316,7 +326,8 @@
     ],
     "salaryMatch": "Rp1.200.000 – Rp1.800.000 per bulan",
     "applicantCount": "Jumlah pelamar: 150+",
-    "skillMatch": "Kecocokan keahlian: 80%"
+    "skillMatch": "Kecocokan keahlian: 80%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/ffeb3b/000000?text=SE"
   },
   {
     "id": "job_freelance_1",
@@ -345,7 +356,8 @@
     ],
     "salaryMatch": "Sesuai kesepakatan proyek",
     "applicantCount": "Jumlah pelamar: 40+",
-    "skillMatch": "Kecocokan keahlian: 90%"
+    "skillMatch": "Kecocokan keahlian: 90%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/607d8b/ffffff?text=FE"
   },
   {
     "id": "job_harian_1",
@@ -374,6 +386,7 @@
     ],
     "salaryMatch": "Rp150.000 per hari",
     "applicantCount": "Jumlah pelamar: 30+",
-    "skillMatch": "Kecocokan keahlian: 65%"
+    "skillMatch": "Kecocokan keahlian: 65%",
+    "companyLogoUrl": "https://via.placeholder.com/40x40/7cb342/ffffff?text=EC"
   }
 ]

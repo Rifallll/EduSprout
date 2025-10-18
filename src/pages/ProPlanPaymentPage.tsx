@@ -1,20 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard, DollarSign } from "lucide-react";
+import { CreditCard, DollarSign, Loader2 } from "lucide-react"; // Import Loader2 icon
 import { toast } from "sonner";
 
 const ProPlanPaymentPage = () => {
+  const [isLoading, setIsLoading] = useState(false); // State untuk loading
+  const navigate = useNavigate(); // Hook untuk navigasi
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulasi proses pembayaran
-    console.log("Pro Plan payment submitted");
-    toast.success("Pembayaran Paket Pro berhasil! Selamat menikmati fitur premium.");
-    // Dalam aplikasi nyata, ini akan memanggil API pembayaran
-    // dan kemudian mengarahkan pengguna ke halaman konfirmasi atau dashboard.
+    setIsLoading(true); // Mulai loading
+
+    // Simulasi proses pembayaran dengan penundaan
+    setTimeout(() => {
+      setIsLoading(false); // Hentikan loading
+
+      // Simulasi pembayaran berhasil
+      toast.success("Pembayaran Paket Pro berhasil! Selamat menikmati fitur premium.");
+      console.log("Pro Plan payment submitted successfully");
+      navigate("/pricing/basic"); // Redirect ke halaman konfirmasi (bisa diganti ke halaman konfirmasi Pro jika ada)
+
+      // Jika ingin mensimulasikan kegagalan, bisa seperti ini:
+      // toast.error("Pembayaran gagal. Mohon coba lagi.");
+      // console.error("Pro Plan payment failed");
+
+    }, 2000); // Simulasi penundaan 2 detik
   };
 
   return (
@@ -38,6 +52,7 @@ const ProPlanPaymentPage = () => {
                 autoComplete="name"
                 required
                 placeholder="Nama Anda"
+                disabled={isLoading} // Disable input saat loading
               />
             </div>
             <div>
@@ -49,6 +64,7 @@ const ProPlanPaymentPage = () => {
                 autoComplete="email"
                 required
                 placeholder="email@example.com"
+                disabled={isLoading} // Disable input saat loading
               />
             </div>
             <div>
@@ -61,6 +77,7 @@ const ProPlanPaymentPage = () => {
                 placeholder="XXXX XXXX XXXX XXXX"
                 pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
                 maxLength={19}
+                disabled={isLoading} // Disable input saat loading
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -74,6 +91,7 @@ const ProPlanPaymentPage = () => {
                   placeholder="MM/YY"
                   pattern="(0[1-9]|1[0-2])\/?([0-9]{2})"
                   maxLength={5}
+                  disabled={isLoading} // Disable input saat loading
                 />
               </div>
               <div>
@@ -86,11 +104,17 @@ const ProPlanPaymentPage = () => {
                   placeholder="XXX"
                   pattern="[0-9]{3,4}"
                   maxLength={4}
+                  disabled={isLoading} // Disable input saat loading
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full">
-              <DollarSign className="mr-2 h-4 w-4" /> Bayar Rp 250rb Sekarang
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <DollarSign className="mr-2 h-4 w-4" />
+              )}
+              {isLoading ? "Memproses..." : "Bayar Rp 250rb Sekarang"}
             </Button>
           </form>
           <div className="mt-6 text-center text-sm">

@@ -18,43 +18,15 @@ import {
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import { useCountUp } from "@/hooks/useCountUp";
-// import ScrapedDataDisplay from "@/components/ScrapedDataDisplay"; // Import the new component - REMOVED
-// import scrapedData from "@/data/scrapedData.json"; // Import the dummy scraped data - REMOVED
-
-const dummyNews = [
-  {
-    id: "n1",
-    title: "10 Tips Sukses Mendapatkan Beasiswa Impian",
-    description: "Panduan lengkap untuk mempersiapkan diri dan aplikasi beasiswa agar peluang diterima lebih besar.",
-    category: "Tips Edukasi",
-    date: "15 Oktober 2024",
-    link: "/news-and-tips/tips-beasiswa",
-    imageUrl: "https://via.placeholder.com/400x200/FFD700/FFFFFF?text=Tips+Beasiswa",
-  },
-  {
-    id: "n2",
-    title: "Tren Karir Paling Diminati di Tahun 2025",
-    description: "Analisis mendalam tentang sektor industri dan jenis pekerjaan yang akan booming di masa depan.",
-    category: "Berita Karir",
-    date: "10 Oktober 2024",
-    link: "/news-and-tips/tren-karir",
-    imageUrl: "https://via.placeholder.com/400x200/87CEEB/FFFFFF?text=Tren+Karir",
-  },
-  {
-    id: "n3",
-    title: "Pentingnya Soft Skill di Dunia Kerja Modern",
-    description: "Mengapa soft skill menjadi kunci keberhasilan di samping hard skill yang Anda miliki.",
-    category: "Tips Edukasi",
-    date: "05 Oktober 2024",
-    link: "/news-and-tips/soft-skill",
-    imageUrl: "https://via.placeholder.com/400x200/90EE90/FFFFFF?text=Soft+Skill",
-  },
-];
+import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json"; // Import scraped news data
 
 const Index = () => {
   const totalEvents = useCountUp({ end: 17556, duration: 3000 });
   const partnersRating = useCountUp({ end: 3997, duration: 3000 });
   const registeredStudents = useCountUp({ end: 2548852, duration: 3000 });
+
+  // Use a slice of scrapedNewsAndTips for the homepage display
+  const homepageNews = scrapedNewsAndTips.slice(0, 3);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -128,13 +100,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Scraped Data Display Section - REMOVED */}
-      {/* <ScrapedDataDisplay
-        data={scrapedData}
-        title="Berita & Artikel Pilihan"
-        description="Dapatkan informasi terbaru dari berbagai sumber terpercaya yang kami kumpulkan."
-      /> */}
-
       {/* Partnership & Career CTAs */}
       <section className="container py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -180,7 +145,7 @@ const Index = () => {
       <section className="container py-16 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Berita & Tips Edukasi</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dummyNews.map((newsItem) => (
+          {homepageNews.map((newsItem) => (
             <NewsCard key={newsItem.id} {...newsItem} />
           ))}
         </div>

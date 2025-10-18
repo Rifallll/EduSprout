@@ -2,43 +2,77 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // For author avatar
+import { CalendarDays, Eye, MessageSquare, Bookmark, MoreHorizontal, FileText } from "lucide-react"; // New icons
 
 interface NewsCardProps {
   title: string;
   description: string;
-  category: string; // Keep category in props if it's used elsewhere or for data, but won't be rendered here
   date: string;
   link: string;
-  imageUrl?: string;
+  imageUrl?: string; // This will now be the small icon/thumbnail
+  author?: string;
+  authorAvatarUrl?: string;
+  views?: number;
+  comments?: number;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
   title,
   description,
-  // category, // Removed from destructuring to prevent rendering
   date,
   link,
-  imageUrl = "/placeholder.svg", // Default placeholder image
+  imageUrl, // Now used for the small icon/thumbnail
+  author = "EduSprout Team",
+  authorAvatarUrl = "https://api.dicebear.com/8.x/initials/svg?seed=ES",
+  views = Math.floor(Math.random() * 10000) + 100,
+  comments = Math.floor(Math.random() * 500) + 10,
 }) => {
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      {imageUrl && (
-        <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
-      )}
-      <CardHeader className="flex-grow text-center"> {/* Added text-center here */}
-        <div className="flex justify-center items-start mb-2"> {/* Changed justify-between to justify-center */}
-          <CardTitle className="text-xl font-semibold line-clamp-2">{title}</CardTitle>
-          {/* Removed the category span */}
+    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 p-4"> {/* Added padding to card */}
+      <CardHeader className="flex-grow p-0 mb-4"> {/* Adjusted padding and margin */}
+        <div className="flex items-center mb-4"> {/* Container for small icon and author */}
+          {imageUrl ? (
+            <img src={imageUrl} alt="News Icon" className="w-8 h-8 object-cover rounded-md mr-3" /> // Small image
+          ) : (
+            <FileText className="w-8 h-8 text-primary mr-3" /> // Placeholder icon
+          )}
+          <Avatar className="h-7 w-7 mr-2"> {/* Author Avatar */}
+            <AvatarImage src={authorAvatarUrl} alt={author} />
+            <AvatarFallback>{author.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <span className="text-sm font-medium text-foreground">{author}</span>
         </div>
-        <CardDescription className="text-sm text-muted-foreground line-clamp-3">
+
+        <Link to={link} className="block">
+          <CardTitle className="text-xl font-bold leading-tight line-clamp-3 mb-2 hover:text-primary transition-colors duration-200">
+            {title}
+          </CardTitle>
+        </Link>
+        <CardDescription className="text-sm text-muted-foreground line-clamp-4">
           {description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 pt-0">
-        <p>{date}</p>
-        <Link to={link}>
-          <Button variant="link" className="p-0 h-auto">Baca Selengkapnya &rarr;</Button>
-        </Link>
+      <CardContent className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 p-0 pt-4 border-t border-border mt-auto"> {/* Adjusted padding, added border-top */}
+        <div className="flex items-center space-x-3">
+          <span className="flex items-center">
+            <CalendarDays className="h-4 w-4 mr-1" /> {date}
+          </span>
+          <span className="flex items-center">
+            <Eye className="h-4 w-4 mr-1" /> {views.toLocaleString()}
+          </span>
+          <span className="flex items-center">
+            <MessageSquare className="h-4 w-4 mr-1" /> {comments.toLocaleString()}
+          </span>
+        </div>
+        <div className="flex items-center space-x-1">
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+            <Bookmark className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

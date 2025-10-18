@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Search, MapPin, X, Whatsapp } from "lucide-react"; // Import icons
+import { Search, MapPin, X } from "lucide-react"; // Menghapus Whatsapp dari impor
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 const Jobs = () => {
@@ -293,7 +293,7 @@ const Jobs = () => {
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50"
         aria-label="Hubungi kami via WhatsApp"
       >
-        <Whatsapp className="h-7 w-7" />
+        {/* Ikon Whatsapp dihapus karena tidak tersedia di lucide-react */}
       </a>
     </div>
   );

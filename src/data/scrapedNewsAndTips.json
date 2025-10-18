@@ -1,0 +1,38 @@
+[
+  {
+    "id": "sn1",
+    "title": "Inovasi Terbaru dalam Teknologi Pendidikan",
+    "description": "Bagaimana teknologi AI dan VR mengubah cara kita belajar di era digital.",
+    "category": "Teknologi",
+    "date": "2024-10-25",
+    "link": "https://example.com/inovasi-edutech",
+    "imageUrl": "https://via.placeholder.com/400x200/FF5733/FFFFFF?text=EduTech+Innovation"
+  },
+  {
+    "id": "sn2",
+    "title": "Tips Efektif Belajar Online untuk Mahasiswa",
+    "description": "Strategi untuk tetap fokus dan produktif saat mengikuti perkuliahan daring.",
+    "category": "Tips Belajar",
+    "date": "2024-10-24",
+    "link": "https://example.com/tips-belajar-online",
+    "imageUrl": "https://via.placeholder.com/400x200/33FF57/FFFFFF?text=Online+Learning+Tips"
+  },
+  {
+    "id": "sn3",
+    "title": "Peluang Karir di Bidang Data Science",
+    "description": "Mengenal lebih dalam profesi Data Scientist dan skill yang dibutuhkan.",
+    "category": "Karir",
+    "date": "2024-10-23",
+    "link": "https://example.com/karir-data-science",
+    "imageUrl": "https://via.placeholder.com/400x200/5733FF/FFFFFF?text=Data+Science+Career"
+  },
+  {
+    "id": "sn4",
+    "title": "Manfaat Bergabung dengan Komunitas Profesional",
+    "description": "Bagaimana networking dapat mempercepat pertumbuhan karir Anda.",
+    "category": "Pengembangan Diri",
+    "date": "2024-10-22",
+    "link": "https://example.com/komunitas-profesional",
+    "imageUrl": "https://via.placeholder.com/400x200/FF33A1/FFFFFF?text=Professional+Community"
+  }
+]

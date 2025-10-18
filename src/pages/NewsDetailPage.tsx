@@ -70,8 +70,7 @@ const NewsDetailPage = () => {
           <div className="flex items-center justify-between mb-4"> {/* Increased bottom margin */}
             <Badge className="bg-primary/10 text-primary font-semibold text-sm px-3 py-1 hover:bg-primary/20 transition-colors duration-200"> {/* Enhanced badge styling */}
               {news.category}
-            </Badge>
-            {/* Tombol Bookmark dan Share telah dihapus */}
+            </Badge>            
           </div>
 
           <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-foreground">{news.title}</CardTitle> {/* Larger, bolder title */}
@@ -166,8 +165,7 @@ const NewsDetailPage = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
+          </CardContent>
       </Card>
 
       {/* Related News Section (Carousel) */}

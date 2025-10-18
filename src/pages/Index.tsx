@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // Import useState and useEffect
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,13 +28,26 @@ const Index = () => {
   // Array of hero image paths
   const heroImages = ["/1 (2).jpg", "/3.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageOpacity, setImageOpacity] = useState(1); // 1 for visible, 0 for hidden
 
   useEffect(() => {
+    const fadeDuration = 1000; // 1 detik untuk fade in/out (sesuai dengan transisi CSS)
+    const visibleDuration = 4000; // Waktu gambar tampil penuh (4 detik)
+    const cycleInterval = visibleDuration + fadeDuration; // Total waktu sebelum fade-out berikutnya dimulai (5 detik)
+
+    // Gambar awal sudah terlihat (opacity 1)
+
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        (prevIndex + 1) % heroImages.length
-      );
-    }, 6000); // Ganti gambar setiap 6 detik
+      setImageOpacity(0); // Mulai fade-out gambar saat ini
+
+      const timeoutId = setTimeout(() => {
+        // Setelah fade-out selesai, ganti sumber gambar dan mulai fade-in
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+        setImageOpacity(1); // Mulai fade-in gambar baru
+      }, fadeDuration); // Tunggu sampai fade-out selesai
+
+      return () => clearTimeout(timeoutId); // Bersihkan timeout jika komponen di-unmount
+    }, cycleInterval); // Interval ini memicu dimulainya fade-out
 
     return () => clearInterval(interval); // Bersihkan interval saat komponen di-unmount
   }, [heroImages.length]);
@@ -50,7 +63,8 @@ const Index = () => {
         <img
           src={heroImages[currentImageIndex]} // Menggunakan gambar dari state
           alt="Hero Background"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out" // Tambahkan transisi
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out" // Transisi CSS
+          style={{ opacity: imageOpacity }} // Kontrol opacity melalui style
         />
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-black opacity-50"></div>

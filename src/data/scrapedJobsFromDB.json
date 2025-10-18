@@ -10,12 +10,23 @@
     "salaryRange": "Rp 4 jt-6 jt",
     "experience": "1-2 tahun",
     "education": "Minimal SMA/SMK",
-    "skills": ["Administrasi", "Microsoft Office"],
+    "skills": ["Administrasi", "Microsoft Office", "Kearsipan"],
     "isPremium": false,
     "isHot": true,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Bertanggung jawab untuk mengelola dokumen, jadwal, dan korespondensi kantor. Memastikan semua data administrasi tercatat dengan rapi dan akurat. Membantu dalam persiapan laporan dan presentasi. Diperlukan ketelitian dan kemampuan multitasking yang baik.",
+    "companyDescription": "PT Maju Bersama adalah perusahaan yang bergerak di bidang jasa konsultasi manajemen. Kami berkomitmen untuk memberikan solusi terbaik bagi klien kami dengan tim yang profesional dan berdedikasi.",
+    "companyIndustry": "Jasa Konsultasi",
+    "companySize": "51-200 karyawan",
+    "applicationQuestions": [
+      { "question": "Apa pengalaman Anda dalam administrasi?", "type": "text" },
+      { "question": "Seberapa familiar Anda dengan Microsoft Office?", "type": "text" }
+    ],
+    "salaryMatch": "Rp4.000.000 – Rp5.500.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 80+",
+    "skillMatch": "Kecocokan keahlian: 75%"
   },
   {
     "id": "job_jobstreet_1",
@@ -28,12 +39,23 @@
     "salaryRange": "Rp 6 jt-9 jt",
     "experience": "0-1 tahun",
     "education": "Minimal Sarjana (S1)",
-    "skills": ["React", "Node.js", "SQL"],
+    "skills": ["React", "Node.js", "SQL", "JavaScript"],
     "isPremium": true,
     "isHot": true,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor / rumah"
+    "workPolicy": "Kerja di kantor / rumah",
+    "descriptionDetail": "Bergabunglah dengan tim pengembangan kami untuk membangun aplikasi web inovatif. Anda akan terlibat dalam seluruh siklus pengembangan perangkat lunak, mulai dari desain hingga implementasi dan pengujian. Kesempatan besar untuk belajar dan berkembang di lingkungan startup yang dinamis.",
+    "companyDescription": "Tech Innovators adalah startup teknologi yang berfokus pada pengembangan solusi perangkat lunak untuk industri pendidikan. Kami percaya pada inovasi dan kolaborasi untuk menciptakan produk yang berdampak.",
+    "companyIndustry": "Teknologi Informasi",
+    "companySize": "11-50 karyawan",
+    "applicationQuestions": [
+      { "question": "Apa proyek React terakhir yang Anda kerjakan?", "type": "text" },
+      { "question": "Apakah Anda memiliki portofolio online?", "type": "text" }
+    ],
+    "salaryMatch": "Rp6.500.000 – Rp8.000.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 200+",
+    "skillMatch": "Kecocokan keahlian: 90%"
   },
   {
     "id": "job_lokerid_2",
@@ -46,12 +68,23 @@
     "salaryRange": "Rp 3 jt-5 jt",
     "experience": "1-3 tahun",
     "education": "Minimal SMA/SMK",
-    "skills": ["Komunikasi", "Problem Solving"],
+    "skills": ["Komunikasi", "Problem Solving", "Empati"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja Remote/dari rumah"
+    "workPolicy": "Kerja Remote/dari rumah",
+    "descriptionDetail": "Melayani pertanyaan dan keluhan pelanggan melalui telepon, email, dan chat. Memberikan solusi yang efektif dan menjaga kepuasan pelanggan. Membangun hubungan baik dengan pelanggan dan mencatat interaksi dengan akurat.",
+    "companyDescription": "Global Connect adalah penyedia layanan pelanggan terkemuka yang melayani berbagai industri. Kami bangga dengan tim kami yang responsif dan berorientasi pada solusi.",
+    "companyIndustry": "Layanan Pelanggan",
+    "companySize": "201-500 karyawan",
+    "applicationQuestions": [
+      { "question": "Bagaimana Anda menangani pelanggan yang marah?", "type": "text" },
+      { "question": "Apakah Anda memiliki pengalaman kerja remote sebelumnya?", "type": "text" }
+    ],
+    "salaryMatch": "Rp3.500.000 – Rp4.800.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 120+",
+    "skillMatch": "Kecocokan keahlian: 85%"
   },
   {
     "id": "job_jobstreet_2",
@@ -64,12 +97,23 @@
     "salaryRange": "Rp 5 jt-7 jt",
     "experience": "2-4 tahun",
     "education": "Minimal Diploma",
-    "skills": ["SEO", "SEM", "Social Media Marketing"],
+    "skills": ["SEO", "SEM", "Social Media Marketing", "Content Marketing"],
     "isPremium": true,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Merencanakan dan melaksanakan strategi pemasaran digital untuk meningkatkan visibilitas merek dan menghasilkan lead. Mengelola kampanye iklan online, menganalisis data, dan mengoptimalkan kinerja. Berkolaborasi dengan tim kreatif untuk menghasilkan konten yang menarik.",
+    "companyDescription": "Creative Solutions adalah agensi pemasaran digital yang inovatif, membantu klien mencapai tujuan bisnis mereka melalui strategi digital yang efektif dan kreatif.",
+    "companyIndustry": "Pemasaran & Periklanan",
+    "companySize": "51-200 karyawan",
+    "applicationQuestions": [
+      { "question": "Sebutkan 3 tools digital marketing yang Anda kuasai.", "type": "text" },
+      { "question": "Bagaimana Anda mengukur keberhasilan kampanye digital?", "type": "text" }
+    ],
+    "salaryMatch": "Rp5.200.000 – Rp6.800.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 90+",
+    "skillMatch": "Kecocokan keahlian: 92%"
   },
   {
     "id": "job_jooble_1",
@@ -82,12 +126,23 @@
     "salaryRange": "Rp 4.5 jt-6.5 jt",
     "experience": "1-3 tahun",
     "education": "Minimal Diploma",
-    "skills": ["Event Management", "Komunikasi"],
+    "skills": ["Event Management", "Komunikasi", "Negosiasi"],
     "isPremium": false,
     "isHot": true,
     "isActiveRecruiting": false,
     "jobType": "Kontrak",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Bertanggung jawab atas perencanaan, koordinasi, dan pelaksanaan berbagai acara, mulai dari konsep hingga pasca-acara. Memastikan semua aspek acara berjalan lancar dan sesuai anggaran. Berkoordinasi dengan vendor, klien, dan tim internal.",
+    "companyDescription": "Global Events Inc. adalah perusahaan penyelenggara acara terkemuka yang memiliki rekam jejak sukses dalam menciptakan pengalaman tak terlupakan untuk klien korporat dan individu.",
+    "companyIndustry": "Penyelenggara Acara",
+    "companySize": "11-50 karyawan",
+    "applicationQuestions": [
+      { "question": "Ceritakan pengalaman Anda dalam mengelola event.", "type": "text" },
+      { "question": "Bagaimana Anda menangani masalah tak terduga saat event?", "type": "text" }
+    ],
+    "salaryMatch": "Rp4.800.000 – Rp6.000.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 70+",
+    "skillMatch": "Kecocokan keahlian: 88%"
   },
   {
     "id": "job_jobstreet_3",
@@ -100,12 +155,23 @@
     "salaryRange": "Rp 7 jt-10 jt",
     "experience": "2-5 tahun",
     "education": "Minimal Sarjana (S1)",
-    "skills": ["Figma", "Sketch", "User Research"],
+    "skills": ["Figma", "Sketch", "User Research", "Prototyping"],
     "isPremium": true,
     "isHot": true,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor / rumah"
+    "workPolicy": "Kerja di kantor / rumah",
+    "descriptionDetail": "Mendesain antarmuka pengguna yang intuitif dan pengalaman pengguna yang menarik untuk produk digital kami. Melakukan riset pengguna, membuat wireframe, mockup, dan prototipe. Berkolaborasi erat dengan tim produk dan pengembang.",
+    "companyDescription": "Design Hub adalah studio desain yang berfokus pada penciptaan pengalaman digital yang luar biasa. Kami menggabungkan estetika dengan fungsionalitas untuk menghasilkan produk yang dicintai pengguna.",
+    "companyIndustry": "Desain Grafis & Web",
+    "companySize": "11-50 karyawan",
+    "applicationQuestions": [
+      { "question": "Bagaimana proses desain Anda dari awal hingga akhir?", "type": "text" },
+      { "question": "Sertakan tautan ke portofolio desain Anda.", "type": "text" }
+    ],
+    "salaryMatch": "Rp7.500.000 – Rp9.500.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 180+",
+    "skillMatch": "Kecocokan keahlian: 95%"
   },
   {
     "id": "job_getredy_1",
@@ -118,12 +184,23 @@
     "salaryRange": "Rp 5.5 jt-8 jt",
     "experience": "3-5 tahun",
     "education": "Minimal Diploma",
-    "skills": ["Strategi Konten", "Analisis Data"],
+    "skills": ["Strategi Konten", "Analisis Data", "Manajemen Komunitas", "Iklan Media Sosial"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja Remote/dari rumah"
+    "workPolicy": "Kerja Remote/dari rumah",
+    "descriptionDetail": "Mengembangkan dan mengimplementasikan strategi media sosial untuk meningkatkan brand awareness dan engagement. Mengelola semua platform media sosial, membuat konten yang menarik, dan menganalisis metrik kinerja. Berinteraksi dengan komunitas online.",
+    "companyDescription": "Digital Agency X adalah agensi pemasaran digital yang bersemangat membantu merek berkembang di era digital. Kami menawarkan solusi kreatif dan data-driven untuk klien kami.",
+    "companyIndustry": "Pemasaran Digital",
+    "companySize": "51-200 karyawan",
+    "applicationQuestions": [
+      { "question": "Platform media sosial mana yang paling Anda kuasai?", "type": "text" },
+      { "question": "Bagaimana Anda mengukur ROI dari kampanye media sosial?", "type": "text" }
+    ],
+    "salaryMatch": "Rp5.800.000 – Rp7.500.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 110+",
+    "skillMatch": "Kecocokan keahlian: 89%"
   },
   {
     "id": "job_jooble_2",
@@ -136,12 +213,23 @@
     "salaryRange": "Rp 4 jt-7 jt",
     "experience": "2-4 tahun",
     "education": "Minimal Sarjana (S1)",
-    "skills": ["Rekrutmen", "Wawancara"],
+    "skills": ["Rekrutmen", "Wawancara", "Manajemen Kandidat", "Onboarding"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Bertanggung jawab untuk seluruh proses rekrutmen, mulai dari sourcing kandidat hingga penawaran kerja. Melakukan wawancara, penilaian, dan memastikan pengalaman kandidat yang positif. Berkolaborasi dengan manajer perekrutan untuk memahami kebutuhan talenta.",
+    "companyDescription": "Tech Solutions adalah perusahaan teknologi yang menyediakan solusi perangkat lunak inovatif. Kami mencari talenta terbaik untuk bergabung dengan tim kami yang berkembang pesat.",
+    "companyIndustry": "Teknologi Informasi",
+    "companySize": "201-500 karyawan",
+    "applicationQuestions": [
+      { "question": "Apa strategi Anda untuk menarik kandidat pasif?", "type": "text" },
+      { "question": "Berapa banyak posisi yang pernah Anda rekrut dalam setahun?", "type": "number" }
+    ],
+    "salaryMatch": "Rp4.500.000 – Rp6.500.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 60+",
+    "skillMatch": "Kecocokan keahlian: 82%"
   },
   {
     "id": "job_lokerbandung_1",
@@ -154,12 +242,23 @@
     "salaryRange": "Rp 3.5 jt-5.5 jt",
     "experience": "1-2 tahun",
     "education": "Minimal SMA/SMK",
-    "skills": ["Organisasi", "Koordinasi"],
+    "skills": ["Organisasi", "Koordinasi", "Manajemen Waktu"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Paruh Waktu",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Membantu dalam perencanaan dan pelaksanaan berbagai event. Bertanggung jawab untuk logistik, koordinasi vendor, dan dukungan di lokasi acara. Memastikan kelancaran operasional event dan kepuasan peserta.",
+    "companyDescription": "PT Event Cemerlang adalah perusahaan event organizer yang berdedikasi untuk menciptakan acara yang sukses dan berkesan. Kami melayani berbagai jenis event, dari korporat hingga pribadi.",
+    "companyIndustry": "Penyelenggara Acara",
+    "companySize": "11-50 karyawan",
+    "applicationQuestions": [
+      { "question": "Apakah Anda memiliki pengalaman dalam event logistik?", "type": "text" },
+      { "question": "Bagaimana Anda bekerja di bawah tekanan saat event?", "type": "text" }
+    ],
+    "salaryMatch": "Rp3.800.000 – Rp5.000.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 50+",
+    "skillMatch": "Kecocokan keahlian: 70%"
   },
   {
     "id": "job_lokerbandung_2",
@@ -172,12 +271,23 @@
     "salaryRange": "Rp 5 jt-7.5 jt",
     "experience": "2-3 tahun",
     "education": "Minimal Diploma",
-    "skills": ["Komunikasi Pemasaran", "Public Relations"],
+    "skills": ["Komunikasi Pemasaran", "Public Relations", "Penulisan Kreatif", "Manajemen Kampanye"],
     "isPremium": true,
     "isHot": true,
     "isActiveRecruiting": true,
     "jobType": "Penuh Waktu",
-    "workPolicy": "Kerja di kantor / rumah"
+    "workPolicy": "Kerja di kantor / rumah",
+    "descriptionDetail": "Mengembangkan dan melaksanakan strategi komunikasi pemasaran untuk meningkatkan citra merek dan engagement. Menulis materi pemasaran, mengelola hubungan media, dan mendukung kampanye promosi. Berkolaborasi dengan tim pemasaran dan penjualan.",
+    "companyDescription": "Kreatif Media adalah agensi komunikasi yang berfokus pada pengembangan strategi merek dan kampanye komunikasi yang inovatif. Kami membantu klien membangun koneksi yang kuat dengan audiens mereka.",
+    "companyIndustry": "Pemasaran & Periklanan",
+    "companySize": "51-200 karyawan",
+    "applicationQuestions": [
+      { "question": "Sebutkan kampanye komunikasi yang paling Anda banggakan.", "type": "text" },
+      { "question": "Bagaimana Anda mengukur efektivitas komunikasi pemasaran?", "type": "text" }
+    ],
+    "salaryMatch": "Rp5.500.000 – Rp7.000.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 100+",
+    "skillMatch": "Kecocokan keahlian: 93%"
   },
   {
     "id": "job_getredy_2",
@@ -190,12 +300,23 @@
     "salaryRange": "Rp 1 jt-2 jt",
     "experience": "0 tahun",
     "education": "Mahasiswa",
-    "skills": ["Penulisan Konten", "Desain Grafis"],
+    "skills": ["Penulisan Konten", "Desain Grafis", "Video Editing"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Magang",
-    "workPolicy": "Kerja Remote/dari rumah"
+    "workPolicy": "Kerja Remote/dari rumah",
+    "descriptionDetail": "Membantu tim dalam membuat konten menarik untuk platform media sosial dan blog. Melakukan riset topik, menulis naskah, dan membantu dalam proses produksi visual. Kesempatan untuk belajar langsung dari profesional di industri kreatif.",
+    "companyDescription": "Startup Edukasi adalah platform inovatif yang menyediakan sumber daya belajar online untuk siswa dan mahasiswa. Misi kami adalah membuat pendidikan lebih mudah diakses dan menarik.",
+    "companyIndustry": "Edukasi & E-Learning",
+    "companySize": "1-10 karyawan",
+    "applicationQuestions": [
+      { "question": "Sertakan tautan ke contoh konten yang pernah Anda buat.", "type": "text" },
+      { "question": "Apa ide konten edukasi yang menarik menurut Anda?", "type": "text" }
+    ],
+    "salaryMatch": "Rp1.200.000 – Rp1.800.000 per bulan",
+    "applicantCount": "Jumlah pelamar: 150+",
+    "skillMatch": "Kecocokan keahlian: 80%"
   },
   {
     "id": "job_freelance_1",
@@ -208,12 +329,23 @@
     "salaryRange": "Proyek",
     "experience": "1+ tahun",
     "education": "Tidak wajib",
-    "skills": ["Adobe Photoshop", "Illustrator"],
+    "skills": ["Adobe Photoshop", "Illustrator", "CorelDRAW"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Freelance",
-    "workPolicy": "Kerja Remote/dari rumah"
+    "workPolicy": "Kerja Remote/dari rumah",
+    "descriptionDetail": "Mencari desainer grafis freelance untuk berbagai proyek desain, termasuk materi pemasaran, branding, dan ilustrasi. Fleksibilitas waktu dan kemampuan bekerja secara mandiri sangat dihargai. Portofolio yang kuat adalah nilai tambah.",
+    "companyDescription": "Ini adalah kesempatan untuk bekerja sebagai freelancer dengan berbagai klien. Anda akan memiliki kebebasan untuk mengelola proyek Anda sendiri dan membangun portofolio yang beragam.",
+    "companyIndustry": "Desain Grafis",
+    "companySize": "1 karyawan",
+    "applicationQuestions": [
+      { "question": "Sertakan tautan ke portofolio desain Anda.", "type": "text" },
+      { "question": "Berapa tarif per proyek/jam yang Anda inginkan?", "type": "text" }
+    ],
+    "salaryMatch": "Sesuai kesepakatan proyek",
+    "applicantCount": "Jumlah pelamar: 40+",
+    "skillMatch": "Kecocokan keahlian: 90%"
   },
   {
     "id": "job_harian_1",
@@ -226,11 +358,22 @@
     "salaryRange": "Rp 150rb/hari",
     "experience": "0 tahun",
     "education": "Minimal SMA",
-    "skills": ["Komunikasi", "Kerja Tim"],
+    "skills": ["Komunikasi", "Kerja Tim", "Inisiatif"],
     "isPremium": false,
     "isHot": false,
     "isActiveRecruiting": true,
     "jobType": "Harian",
-    "workPolicy": "Kerja di kantor"
+    "workPolicy": "Kerja di kantor",
+    "descriptionDetail": "Membantu tim event dalam persiapan dan pelaksanaan acara harian. Tugas meliputi pengaturan lokasi, pendaftaran peserta, dan dukungan umum selama acara. Cocok untuk individu yang energik dan suka bekerja di lingkungan yang serba cepat.",
+    "companyDescription": "Event Cepat adalah penyedia layanan event support untuk berbagai acara di Jakarta. Kami menyediakan tenaga profesional untuk memastikan setiap event berjalan sukses.",
+    "companyIndustry": "Penyelenggara Acara",
+    "companySize": "1-10 karyawan",
+    "applicationQuestions": [
+      { "question": "Apakah Anda siap bekerja di akhir pekan?", "type": "select", "options": ["Ya", "Tidak"] },
+      { "question": "Apa yang membuat Anda tertarik pada pekerjaan event harian?", "type": "text" }
+    ],
+    "salaryMatch": "Rp150.000 per hari",
+    "applicantCount": "Jumlah pelamar: 30+",
+    "skillMatch": "Kecocokan keahlian: 65%"
   }
 ]

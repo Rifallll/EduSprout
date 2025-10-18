@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import JobCard from "@/components/JobCard";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,6 +34,15 @@ interface JobItem {
   isActiveRecruiting?: boolean;
   jobType?: string; // New field
   workPolicy?: string; // New field
+  descriptionDetail?: string;
+  companyDescription?: string;
+  companyIndustry?: string;
+  companySize?: string;
+  applicationQuestions?: { question: string; type: string; options?: string[] }[];
+  salaryMatch?: string;
+  applicantCount?: string;
+  skillMatch?: string;
+  companyLogoUrl?: string;
 }
 
 const Jobs = () => {
@@ -43,16 +52,25 @@ const Jobs = () => {
   const [jobTypes, setJobTypes] = useState<string[]>([]);
   const [workPolicies, setWorkPolicies] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("all");
+  const [allJobs, setAllJobs] = useState<JobItem[]>([]); // State to hold combined jobs
+
+  useEffect(() => {
+    // Load user-posted jobs from localStorage
+    const userPostedJobs: JobItem[] = JSON.parse(localStorage.getItem("userPostedJobs") || "[]");
+    // Combine with static jobs, ensuring unique IDs (user-posted might overwrite if IDs clash, but we made them unique)
+    const combinedJobs = [...scrapedJobsFromDB, ...userPostedJobs];
+    setAllJobs(combinedJobs);
+  }, []); // Run once on component mount
 
   const allLocations = useMemo(() => {
     const locations = new Set<string>();
-    scrapedJobsFromDB.forEach(job => {
+    allJobs.forEach(job => { // Use allJobs here
       if (job.location) {
         locations.add(job.location);
       }
     });
     return Array.from(locations).sort();
-  }, []);
+  }, [allJobs]);
 
   const handleJobTypeChange = (type: string, checked: boolean) => {
     setJobTypes((prev) =>
@@ -76,7 +94,7 @@ const Jobs = () => {
   };
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filtered: JobItem[] = scrapedJobsFromDB;
+    let filtered: JobItem[] = allJobs; // Use allJobs here
 
     // 1. Filter by Search Term (Title, Company, Location, Source)
     if (searchTerm) {
@@ -103,12 +121,12 @@ const Jobs = () => {
 
     // 4. Filter by Job Type
     if (jobTypes.length > 0) {
-      filtered = filtered.filter(job => job.jobType && jobTypes.includes(job.jobType));
+      filtered = filtered.filter(job => job.jobType && jobTypes.some(type => job.jobType?.includes(type)));
     }
 
     // 5. Filter by Work Policy
     if (workPolicies.length > 0) {
-      filtered = filtered.filter(job => job.workPolicy && workPolicies.includes(job.workPolicy));
+      filtered = filtered.filter(job => job.workPolicy && workPolicies.some(policy => job.workPolicy?.includes(policy)));
     }
 
     // Helper function to parse date strings (assuming YYYY-MM-DD format from scraper)
@@ -134,7 +152,7 @@ const Jobs = () => {
     });
 
     return filtered;
-  }, [searchTerm, sortBy, selectedSource, selectedLocation, jobTypes, workPolicies]);
+  }, [searchTerm, sortBy, selectedSource, selectedLocation, jobTypes, workPolicies, allJobs]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -280,6 +298,7 @@ const Jobs = () => {
                     <SelectItem value="lokerid">Loker.id</SelectItem>
                     <SelectItem value="freelance">Freelance</SelectItem>
                     <SelectItem value="lokal">Lokal</SelectItem>
+                    <SelectItem value="user-posted">Diposting Pengguna</SelectItem> {/* Added new source */}
                     {/* Add other sources as needed */}
                   </SelectContent>
                 </Select>
@@ -323,7 +342,7 @@ const Jobs = () => {
                   isPremium={jobItem.isPremium}
                   isHot={jobItem.isHot}
                   isActiveRecruiting={jobItem.isActiveRecruiting}
-                  // companyLogoUrl="/path/to/company-logo.png" // Add actual logo URL if available
+                  companyLogoUrl={jobItem.companyLogoUrl}
                 />
               ))
             ) : (

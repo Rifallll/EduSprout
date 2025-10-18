@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import { useCountUp } from "@/hooks/useCountUp";
-import ScrapedDataDisplay from "@/components/ScrapedDataDisplay"; // Import the new component
-import scrapedData from "@/data/scrapedData.json"; // Import the dummy scraped data
+// import ScrapedDataDisplay from "@/components/ScrapedDataDisplay"; // Import the new component - REMOVED
+// import scrapedData from "@/data/scrapedData.json"; // Import the dummy scraped data - REMOVED
 
 const dummyNews = [
   {
@@ -128,12 +128,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Scraped Data Display Section */}
-      <ScrapedDataDisplay
+      {/* Scraped Data Display Section - REMOVED */}
+      {/* <ScrapedDataDisplay
         data={scrapedData}
         title="Berita & Artikel Pilihan"
         description="Dapatkan informasi terbaru dari berbagai sumber terpercaya yang kami kumpulkan."
-      />
+      /> */}
 
       {/* Partnership & Career CTAs */}
       <section className="container py-16">

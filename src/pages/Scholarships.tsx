@@ -125,16 +125,16 @@ const Scholarships = () => {
         Temukan berbagai beasiswa lokal dan internasional untuk mendukung pendidikan Anda.
       </p>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="flex flex-col md:flex-row flex-wrap gap-4 mb-8 justify-center"> {/* Added flex-wrap and justify-center */}
         <Input
           type="text"
           placeholder="Cari beasiswa..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-grow"
+          className="w-full md:flex-grow md:max-w-xs lg:max-w-md" // Adjusted width for responsiveness
         />
         <Select onValueChange={setSelectedCategory} defaultValue="all">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]"> {/* Made w-full on small screens */}
             <SelectValue placeholder="Filter Kategori" />
           </SelectTrigger>
           <SelectContent>
@@ -144,7 +144,7 @@ const Scholarships = () => {
           </SelectContent>
         </Select>
         <Select onValueChange={setSortBy} defaultValue="date-desc">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]"> {/* Made w-full on small screens */}
             <SelectValue placeholder="Urutkan berdasarkan" />
           </SelectTrigger>
           <SelectContent>

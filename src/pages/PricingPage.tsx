@@ -62,7 +62,7 @@ const PricingPage = () => {
                 <p className="text-muted-foreground">Untuk perusahaan besar</p>
               </CardHeader>
               <CardContent className="flex-grow space-y-4">
-                <p className="text-5xl font-extrabold text-primary mb-4">Custom</p>
+                <p className="text-5xl font-extrabold text-primary mb-4 text-center">Custom</p>
                 <ul className="text-left space-y-2 text-foreground">
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Lowongan Tanpa Batas</li>
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Fitur Kustom</li>

@@ -41,7 +41,7 @@ const PricingPage = () => {
                 <p className="text-muted-foreground">Untuk bisnis yang berkembang</p>
               </CardHeader>
               <CardContent className="flex-grow space-y-4">
-                <p className="text-5xl font-extrabold text-primary mb-4">Rp 250rb<span className="text-xl text-muted-foreground">/bulan</span></p>
+                <p className="flex items-baseline text-5xl font-extrabold text-primary mb-4">Rp 250rb<span className="text-base text-muted-foreground ml-1">/bulan</span></p>
                 <ul className="text-left space-y-2 text-foreground">
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> 5 Lowongan Aktif</li>
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Akses Penuh Database</li>

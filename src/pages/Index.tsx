@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // Import useState and useEffect
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +25,20 @@ const Index = () => {
   const partnersRating = useCountUp({ end: 3997, duration: 3000 });
   const registeredStudents = useCountUp({ end: 2548852, duration: 3000 });
 
+  // Array of hero image paths
+  const heroImages = ["/1 (2).jpg", "/3.jpg"];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        (prevIndex + 1) % heroImages.length
+      );
+    }, 6000); // Ganti gambar setiap 6 detik
+
+    return () => clearInterval(interval); // Bersihkan interval saat komponen di-unmount
+  }, [heroImages.length]);
+
   // Use a slice of scrapedNewsAndTips for the homepage display
   const homepageNews = scrapedNewsAndTips.slice(0, 3);
 
@@ -34,9 +48,9 @@ const Index = () => {
       <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
         {/* Background Image */}
         <img
-          src="/1 (2).jpg" // Path diperbarui: langsung dari folder public
+          src={heroImages[currentImageIndex]} // Menggunakan gambar dari state
           alt="Hero Background"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out" // Tambahkan transisi
         />
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -234,7 +248,7 @@ const Index = () => {
             <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               100% Fully-Funded International Leadership Trip ke destinasi terbaik luar negeri selama 6 hari 5 malam. Siap mengikuti perjalanan yang mengubah hidup?
             </CardContent>
-            <Button variant="link" className="mt-auto">Liak Selengkapnya</Button>
+            <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <Megaphone className="h-12 w-12 text-primary mb-4" />

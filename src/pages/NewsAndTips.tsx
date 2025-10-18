@@ -32,6 +32,30 @@ const dummyScholarshipsData = [
     date: "Deadline: 28 Februari 2025",
     link: "/scholarships/riset-inovasi",
   },
+  {
+    id: "s4",
+    title: "Erasmus Mundus Scholarship (Europe)",
+    description: "Beasiswa bergengsi untuk program master bersama di berbagai negara Eropa.",
+    category: "Internasional",
+    date: "Deadline: 10 Maret 2025",
+    link: "/scholarships/erasmus-mundus",
+  },
+  {
+    id: "s5",
+    title: "Beasiswa Pendidikan Guru (Lokal)",
+    description: "Program beasiswa khusus bagi calon guru yang berkomitmen untuk memajukan pendidikan di daerah terpencil.",
+    category: "Lokal",
+    date: "Deadline: 20 Maret 2025",
+    link: "/scholarships/pendidikan-guru",
+  },
+  {
+    id: "s6",
+    title: "Chevening Scholarship (UK)",
+    description: "Beasiswa penuh untuk studi pascasarjana di universitas-universitas di Inggris.",
+    category: "Internasional",
+    date: "Deadline: 05 April 2025",
+    link: "/scholarships/chevening",
+  },
 ];
 
 
@@ -62,11 +86,11 @@ const NewsAndTips = () => {
   }, []);
 
   const featuredEvents = useMemo(() => {
-    return dummyEvents.slice(0, 2);
+    return dummyEvents.slice(0, 5); // Mengubah dari 2 menjadi 5
   }, []);
 
   const featuredScholarships = useMemo(() => {
-    return dummyScholarshipsData.slice(0, 2);
+    return dummyScholarshipsData.slice(0, 5); // Mengubah dari 2 menjadi 5
   }, []);
 
   return (
@@ -87,7 +111,7 @@ const NewsAndTips = () => {
               link: event.link,
               metadata: event.date,
             }))}
-            viewAllLink="/events"
+            // viewAllLink="/events" // Dihapus
           />
           <NewsSidebarCard
             title="Beasiswa Unggulan"
@@ -97,7 +121,7 @@ const NewsAndTips = () => {
               link: scholarship.link,
               metadata: scholarship.date,
             }))}
-            viewAllLink="/scholarships"
+            // viewAllLink="/scholarships" // Dihapus
           />
         </aside>
 
@@ -126,7 +150,7 @@ const NewsAndTips = () => {
           <NewsSidebarCard
             title="Berita Populer"
             items={popularNews}
-            viewAllLink="/news-and-tips"
+            // viewAllLink="/news-and-tips" // Dihapus
           />
           <NewsSidebarCard
             title="Kategori Berita"

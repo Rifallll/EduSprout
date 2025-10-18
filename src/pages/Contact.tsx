@@ -1,33 +1,15 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
-import MapDisplay from "@/components/MapDisplay"; // Import MapDisplay component
 
 const Contact = () => {
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
   const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
-  // API Key Geoapify Anda
-  const apiKey = "6c0118d493cb46b99027c584cc5111c9"; 
-
-  useEffect(() => {
-    fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`)
-      .then(response => response.json())
-      .then(result => {
-        if (result.features && result.features.length > 0) {
-          const location = result.features[0].properties;
-          setLatitude(location.lat);
-          setLongitude(location.lon);
-        } else {
-          console.error("Tidak dapat menemukan koordinat untuk alamat yang diberikan.");
-        }
-      })
-      .catch(error => console.error("Error fetching geocoding data:", error));
-  }, [address, apiKey]);
 
   return (
     <div className="container py-8">
@@ -84,13 +66,9 @@ const Contact = () => {
       <div className="mt-12">
         <h2 className="text-2xl font-semibold mb-4 text-center">Lokasi Kami</h2>
         <p className="text-muted-foreground text-center mb-6">{address}</p>
-        {latitude !== null && longitude !== null ? (
-          <MapDisplay latitude={latitude} longitude={longitude} address={address} />
-        ) : (
-          <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-muted-foreground">
-            Memuat peta...
-          </div>
-        )}
+        <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-muted-foreground">
+          Peta telah dihapus.
+        </div>
       </div>
     </div>
   );

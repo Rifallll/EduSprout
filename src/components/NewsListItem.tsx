@@ -53,13 +53,13 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
 
         {/* Title */}
         <Link to={link} className="block">
-          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200 line-clamp-2">
+          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200 line-clamp-3"> {/* Changed from line-clamp-2 to line-clamp-3 */}
             {title}
           </h3>
         </Link>
 
         {/* Description */}
-        <p className="text-muted-foreground line-clamp-3 text-sm md:text-base"> {/* Changed from line-clamp-2 to line-clamp-3 */}
+        <p className="text-muted-foreground line-clamp-4 text-sm md:text-base"> {/* Changed from line-clamp-3 to line-clamp-4 */}
           {description}
         </p>
 

@@ -145,8 +145,8 @@ const NewsDetailPage = () => {
               </Button>
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="h-10 w-10 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
-                <Phone className="h-5 w-5" /> {/* Phone icon for WhatsApp */}
+              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-green-500 hover:text-white transition-colors duration-200"> {/* Changed to outline and added hover effect */}
+                <Phone className="h-5 w-5" />
               </Button>
             </a>
           </div>

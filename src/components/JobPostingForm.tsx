@@ -189,68 +189,70 @@ const JobPostingForm: React.FC = () => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="salaryRange"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Rentang Gaji (Opsional)</FormLabel>
-              <FormControl>
-                <Input placeholder="Contoh: Rp 5jt - 8jt" {...field} disabled={isLoading} />
-              </FormControl>
-              <FormDescription>
-                Berikan perkiraan rentang gaji untuk menarik kandidat yang tepat.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="experience"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pengalaman yang Dibutuhkan</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <FormField
+            control={form.control}
+            name="salaryRange"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rentang Gaji (Opsional)</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih tingkat pengalaman" />
-                  </SelectTrigger>
+                  <Input placeholder="Contoh: Rp 5jt - 8jt" {...field} disabled={isLoading} />
                 </FormControl>
-                <SelectContent>
-                  {experienceOptions.map(option => (
-                    <SelectItem key={option} value={option}>{option}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormDescription>
+                  Berikan perkiraan rentang gaji.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="education"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pendidikan Minimal</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih pendidikan minimal" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {educationOptions.map(option => (
-                    <SelectItem key={option} value={option}>{option}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="experience"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pengalaman yang Dibutuhkan</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih tingkat pengalaman" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {experienceOptions.map(option => (
+                      <SelectItem key={option} value={option}>{option}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="education"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pendidikan Minimal</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih pendidikan minimal" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {educationOptions.map(option => (
+                      <SelectItem key={option} value={option}>{option}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -269,109 +271,111 @@ const JobPostingForm: React.FC = () => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="jobType"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Tipe Pekerjaan</FormLabel>
-                <FormDescription>
-                  Pilih tipe pekerjaan yang sesuai.
-                </FormDescription>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {jobTypeOptions.map((item) => (
-                  <FormField
-                    key={item}
-                    control={form.control}
-                    name="jobType"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={item}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([...(field.value || []), item])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== item
-                                      )
-                                    );
-                              }}
-                              disabled={isLoading}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {item}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="jobType"
+            render={() => (
+              <FormItem>
+                <div className="mb-4">
+                  <FormLabel className="text-base">Tipe Pekerjaan</FormLabel>
+                  <FormDescription>
+                    Pilih tipe pekerjaan yang sesuai.
+                  </FormDescription>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {jobTypeOptions.map((item) => (
+                    <FormField
+                      key={item}
+                      control={form.control}
+                      name="jobType"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={item}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), item])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item
+                                        )
+                                      );
+                                }}
+                                disabled={isLoading}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              {item}
+                            </FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="workPolicy"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Kebijakan Kerja</FormLabel>
-                <FormDescription>
-                  Pilih kebijakan kerja untuk lowongan ini.
-                </FormDescription>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {workPolicyOptions.map((item) => (
-                  <FormField
-                    key={item}
-                    control={form.control}
-                    name="workPolicy"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={item}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([...(field.value || []), item])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== item
-                                      )
-                                    );
-                              }}
-                              disabled={isLoading}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {item}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="workPolicy"
+            render={() => (
+              <FormItem>
+                <div className="mb-4">
+                  <FormLabel className="text-base">Kebijakan Kerja</FormLabel>
+                  <FormDescription>
+                    Pilih kebijakan kerja untuk lowongan ini.
+                  </FormDescription>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {workPolicyOptions.map((item) => (
+                    <FormField
+                      key={item}
+                      control={form.control}
+                      name="workPolicy"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={item}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), item])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item
+                                        )
+                                      );
+                                }}
+                                disabled={isLoading}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              {item}
+                            </FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -417,33 +421,35 @@ const JobPostingForm: React.FC = () => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="companyIndustry"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Industri Perusahaan (Opsional)</FormLabel>
-              <FormControl>
-                <Input placeholder="Contoh: Teknologi Informasi, Edukasi" {...field} disabled={isLoading} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="companyIndustry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industri Perusahaan (Opsional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Contoh: Teknologi Informasi, Edukasi" {...field} disabled={isLoading} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="companySize"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ukuran Perusahaan (Opsional)</FormLabel>
-              <FormControl>
-                <Input placeholder="Contoh: 1-10 karyawan, 51-200 karyawan" {...field} disabled={isLoading} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="companySize"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ukuran Perusahaan (Opsional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Contoh: 1-10 karyawan, 51-200 karyawan" {...field} disabled={isLoading} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}

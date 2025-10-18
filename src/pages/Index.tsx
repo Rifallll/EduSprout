@@ -34,7 +34,7 @@ const Index = () => {
       <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
         {/* Background Image */}
         <img
-          src="/images/1 (2).jpg" // Menggunakan gambar yang Anda berikan
+          src="/1 (2).jpg" // Path diperbarui: langsung dari folder public
           alt="Hero Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -234,7 +234,7 @@ const Index = () => {
             <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
               100% Fully-Funded International Leadership Trip ke destinasi terbaik luar negeri selama 6 hari 5 malam. Siap mengikuti perjalanan yang mengubah hidup?
             </CardContent>
-            <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
+            <Button variant="link" className="mt-auto">Liak Selengkapnya</Button>
           </Card>
           <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
             <Megaphone className="h-12 w-12 text-primary mb-4" />

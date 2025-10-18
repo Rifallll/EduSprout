@@ -16,6 +16,26 @@ import { Button } from "@/components/ui/button";
 import { Search, MapPin, X, MessageSquare } from "lucide-react";
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
+// Define JobItem type to include new fields for better type safety
+interface JobItem {
+  id: string;
+  source: string;
+  title: string;
+  company?: string;
+  location?: string;
+  link: string;
+  date_posted?: string;
+  salaryRange?: string;
+  experience?: string;
+  education?: string;
+  skills?: string[];
+  isPremium?: boolean;
+  isHot?: boolean;
+  isActiveRecruiting?: boolean;
+  jobType?: string; // New field
+  workPolicy?: string; // New field
+}
+
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date-desc");
@@ -47,7 +67,7 @@ const Jobs = () => {
   };
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filtered = scrapedJobsFromDB;
+    let filtered: JobItem[] = scrapedJobsFromDB;
 
     // 1. Filter by Search Term (Title, Company, Location, Source)
     if (searchTerm) {
@@ -72,13 +92,15 @@ const Jobs = () => {
       filtered = filtered.filter(job => job.location === selectedLocation);
     }
 
-    // Placeholder for Job Type and Work Policy filters (not implemented in dummy data yet)
-    // if (jobTypes.length > 0) {
-    //   filtered = filtered.filter(job => job.jobType && jobTypes.includes(job.jobType));
-    // }
-    // if (workPolicies.length > 0) {
-    //   filtered = filtered.filter(job => job.workPolicy && workPolicies.includes(job.workPolicy));
-    // }
+    // 4. Filter by Job Type
+    if (jobTypes.length > 0) {
+      filtered = filtered.filter(job => job.jobType && jobTypes.includes(job.jobType));
+    }
+
+    // 5. Filter by Work Policy
+    if (workPolicies.length > 0) {
+      filtered = filtered.filter(job => job.workPolicy && workPolicies.includes(job.workPolicy));
+    }
 
     // Helper function to parse date strings (assuming YYYY-MM-DD format from scraper)
     const parseDate = (dateString: string | undefined) => {
@@ -88,7 +110,7 @@ const Jobs = () => {
       return new Date(0); // Return a very old date if parsing fails
     };
 
-    // 4. Sort
+    // 6. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
         return parseDate(b.date_posted).getTime() - parseDate(a.date_posted).getTime();
@@ -108,7 +130,7 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-sm"> {/* Increased py to 4 */}
+      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-sm">
         <div className="container flex flex-col md:flex-row items-center gap-4">
           <div className="relative flex-grow w-full md:w-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -150,11 +172,11 @@ const Jobs = () => {
 
       <div className="container flex flex-col lg:flex-row gap-8 py-8">
         {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-md border border-border lg:sticky lg:top-[120px] self-start"> {/* Increased padding, added shadow-md */}
+        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-md border border-border lg:sticky lg:top-[120px] self-start">
           <h2 className="text-2xl font-bold mb-6">Filter Lowongan</h2>
 
           {/* QR Code Section */}
-          <div className="mb-8 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800 text-center shadow-sm"> {/* Increased mb, added shadow-sm */}
+          <div className="mb-8 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800 text-center shadow-sm">
             <img src="/placeholder.svg" alt="QR Code" className="w-24 h-24 mx-auto mb-3" />
             <p className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p>
             <p className="text-xs text-blue-600 dark:text-blue-400">Scan kode QR untuk download</p>
@@ -162,7 +184,7 @@ const Jobs = () => {
 
           <Accordion type="multiple" defaultValue={["prioritas", "tipe-pekerjaan", "kebijakan-kerja", "sumber"]}>
             {/* Prioritas Filter */}
-            <AccordionItem value="prioritas" className="border-b pb-4 mb-4"> {/* Added pb and mb for spacing */}
+            <AccordionItem value="prioritas" className="border-b pb-4 mb-4">
               <AccordionTrigger className="text-lg font-semibold">Prioritas</AccordionTrigger>
               <AccordionContent className="flex gap-2 pt-2">
                 <Button
@@ -181,9 +203,8 @@ const Jobs = () => {
                 </Button>
               </AccordionContent>
             </AccordionItem>
-            {/* Separator removed as AccordionItem now has border-b and mb */}
 
-            {/* Tipe Pekerjaan Filter (Placeholder) */}
+            {/* Tipe Pekerjaan Filter */}
             <AccordionItem value="tipe-pekerjaan" className="border-b pb-4 mb-4">
               <AccordionTrigger className="text-lg font-semibold">Tipe Pekerjaan</AccordionTrigger>
               <AccordionContent className="space-y-2 pt-2">
@@ -213,9 +234,8 @@ const Jobs = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
-            {/* Separator removed */}
 
-            {/* Kebijakan Kerja Filter (Placeholder) */}
+            {/* Kebijakan Kerja Filter */}
             <AccordionItem value="kebijakan-kerja" className="border-b pb-4 mb-4">
               <AccordionTrigger className="text-lg font-semibold">Kebijakan Kerja</AccordionTrigger>
               <AccordionContent className="space-y-2 pt-2">
@@ -233,10 +253,9 @@ const Jobs = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
-            {/* Separator removed */}
 
             {/* Sumber Filter */}
-            <AccordionItem value="sumber" className="pb-4"> {/* No bottom border for the last item */}
+            <AccordionItem value="sumber" className="pb-4">
               <AccordionTrigger className="text-lg font-semibold">Sumber Lowongan</AccordionTrigger>
               <AccordionContent className="pt-2">
                 <Select onValueChange={setSelectedSource} defaultValue="all">
@@ -250,6 +269,8 @@ const Jobs = () => {
                     <SelectItem value="jooble">Jooble</SelectItem>
                     <SelectItem value="jobstreet">JobStreet</SelectItem>
                     <SelectItem value="lokerid">Loker.id</SelectItem>
+                    <SelectItem value="freelance">Freelance</SelectItem>
+                    <SelectItem value="lokal">Lokal</SelectItem>
                     {/* Add other sources as needed */}
                   </SelectContent>
                 </Select>
@@ -260,7 +281,7 @@ const Jobs = () => {
 
         {/* Job Listings */}
         <main className="flex-grow lg:w-3/4">
-          <h1 className="text-4xl font-bold mb-4 text-center lg:text-left">Lowongan Kerja di Indonesia</h1> {/* Adjusted mb */}
+          <h1 className="text-4xl font-bold mb-4 text-center lg:text-left">Lowongan Kerja di Indonesia</h1>
           <p className="text-lg text-center lg:text-left text-muted-foreground mb-8">
             Dapatkan informasi lowongan pekerjaan dan peluang karir terbaru dari berbagai perusahaan.
           </p>
@@ -296,7 +317,7 @@ const Jobs = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/6281234567890" // Ganti dengan nomor WhatsApp yang benar
+        href="https://wa.me/6281234567890"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50 flex items-center justify-center"

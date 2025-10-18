@@ -31,9 +31,9 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
   comments = Math.floor(Math.random() * 500) + 10,
 }) => {
   return (
-    <Card className="flex flex-col md:flex-row items-start gap-4 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+    <Card className="flex flex-col md:flex-row items-start gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Removed p-4 from Card, adjusted gap */}
       {imageUrl && (
-        <Link to={link} className="flex-shrink-0 w-full md:w-40 h-32 md:h-28 overflow-hidden rounded-md">
+        <Link to={link} className="flex-shrink-0 w-full md:w-48 h-40 md:h-full overflow-hidden rounded-l-lg"> {/* Increased width, made height full, rounded-l-lg */}
           <img
             src={imageUrl}
             alt={title}
@@ -41,30 +41,30 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
           />
         </Link>
       )}
-      <CardContent className="flex-1 p-0 space-y-2">
+      <CardContent className="flex-1 p-4 space-y-2"> {/* Added p-4 to CardContent */}
         {/* Author Info */}
-        <div className="flex items-center text-sm text-muted-foreground">
+        <div className="flex items-center text-sm text-muted-foreground mb-2"> {/* Added mb-2 */}
           <Avatar className="h-6 w-6 mr-2">
             <AvatarImage src={authorAvatarUrl} alt={author} />
             <AvatarFallback>{author.charAt(0)}</AvatarFallback>
           </Avatar>
-          <span>{author}</span>
+          <span className="font-medium text-foreground">{author}</span> {/* Made author name more prominent */}
         </div>
 
         {/* Title */}
         <Link to={link} className="block">
-          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200 line-clamp-3"> {/* Changed from line-clamp-2 to line-clamp-3 */}
+          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200 line-clamp-3">
             {title}
           </h3>
         </Link>
 
         {/* Description */}
-        <p className="text-muted-foreground line-clamp-4 text-sm md:text-base"> {/* Changed from line-clamp-3 to line-clamp-4 */}
+        <p className="text-muted-foreground line-clamp-4 text-sm md:text-base mt-2"> {/* Added mt-2 */}
           {description}
         </p>
 
         {/* Metadata and Actions */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-4 border-t border-border mt-4"> {/* Added pt-4, border-t, mt-4 */}
           <div className="flex items-center text-sm text-muted-foreground space-x-4">
             <span className="flex items-center">
               <CalendarDays className="h-4 w-4 mr-1" /> {date}

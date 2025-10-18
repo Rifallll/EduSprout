@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
-import Scholarships from "./pages/Scholarships"; // Jalur impor telah diperbaiki di sini
+import Scholarships from "./pages/Scholarships";
 import Jobs from "./pages/Jobs";
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
@@ -29,6 +29,9 @@ import CompanyRegistrationPage from "./pages/CompanyRegistrationPage";
 import PostJobPage from "./pages/PostJobPage";
 import ProductsAndServicesPage from "./pages/ProductsAndServicesPage";
 import PricingPage from "./pages/PricingPage";
+import BasicPlanConfirmationPage from "./pages/BasicPlanConfirmationPage"; // New import
+import ProPlanPaymentPage from "./pages/ProPlanPaymentPage"; // New import
+import EnterpriseContactPage from "./pages/EnterpriseContactPage"; // New import
 
 const queryClient = new QueryClient();
 
@@ -65,6 +68,10 @@ const App = () => (
             <Route path="post-job" element={<PostJobPage />} />
             <Route path="products-and-services" element={<ProductsAndServicesPage />} />
             <Route path="pricing" element={<PricingPage />} />
+            {/* New Pricing Plan Routes */}
+            <Route path="pricing/basic" element={<BasicPlanConfirmationPage />} />
+            <Route path="pricing/pro" element={<ProPlanPaymentPage />} />
+            <Route path="pricing/enterprise" element={<EnterpriseContactPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

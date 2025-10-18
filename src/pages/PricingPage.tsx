@@ -31,7 +31,9 @@ const PricingPage = () => {
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Dukungan Email</li>
                 </ul>
               </CardContent>
-              <Button className="mt-6">Pilih Paket Basic</Button>
+              <Link to="/pricing/basic" className="mt-6">
+                <Button className="w-full">Pilih Paket Basic</Button>
+              </Link>
             </Card>
 
             {/* Pro Plan */}
@@ -41,7 +43,7 @@ const PricingPage = () => {
                 <p className="text-muted-foreground">Untuk bisnis yang berkembang</p>
               </CardHeader>
               <CardContent className="flex-grow space-y-4">
-                <div className="flex flex-col items-center mb-4"> {/* Container for price and frequency */}
+                <div className="flex flex-col items-center mb-4">
                   <p className="text-5xl font-extrabold text-primary leading-none">Rp 250rb</p>
                   <p className="text-base text-muted-foreground mt-1">/bulan</p>
                 </div>
@@ -52,7 +54,9 @@ const PricingPage = () => {
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Dukungan Prioritas</li>
                 </ul>
               </CardContent>
-              <Button className="mt-6">Pilih Paket Pro</Button>
+              <Link to="/pricing/pro" className="mt-6">
+                <Button className="w-full">Pilih Paket Pro</Button>
+              </Link>
             </Card>
 
             {/* Enterprise Plan */}
@@ -62,7 +66,7 @@ const PricingPage = () => {
                 <p className="text-muted-foreground">Untuk perusahaan besar</p>
               </CardHeader>
               <CardContent className="flex-grow space-y-4">
-                <div className="flex flex-col items-center mb-4"> {/* New container for 'Custom' text */}
+                <div className="flex flex-col items-center mb-4">
                   <p className="text-5xl font-extrabold text-primary leading-none">Custom</p>
                 </div>
                 <ul className="text-left space-y-2 text-foreground">
@@ -71,7 +75,9 @@ const PricingPage = () => {
                   <li className="flex items-center"><Check className="h-5 w-5 text-green-500 mr-2" /> Manajer Akun Khusus</li>
                 </ul>
               </CardContent>
-              <Button className="mt-6">Hubungi Sales</Button>
+              <Link to="/pricing/enterprise" className="mt-6">
+                <Button className="w-full">Hubungi Sales</Button>
+              </Link>
             </Card>
           </div>
           <Link to="/" className="block mt-8">

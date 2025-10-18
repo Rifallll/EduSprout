@@ -8,63 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const dummyJobs = [
-  {
-    id: "j1",
-    title: "Junior Front-end Developer",
-    description: "Dicari pengembang front-end berbakat untuk bergabung dengan tim inovatif kami.",
-    category: "Full-time",
-    location: "Jakarta",
-    date: "Deadline: 30 November 2024",
-    link: "/jobs/junior-frontend",
-  },
-  {
-    id: "j2",
-    title: "Content Creator Intern",
-    description: "Kesempatan magang bagi mahasiswa yang passionate di bidang pembuatan konten digital.",
-    category: "Internship",
-    location: "Remote",
-    date: "Deadline: 15 Desember 2024",
-    link: "/jobs/content-creator-intern",
-  },
-  {
-    id: "j3",
-    title: "Marketing Specialist",
-    description: "Profesional pemasaran dengan pengalaman untuk mengembangkan strategi digital.",
-    category: "Full-time",
-    location: "Surabaya",
-    date: "Deadline: 20 Desember 2024",
-    link: "/jobs/marketing-specialist",
-  },
-  {
-    id: "j4",
-    title: "Data Analyst (Part-time)",
-    description: "Peluang part-time bagi mahasiswa atau fresh graduate yang tertarik dengan analisis data.",
-    category: "Part-time",
-    location: "Bandung",
-    date: "Deadline: 05 Januari 2025",
-    link: "/jobs/data-analyst-parttime",
-  },
-  {
-    id: "j5",
-    title: "UI/UX Designer",
-    description: "Desainer UI/UX berpengalaman untuk menciptakan pengalaman pengguna yang intuitif dan menarik.",
-    category: "Full-time",
-    location: "Yogyakarta",
-    date: "Deadline: 10 Januari 2025",
-    link: "/jobs/ui-ux-designer",
-  },
-  {
-    id: "j6",
-    title: "Community Manager",
-    description: "Membangun dan mengelola komunitas online untuk brand kami.",
-    category: "Full-time",
-    location: "Remote",
-    date: "Deadline: 25 Januari 2025",
-    link: "/jobs/community-manager",
-  },
-];
+import scrapedJobs from "@/data/scrapedJobs.json"; // Import the scraped job data
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,7 +16,7 @@ const Jobs = () => {
   const [selectedCategory, setSelectedCategory] = useState("all"); // New state for category filter
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filtered = dummyJobs;
+    let filtered = scrapedJobs; // Use scrapedJobs instead of dummyJobs
 
     // 1. Filter by Category
     if (selectedCategory !== "all") {
@@ -146,9 +90,9 @@ const Jobs = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Semua Kategori</SelectItem>
-            <SelectItem value="Full-time">Full-time</SelectItem>
-            <SelectItem value="Internship">Internship</SelectItem>
-            <SelectItem value="Part-time">Part-time</SelectItem>
+            <SelectItem value="Job Fair">Job Fair</SelectItem>
+            <SelectItem value="Career Day">Career Day</SelectItem>
+            {/* Add other job categories if needed, e.g., "Full-time", "Internship", "Part-time" */}
           </SelectContent>
         </Select>
         <Select onValueChange={setSortBy} defaultValue="date-desc">

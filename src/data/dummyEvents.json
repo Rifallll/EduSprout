@@ -1,0 +1,47 @@
+[
+  {
+    "id": "e1",
+    "title": "Webinar Pengembangan Diri: Kunci Sukses Karir",
+    "description": "Pelajari soft skill penting untuk menunjang karir Anda di masa depan.",
+    "category": "Webinar",
+    "date": "10 November 2024",
+    "location": "Online",
+    "link": "/events/webinar-pengembangan-diri"
+  },
+  {
+    "id": "e2",
+    "title": "Lomba Desain UI/UX Nasional 2024",
+    "description": "Tunjukkan kreativitas Anda dalam mendesain antarmuka pengguna yang inovatif.",
+    "category": "Lomba",
+    "date": "25 November 2024",
+    "location": "Online",
+    "link": "/events/lomba-ui-ux"
+  },
+  {
+    "id": "e3",
+    "title": "Workshop Coding untuk Pemula",
+    "description": "Mulai perjalanan coding Anda dengan workshop interaktif ini.",
+    "category": "Workshop",
+    "date": "01 Desember 2024",
+    "location": "Jakarta",
+    "link": "/events/workshop-coding"
+  },
+  {
+    "id": "e4",
+    "title": "Seminar Karir: Menjelajahi Industri Kreatif",
+    "description": "Dapatkan wawasan dari para profesional di industri kreatif.",
+    "category": "Seminar",
+    "date": "12 Desember 2024",
+    "location": "Bandung",
+    "link": "/events/seminar-industri-kreatif"
+  },
+  {
+    "id": "e5",
+    "title": "Volunteering Lingkungan: Bersih-Bersih Pantai",
+    "description": "Berkontribusi untuk lingkungan dengan bergabung dalam aksi bersih-bersih pantai.",
+    "category": "Volunteering",
+    "date": "20 Desember 2024",
+    "location": "Bali",
+    "link": "/events/volunteering-pantai"
+  }
+]

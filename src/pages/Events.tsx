@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import scrapedEvents from "@/data/events.json"; // Import the scraped event data
+import dummyEvents from "@/data/dummyEvents.json"; // Import the new dummy event data
 
 const Events = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +16,7 @@ const Events = () => {
   const [selectedCategory, setSelectedCategory] = useState("all"); // New state for category filter
 
   const filteredAndSortedEvents = useMemo(() => {
-    let filtered = scrapedEvents; // Use scrapedEvents instead of dummyEvents
+    let filtered = dummyEvents; // Use dummyEvents
 
     // 1. Filter by Category
     if (selectedCategory !== "all") {
@@ -36,8 +36,6 @@ const Events = () => {
 
     // Helper function to parse date strings
     const parseDate = (dateString: string) => {
-      // This is a simplified parser. For robust date parsing, consider a library like date-fns or moment.js
-      // It tries to extract a date like "DD Month YYYY" or "Deadline: DD Month YYYY"
       const match = dateString.match(/(\d{1,2})\s(\w+)\s(\d{4})/);
       if (match) {
         const [_, day, monthName, year] = match;
@@ -96,8 +94,6 @@ const Events = () => {
             <SelectItem value="Workshop">Workshop</SelectItem>
             <SelectItem value="Seminar">Seminar</SelectItem>
             <SelectItem value="Volunteering">Volunteering</SelectItem>
-            <SelectItem value="Job Fair">Job Fair</SelectItem> {/* Added Job Fair category */}
-            <SelectItem value="Career Day">Career Day</SelectItem> {/* Added Career Day category */}
           </SelectContent>
         </Select>
         <Select onValueChange={setSortBy} defaultValue="date-desc">

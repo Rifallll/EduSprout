@@ -12,22 +12,22 @@ const Contact = () => {
   const [longitude, setLongitude] = useState<number | null>(null);
   const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
   // API Key Geoapify Anda
-  const apiKey = "6c0118d493cb46b99027c584cc5111c9"; 
+  // const apiKey = "6c0118d493cb46b99027c584cc5111c9"; 
 
-  useEffect(() => {
-    fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`)
-      .then(response => response.json())
-      .then(result => {
-        if (result.features && result.features.length > 0) {
-          const location = result.features[0].properties;
-          setLatitude(location.lat);
-          setLongitude(location.lon);
-        } else {
-          console.error("Tidak dapat menemukan koordinat untuk alamat yang diberikan.");
-        }
-      })
-      .catch(error => console.error("Error fetching geocoding data:", error));
-  }, [address, apiKey]);
+  // useEffect(() => {
+  //   fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`)
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       if (result.features && result.features.length > 0) {
+  //         const location = result.features[0].properties;
+  //         setLatitude(location.lat);
+  //         setLongitude(location.lon);
+  //       } else {
+  //         console.error("Tidak dapat menemukan koordinat untuk alamat yang diberikan.");
+  //       }
+  //     })
+  //     .catch(error => console.error("Error fetching geocoding data:", error));
+  // }, [address, apiKey]);
 
   return (
     <div className="container py-8">

@@ -42,49 +42,57 @@ const JobCard: React.FC<JobCardProps> = ({
 }) => {
   return (
     <Card className="flex flex-col h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      <CardHeader className="flex-grow pb-2">
+      <CardHeader className="pb-2">
         <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl font-bold line-clamp-2">{title}</CardTitle>
+          <CardTitle className="text-xl font-bold leading-tight line-clamp-2">{title}</CardTitle>
           {salaryRange && (
-            <Badge variant="outline" className="text-primary font-semibold whitespace-nowrap">
+            <Badge variant="outline" className="text-primary font-semibold whitespace-nowrap px-3 py-1">
               {salaryRange}
             </Badge>
           )}
         </div>
+        
+        {/* Badges for Experience, Education, Skills */}
         <div className="flex flex-wrap gap-2 mb-3">
-          {isPremium && <Badge className="bg-yellow-500 text-white hover:bg-yellow-600">Premium</Badge>}
-          {experience && <Badge variant="secondary">{experience}</Badge>}
-          {education && <Badge variant="secondary">{education}</Badge>}
+          {experience && <Badge variant="secondary" className="bg-muted text-muted-foreground">{experience}</Badge>}
+          {education && <Badge variant="secondary" className="bg-muted text-muted-foreground">{education}</Badge>}
           {skills && skills.map((skill, index) => (
-            <Badge key={index} variant="secondary">{skill}</Badge>
+            <Badge key={index} variant="secondary" className="bg-muted text-muted-foreground">{skill}</Badge>
           ))}
         </div>
-        <CardDescription className="space-y-1">
+
+        {/* Company, Location, Date Posted */}
+        <CardDescription className="space-y-1 text-sm text-muted-foreground">
           {company && (
-            <div className="flex items-center text-sm text-muted-foreground">
+            <div className="flex items-center">
               {companyLogoUrl && <img src={companyLogoUrl} alt={company} className="h-5 w-5 mr-2 rounded-sm" />}
               <Building2 className="h-4 w-4 mr-2 flex-shrink-0" />
               <span>{company}</span>
             </div>
           )}
           {location && (
-            <div className="flex items-center text-sm text-muted-foreground">
+            <div className="flex items-center">
               <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
               <span>{location}</span>
             </div>
           )}
           {date_posted && (
-            <div className="flex items-center text-sm text-muted-foreground">
+            <div className="flex items-center">
               <CalendarDays className="h-4 w-4 mr-2 flex-shrink-0" />
               <span>{date_posted}</span>
             </div>
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="pt-2 pb-4 flex flex-wrap gap-2">
-        <Badge variant="secondary" className="capitalize">
+      
+      <CardContent className="pt-2 pb-4 flex flex-wrap gap-2 items-center">
+        {/* Source Badge */}
+        <Badge variant="secondary" className="capitalize bg-muted text-muted-foreground">
           {source.replace(/-/g, " ")} {/* Format source name */}
         </Badge>
+        
+        {/* Status Badges */}
+        {isPremium && <Badge className="bg-yellow-500 text-white hover:bg-yellow-600"><Star className="h-3 w-3 mr-1" /> Premium</Badge>}
         {isHot && (
           <Badge className="bg-red-500 text-white hover:bg-red-600">
             <Zap className="h-3 w-3 mr-1" /> HOT
@@ -96,9 +104,10 @@ const JobCard: React.FC<JobCardProps> = ({
           </Badge>
         )}
       </CardContent>
+      
       <CardFooter className="pt-0">
         <Link to={link} className="w-full">
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full flex items-center justify-center">
             Lihat Detail <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>

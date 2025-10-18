@@ -84,8 +84,8 @@ const Jobs = () => {
             <SelectItem value="lokerbandung">Loker Bandung</SelectItem>
             <SelectItem value="getredy">GetRedy</SelectItem>
             <SelectItem value="jooble">Jooble</SelectItem>
-            <SelectItem value="jobstreet">JobStreet</SelectItem> {/* Added JobStreet */}
-            <SelectItem value="lokerid">Loker.id</SelectItem> {/* Added Loker.id */}
+            <SelectItem value="jobstreet">JobStreet</SelectItem>
+            <SelectItem value="lokerid">Loker.id</SelectItem>
             {/* Add other sources as needed */}
           </SelectContent>
         </Select>
@@ -109,10 +109,10 @@ const Jobs = () => {
               key={jobItem.id}
               title={jobItem.title}
               description={jobItem.company ? `Perusahaan: ${jobItem.company}` : "Detail lowongan"}
-              category={jobItem.source} // Using source as category for InfoCard
+              category={jobItem.source}
               location={jobItem.location}
               date={jobItem.date_posted}
-              link={`/jobs/${jobItem.id}`} {/* Changed to internal link */}
+              link={`/jobs/${jobItem.id}`}
               linkText="Lihat Detail"
             />
           ))

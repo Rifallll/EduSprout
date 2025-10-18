@@ -13,7 +13,16 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, X, RotateCcw } from "lucide-react"; // Removed MessageSquare
+import { Search, MapPin, X, RotateCcw } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination"; // Import pagination components
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 // Define JobItem type to include new fields for better type safety
@@ -52,19 +61,21 @@ const Jobs = () => {
   const [jobTypes, setJobTypes] = useState<string[]>([]);
   const [workPolicies, setWorkPolicies] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("all");
-  const [allJobs, setAllJobs] = useState<JobItem[]>([]); // State to hold combined jobs
+  const [allJobs, setAllJobs] = useState<JobItem[]>([]);
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(12); // Number of jobs to display per page
 
   useEffect(() => {
-    // Load user-posted jobs from localStorage
     const userPostedJobs: JobItem[] = JSON.parse(localStorage.getItem("userPostedJobs") || "[]");
-    // Combine with static jobs, ensuring unique IDs (user-posted might overwrite if IDs clash, but we made them unique)
     const combinedJobs = [...scrapedJobsFromDB, ...userPostedJobs];
     setAllJobs(combinedJobs);
-  }, []); // Run once on component mount
+  }, []);
 
   const allLocations = useMemo(() => {
     const locations = new Set<string>();
-    allJobs.forEach(job => { // Use allJobs here
+    allJobs.forEach(job => {
       if (job.location) {
         locations.add(job.location);
       }
@@ -76,12 +87,14 @@ const Jobs = () => {
     setJobTypes((prev) =>
       checked ? [...prev, type] : prev.filter((t) => t !== type)
     );
+    setCurrentPage(1); // Reset to first page on filter change
   };
 
   const handleWorkPolicyChange = (policy: string, checked: boolean) => {
     setWorkPolicies((prev) =>
       checked ? [...prev, policy] : prev.filter((p) => p !== policy)
     );
+    setCurrentPage(1); // Reset to first page on filter change
   };
 
   const handleResetFilters = () => {
@@ -91,12 +104,12 @@ const Jobs = () => {
     setJobTypes([]);
     setWorkPolicies([]);
     setSelectedLocation("all");
+    setCurrentPage(1); // Reset to first page on filter reset
   };
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filtered: JobItem[] = allJobs; // Use allJobs here
+    let filtered: JobItem[] = allJobs;
 
-    // 1. Filter by Search Term (Title, Company, Location, Source)
     if (searchTerm) {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
       filtered = filtered.filter((job) => {
@@ -109,35 +122,29 @@ const Jobs = () => {
       });
     }
 
-    // 2. Filter by Source
     if (selectedSource !== "all") {
       filtered = filtered.filter(job => job.source === selectedSource);
     }
 
-    // 3. Filter by Location
     if (selectedLocation !== "all") {
       filtered = filtered.filter(job => job.location === selectedLocation);
     }
 
-    // 4. Filter by Job Type
     if (jobTypes.length > 0) {
       filtered = filtered.filter(job => job.jobType && jobTypes.some(type => job.jobType?.includes(type)));
     }
 
-    // 5. Filter by Work Policy
     if (workPolicies.length > 0) {
       filtered = filtered.filter(job => job.workPolicy && workPolicies.some(policy => job.workPolicy?.includes(policy)));
     }
 
-    // Helper function to parse date strings (assuming YYYY-MM-DD format from scraper)
     const parseDate = (dateString: string | undefined) => {
       if (dateString) {
         return new Date(dateString);
       }
-      return new Date(0); // Return a very old date if parsing fails
+      return new Date(0);
     };
 
-    // 6. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
         return parseDate(b.date_posted).getTime() - parseDate(a.date_posted).getTime();
@@ -154,10 +161,35 @@ const Jobs = () => {
     return filtered;
   }, [searchTerm, sortBy, selectedSource, selectedLocation, jobTypes, workPolicies, allJobs]);
 
+  // Get current jobs for pagination
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredAndSortedJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredAndSortedJobs.length / jobsPerPage);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // Generate page numbers for pagination component
+  const pageNumbers = [];
+  const maxPageButtons = 5; // Max number of page buttons to show
+  let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+  let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+  if (endPage - startPage + 1 < maxPageButtons) {
+    startPage = Math.max(1, endPage - maxPageButtons + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-lg rounded-b-lg"> {/* Added rounded-b-lg and shadow-lg */}
+      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-lg rounded-b-lg">
         <div className="container flex flex-col md:flex-row items-center gap-4">
           <div className="relative flex-grow w-full md:w-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -165,7 +197,10 @@ const Jobs = () => {
               type="text"
               placeholder="Cari Nama Pekerjaan, Skill, dan Perusahaan"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1); // Reset to first page on search change
+              }}
               className="pl-9 pr-8 w-full"
             />
             {searchTerm && (
@@ -173,7 +208,10 @@ const Jobs = () => {
                 variant="ghost"
                 size="icon"
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-                onClick={() => setSearchTerm("")}
+                onClick={() => {
+                  setSearchTerm("");
+                  setCurrentPage(1);
+                }}
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -181,7 +219,10 @@ const Jobs = () => {
           </div>
           <div className="relative w-full md:w-[200px]">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Select onValueChange={setSelectedLocation} defaultValue="all">
+            <Select onValueChange={(value) => {
+              setSelectedLocation(value);
+              setCurrentPage(1); // Reset to first page on location change
+            }} defaultValue="all">
               <SelectTrigger className="pl-9 w-full">
                 <SelectValue placeholder="Semua Lokasi" />
               </SelectTrigger>
@@ -199,13 +240,13 @@ const Jobs = () => {
 
       <div className="container flex flex-col lg:flex-row gap-8 py-8">
         {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-lg border border-border lg:sticky lg:top-[120px] self-start"> {/* Changed shadow-md to shadow-lg */}
+        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-lg border border-border lg:sticky lg:top-[120px] self-start">
           <h2 className="text-2xl font-bold mb-6">Filter Lowongan</h2>
 
           {/* QR Code Section */}
-          <div className="mb-8 p-4 bg-muted rounded-lg border border-border text-center shadow-sm"> {/* Changed bg-blue-50 to bg-muted, adjusted border */}
+          <div className="mb-8 p-4 bg-muted rounded-lg border border-border text-center shadow-sm">
             <img src="/placeholder.svg" alt="QR Code" className="w-24 h-24 mx-auto mb-3" />
-            <p className="text-sm font-semibold text-foreground mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p> {/* Changed text color */}
+            <p className="text-sm font-semibold text-foreground mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p>
             <p className="text-xs text-muted-foreground">Scan kode QR untuk download</p>
           </div>
 
@@ -216,14 +257,20 @@ const Jobs = () => {
               <AccordionContent className="flex gap-2 pt-2">
                 <Button
                   variant={sortBy === "date-desc" ? "default" : "outline"}
-                  onClick={() => setSortBy("date-desc")}
+                  onClick={() => {
+                    setSortBy("date-desc");
+                    setCurrentPage(1);
+                  }}
                   className="flex-grow"
                 >
                   Terbaru
                 </Button>
                 <Button
                   variant={sortBy === "title-asc" ? "default" : "outline"}
-                  onClick={() => setSortBy("title-asc")}
+                  onClick={() => {
+                    setSortBy("title-asc");
+                    setCurrentPage(1);
+                  }}
                   className="flex-grow"
                 >
                   Judul (A-Z)
@@ -285,7 +332,10 @@ const Jobs = () => {
             <AccordionItem value="sumber" className="pb-4">
               <AccordionTrigger className="text-lg font-semibold">Sumber Lowongan</AccordionTrigger>
               <AccordionContent className="pt-2">
-                <Select onValueChange={setSelectedSource} defaultValue="all">
+                <Select onValueChange={(value) => {
+                  setSelectedSource(value);
+                  setCurrentPage(1); // Reset to first page on source change
+                }} defaultValue="all">
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Filter Sumber" />
                   </SelectTrigger>
@@ -298,8 +348,7 @@ const Jobs = () => {
                     <SelectItem value="lokerid">Loker.id</SelectItem>
                     <SelectItem value="freelance">Freelance</SelectItem>
                     <SelectItem value="lokal">Lokal</SelectItem>
-                    <SelectItem value="user-posted">Diposting Pengguna</SelectItem> {/* Added new source */}
-                    {/* Add other sources as needed */}
+                    <SelectItem value="user-posted">Diposting Pengguna</SelectItem>
                   </SelectContent>
                 </Select>
               </AccordionContent>
@@ -324,8 +373,8 @@ const Jobs = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredAndSortedJobs.length > 0 ? (
-              filteredAndSortedJobs.map((jobItem) => (
+            {currentJobs.length > 0 ? (
+              currentJobs.map((jobItem) => (
                 <JobCard
                   key={jobItem.id}
                   id={jobItem.id}
@@ -349,10 +398,48 @@ const Jobs = () => {
               <p className="col-span-full text-center text-muted-foreground py-12">Tidak ada lowongan yang ditemukan.</p>
             )}
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <Pagination className="mt-12">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => paginate(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
+                  />
+                </PaginationItem>
+                {startPage > 1 && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+                {pageNumbers.map((number) => (
+                  <PaginationItem key={number}>
+                    <PaginationLink
+                      onClick={() => paginate(number)}
+                      isActive={number === currentPage}
+                    >
+                      {number}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                {endPage < totalPages && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
         </main>
       </div>
-
-      {/* Floating WhatsApp Button Removed */}
     </div>
   );
 };

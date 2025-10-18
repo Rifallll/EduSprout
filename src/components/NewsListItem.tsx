@@ -59,7 +59,7 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
         </Link>
 
         {/* Description */}
-        <p className="text-muted-foreground line-clamp-2 text-sm md:text-base">
+        <p className="text-muted-foreground line-clamp-3 text-sm md:text-base"> {/* Changed from line-clamp-2 to line-clamp-3 */}
           {description}
         </p>
 

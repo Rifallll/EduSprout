@@ -8,19 +8,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import scrapedJobs from "@/data/scrapedJobs.json"; // Import the scraped job data
+import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json"; // Import the new scraped job data
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date-desc"); // Default sort by date descending
-  const [selectedCategory, setSelectedCategory] = useState("all"); // New state for category filter
+  const [selectedSource, setSelectedSource] = useState("all"); // New state for source filter
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filtered = scrapedJobs; // Use scrapedJobs instead of dummyJobs
+    let filtered = scrapedJobsFromDB;
 
-    // 1. Filter by Category
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(job => job.category === selectedCategory);
+    // 1. Filter by Source
+    if (selectedSource !== "all") {
+      filtered = filtered.filter(job => job.source === selectedSource);
     }
 
     // 2. Filter by Search Term
@@ -28,26 +28,17 @@ const Jobs = () => {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
       return (
         job.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-        job.description.toLowerCase().includes(lowerCaseSearchTerm) ||
-        job.category.toLowerCase().includes(lowerCaseSearchTerm) ||
+        (job.company && job.company.toLowerCase().includes(lowerCaseSearchTerm)) ||
         (job.location && job.location.toLowerCase().includes(lowerCaseSearchTerm)) ||
-        (job.date && job.date.toLowerCase().includes(lowerCaseSearchTerm))
+        job.source.toLowerCase().includes(lowerCaseSearchTerm) ||
+        (job.date_posted && job.date_posted.toLowerCase().includes(lowerCaseSearchTerm))
       );
     });
 
-    // Helper function to parse date strings
+    // Helper function to parse date strings (assuming YYYY-MM-DD format from scraper)
     const parseDate = (dateString: string) => {
-      const match = dateString.match(/(\d{1,2})\s(\w+)\s(\d{4})/);
-      if (match) {
-        const [_, day, monthName, year] = match;
-        const monthMap: { [key: string]: number } = {
-          "januari": 0, "februari": 1, "maret": 2, "april": 3, "mei": 4, "juni": 5,
-          "juli": 6, "agustus": 7, "september": 8, "oktober": 9, "november": 10, "desember": 11
-        };
-        const month = monthMap[monthName.toLowerCase()];
-        if (month !== undefined) {
-          return new Date(parseInt(year), month, parseInt(day));
-        }
+      if (dateString) {
+        return new Date(dateString);
       }
       return new Date(0); // Return a very old date if parsing fails
     };
@@ -55,9 +46,9 @@ const Jobs = () => {
     // 3. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
-        return parseDate(b.date).getTime() - parseDate(a.date).getTime();
+        return parseDate(b.date_posted).getTime() - parseDate(a.date_posted).getTime();
       } else if (sortBy === "date-asc") {
-        return parseDate(a.date).getTime() - parseDate(b.date).getTime();
+        return parseDate(a.date_posted).getTime() - parseDate(b.date_posted).getTime();
       } else if (sortBy === "title-asc") {
         return a.title.localeCompare(b.title);
       } else if (sortBy === "title-desc") {
@@ -67,7 +58,7 @@ const Jobs = () => {
     });
 
     return filtered;
-  }, [searchTerm, sortBy, selectedCategory]);
+  }, [searchTerm, sortBy, selectedSource]);
 
   return (
     <div className="container py-8">
@@ -84,15 +75,16 @@ const Jobs = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-grow"
         />
-        <Select onValueChange={setSelectedCategory} defaultValue="all">
+        <Select onValueChange={setSelectedSource} defaultValue="all">
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter Kategori" />
+            <SelectValue placeholder="Filter Sumber" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Semua Kategori</SelectItem>
-            <SelectItem value="Job Fair">Job Fair</SelectItem>
-            <SelectItem value="Career Day">Career Day</SelectItem>
-            {/* Add other job categories if needed, e.g., "Full-time", "Internship", "Part-time" */}
+            <SelectItem value="all">Semua Sumber</SelectItem>
+            <SelectItem value="lokerbandung">Loker Bandung</SelectItem>
+            <SelectItem value="getredy">GetRedy</SelectItem>
+            <SelectItem value="jooble">Jooble</SelectItem>
+            {/* Add other sources as needed */}
           </SelectContent>
         </Select>
         <Select onValueChange={setSortBy} defaultValue="date-desc">
@@ -114,10 +106,10 @@ const Jobs = () => {
             <InfoCard
               key={jobItem.id}
               title={jobItem.title}
-              description={jobItem.description}
-              category={jobItem.category}
+              description={jobItem.company ? `Perusahaan: ${jobItem.company}` : "Detail lowongan"}
+              category={jobItem.source} // Using source as category for InfoCard
               location={jobItem.location}
-              date={jobItem.date}
+              date={jobItem.date_posted}
               link={jobItem.link}
               linkText="Lihat Detail"
             />

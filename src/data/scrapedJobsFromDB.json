@@ -1,0 +1,56 @@
+[
+  {
+    "id": "job_lokerbandung_1",
+    "source": "lokerbandung",
+    "title": "Staf Event Organizer",
+    "company": "PT Event Cemerlang",
+    "location": "Bandung",
+    "link": "https://www.lokerbandung.id/detail/staf-event-organizer",
+    "date_posted": "2024-10-28"
+  },
+  {
+    "id": "job_lokerbandung_2",
+    "source": "lokerbandung",
+    "title": "Marketing Communication Specialist",
+    "company": "Kreatif Media",
+    "location": "Bandung",
+    "link": "https://www.lokerbandung.id/detail/marketing-communication",
+    "date_posted": "2024-10-27"
+  },
+  {
+    "id": "job_getredy_1",
+    "source": "getredy",
+    "title": "Social Media Manager",
+    "company": "Digital Agency X",
+    "location": "Jakarta",
+    "link": "https://www.getredy.id/job/social-media-manager",
+    "date_posted": "2024-10-29"
+  },
+  {
+    "id": "job_getredy_2",
+    "source": "getredy",
+    "title": "Content Creator Intern",
+    "company": "Startup Edukasi",
+    "location": "Remote",
+    "link": "https://www.getredy.id/job/content-creator-intern",
+    "date_posted": "2024-10-26"
+  },
+  {
+    "id": "job_jooble_1",
+    "source": "jooble",
+    "title": "Event Coordinator",
+    "company": "Global Events Inc.",
+    "location": "Surabaya",
+    "link": "https://id.jooble.org/job/event-coordinator",
+    "date_posted": "2024-10-30"
+  },
+  {
+    "id": "job_jooble_2",
+    "source": "jooble",
+    "title": "HR Recruiter",
+    "company": "Tech Solutions",
+    "location": "Yogyakarta",
+    "link": "https://id.jooble.org/job/hr-recruiter",
+    "date_posted": "2024-10-29"
+  }
+]

@@ -31,7 +31,7 @@ interface JobItem {
   companyDescription?: string;
   companyIndustry?: string;
   companySize?: string;
-  applicationQuestions?: { question: string; type: 'text' | 'number' | 'select' | 'radio'; options?: string[] }[];
+  applicationQuestions?: { question: string; type: string; options?: string[] }[]; // Changed 'type' to string
   salaryMatch?: string;
   applicantCount?: string;
   skillMatch?: string;

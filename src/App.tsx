@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
-import Scholarships from "./pages/Scholarships";
+import Scholarships from "./pages/Scholarships"; // Corrected import path
 import Jobs from "./pages/Jobs";
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
@@ -29,9 +29,9 @@ import CompanyRegistrationPage from "./pages/CompanyRegistrationPage";
 import PostJobPage from "./pages/PostJobPage";
 import ProductsAndServicesPage from "./pages/ProductsAndServicesPage";
 import PricingPage from "./pages/PricingPage";
-import BasicPlanConfirmationPage from "./pages/BasicPlanConfirmationPage"; // New import
-import ProPlanPaymentPage from "./pages/ProPlanPaymentPage"; // New import
-import EnterpriseContactPage from "./pages/EnterpriseContactPage"; // New import
+import BasicPlanConfirmationPage from "./pages/BasicPlanConfirmationPage";
+import ProPlanPaymentPage from "./pages/ProPlanPaymentPage";
+import EnterpriseContactPage from "./pages/EnterpriseContactPage";
 
 const queryClient = new QueryClient();
 

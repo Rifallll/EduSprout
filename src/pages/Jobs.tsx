@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import InfoCard from "@/components/InfoCard";
+import JobCard from "@/components/JobCard"; // Import the new JobCard component
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -105,15 +105,15 @@ const Jobs = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {filteredAndSortedJobs.length > 0 ? (
           filteredAndSortedJobs.map((jobItem) => (
-            <InfoCard
+            <JobCard // Using the new JobCard component
               key={jobItem.id}
+              id={jobItem.id}
               title={jobItem.title}
-              description={jobItem.company ? `Perusahaan: ${jobItem.company}` : "Detail lowongan"}
-              category={jobItem.source}
+              company={jobItem.company}
               location={jobItem.location}
-              date={jobItem.date_posted}
-              link={`/jobs/${jobItem.id}`}
-              linkText="Lihat Detail"
+              source={jobItem.source}
+              date_posted={jobItem.date_posted}
+              link={`/jobs/${jobItem.id}`} // Link to the internal detail page
             />
           ))
         ) : (

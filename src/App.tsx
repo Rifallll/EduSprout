@@ -16,7 +16,8 @@ import SignupPage from "./pages/SignupPage";
 import UploadEventPage from "./pages/UploadEventPage";
 import PartnershipPage from "./pages/PartnershipPage";
 import CareerPage from "./pages/CareerPage";
-import JobDetailPage from "./pages/JobDetailPage"; // Import the new page
+import JobDetailPage from "./pages/JobDetailPage";
+import NewsDetailPage from "./pages/NewsDetailPage"; // Import the new NewsDetailPage
 
 const queryClient = new QueryClient();
 
@@ -32,9 +33,10 @@ const App = () => (
             <Route path="events" element={<Events />} />
             <Route path="scholarships" element={<Scholarships />} />
             <Route path="jobs" element={<Jobs />} />
-            <Route path="jobs/:jobId" element={<JobDetailPage />} /> {/* New route for job details */}
+            <Route path="jobs/:jobId" element={<JobDetailPage />} />
             <Route path="contact" element={<Contact />} />
             <Route path="news-and-tips" element={<NewsAndTips />} />
+            <Route path="news-and-tips/:newsId" element={<NewsDetailPage />} /> {/* New route for news details */}
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="upload-event" element={<UploadEventPage />} />

@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
-import Scholarships from "./pages/pages/Scholarships";
+import Scholarships from "./pages/Scholarships"; // Jalur impor telah diperbaiki di sini
 import Jobs from "./pages/Jobs";
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
@@ -17,18 +17,18 @@ import PartnershipPage from "./pages/PartnershipPage";
 import CareerPage from "./pages/CareerPage";
 import JobDetailPage from "./pages/JobDetailPage";
 import NewsDetailPage from "./pages/NewsDetailPage";
-import ContactPage from "./pages/ContactPage"; // New
-import HelpCenterPage from "./pages/HelpCenterPage"; // New
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage"; // New
-import TermsAndConditionsPage from "./pages/TermsAndConditionsPage"; // New
-import ResumeBuilderPage from "./pages/ResumeBuilderPage"; // New
-import JobsAlertPage from "./pages/JobsAlertPage"; // New
-import JobLocationsPage from "./pages/JobLocationsPage"; // New
-import JobCategoriesPage from "./pages/JobCategoriesPage"; // New
-import CompanyRegistrationPage from "./pages/CompanyRegistrationPage"; // New
-import PostJobPage from "./pages/PostJobPage"; // New
-import ProductsAndServicesPage from "./pages/ProductsAndServicesPage"; // New
-import PricingPage from "./pages/PricingPage"; // New
+import ContactPage from "./pages/ContactPage";
+import HelpCenterPage from "./pages/HelpCenterPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
+import ResumeBuilderPage from "./pages/ResumeBuilderPage";
+import JobsAlertPage from "./pages/JobsAlertPage";
+import JobLocationsPage from "./pages/JobLocationsPage";
+import JobCategoriesPage from "./pages/JobCategoriesPage";
+import CompanyRegistrationPage from "./pages/CompanyRegistrationPage";
+import PostJobPage from "./pages/PostJobPage";
+import ProductsAndServicesPage from "./pages/ProductsAndServicesPage";
+import PricingPage from "./pages/PricingPage";
 
 const queryClient = new QueryClient();
 

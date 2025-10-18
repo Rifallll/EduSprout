@@ -5,8 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Facebook, Instagram, Twitter, MapPin } from "lucide-react"; // Import icons
+import MapDisplay from "@/components/MapDisplay"; // Import the new MapDisplay component
 
 const Contact = () => {
+  const apiKey = "6c0118d493cb46b99027c584cc5111c9"; // Your Geoapify API Key
+  const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
+
   return (
     <div className="container py-8">
       <h1 className="text-4xl font-bold mb-6 text-center">Hubungi Kami</h1>
@@ -58,10 +62,8 @@ const Contact = () => {
         </div>
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-2">Lokasi Kami</h3>
-          <p className="text-muted-foreground">Jl. Contoh No. 123, Kota Contoh, Negara Contoh</p>
-          <div className="bg-muted h-64 w-full rounded-lg mt-4 flex items-center justify-center text-muted-foreground border border-dashed border-gray-400">
-            <MapPin className="h-8 w-8 mr-2" /> Integrasi Peta Lokasi (Google Maps/OpenStreetMap)
-          </div>
+          <p className="text-muted-foreground mb-4">{address}</p>
+          <MapDisplay address={address} apiKey={apiKey} />
         </div>
       </div>
     </div>

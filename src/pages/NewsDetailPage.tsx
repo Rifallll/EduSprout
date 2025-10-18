@@ -55,9 +55,9 @@ const NewsDetailPage = () => {
   const shareText = `Baca artikel menarik ini: ${news.title}`;
 
   return (
-    <div className="container py-12">
+    <div className="container py-16"> {/* Increased vertical padding */}
       {/* Breadcrumb */}
-      <nav className="text-sm text-muted-foreground mb-6">
+      <nav className="text-sm text-muted-foreground mb-8"> {/* Increased bottom margin */}
         <Link to="/" className="hover:underline">Home</Link>
         <span className="mx-2">/</span>
         <Link to="/news-and-tips" className="hover:underline">Berita & Tips</Link>
@@ -65,115 +65,113 @@ const NewsDetailPage = () => {
         <span className="font-medium text-foreground line-clamp-1">{news.title}</span>
       </nav>
 
-      <Card className="shadow-lg">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between mb-2">
-            <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20 transition-colors duration-200">
+      <Card className="shadow-lg border border-border rounded-lg"> {/* Added border and rounded-lg */}
+        <CardHeader className="pb-6 px-6 pt-6"> {/* Adjusted padding */}
+          <div className="flex items-center justify-between mb-4"> {/* Increased bottom margin */}
+            <Badge className="bg-primary/10 text-primary font-semibold text-sm px-3 py-1 hover:bg-primary/20 transition-colors duration-200"> {/* Enhanced badge styling */}
               {news.category}
             </Badge>
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                <Bookmark className="h-4 w-4" />
+              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"> {/* Enhanced button styling */}
+                <Bookmark className="h-5 w-5" />
                 <span className="sr-only">Simpan Artikel</span>
               </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                <Share2 className="h-4 w-4" />
+              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"> {/* Enhanced button styling */}
+                <Share2 className="h-5 w-5" />
                 <span className="sr-only">Bagikan Artikel</span>
               </Button>
             </div>
           </div>
 
-          <CardTitle className="text-4xl font-bold mb-4 leading-tight">{news.title}</CardTitle>
-          <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground text-base">
-            <div className="flex items-center text-sm text-muted-foreground">
-              <Avatar className="h-6 w-6 mr-2">
+          <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-foreground">{news.title}</CardTitle> {/* Larger, bolder title */}
+          <CardDescription className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted-foreground text-base"> {/* Increased gap */}
+            <div className="flex items-center text-sm font-medium text-foreground"> {/* Author info more prominent */}
+              <Avatar className="h-7 w-7 mr-2"> {/* Larger avatar */}
                 <AvatarImage src={news.authorAvatarUrl || "https://api.dicebear.com/8.x/initials/svg?seed=ES"} alt={news.author || "EduSprout Team"} />
                 <AvatarFallback>{(news.author || "ES").charAt(0)}</AvatarFallback>
               </Avatar>
               <span>{news.author || "EduSprout Team"}</span>
             </div>
-            <span className="flex items-center">
+            <span className="flex items-center text-sm text-muted-foreground">
               <CalendarDays className="h-4 w-4 mr-1" /> {news.date}
             </span>
-            <span className="flex items-center">
+            <span className="flex items-center text-sm text-muted-foreground">
               <Clock className="h-4 w-4 mr-1" /> {readingTime}
             </span>
-            <span className="flex items-center">
+            <span className="flex items-center text-sm text-muted-foreground">
               <Eye className="h-4 w-4 mr-1" /> {news.views?.toLocaleString() || '0'} views
             </span>
-            <span className="flex items-center">
+            <span className="flex items-center text-sm text-muted-foreground">
               <MessageSquare className="h-4 w-4 mr-1" /> {news.comments?.toLocaleString() || '0'} comments
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-8 p-6"> {/* Increased spacing and padding */}
           {news.imageUrl && (
             <img
               src={news.imageUrl}
               alt={news.title}
-              className="w-full h-auto max-h-[400px] object-cover rounded-lg mb-6"
+              className="w-full h-auto max-h-[450px] object-cover rounded-lg mb-6 shadow-md" // Slightly larger max-height, added shadow
             />
           )}
 
-          <div className="prose dark:prose-invert max-w-none">
+          <div className="prose dark:prose-invert max-w-none text-lg leading-relaxed text-foreground"> {/* Larger text, better line height */}
             {contentToDisplay.split('\n').map((paragraph, index) => (
               <p key={index} className="mb-4">{paragraph.trim()}</p>
             ))}
-            {/* Add more detailed content here if available in your data */}
-            <p className="mt-6 text-muted-foreground italic">
+            <p className="mt-8 text-muted-foreground italic text-base"> {/* Adjusted margin and text size */}
               Untuk informasi lebih lanjut, silakan kunjungi sumber asli.
             </p>
           </div>
 
-          <Separator />
+          <Separator className="my-8" /> {/* Increased margin for separator */}
 
           {/* Share Buttons */}
-          <div className="flex items-center justify-center gap-4 py-4">
-            <span className="text-lg font-semibold text-foreground">Bagikan:</span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
+            <span className="text-lg font-semibold text-foreground mb-2 sm:mb-0">Bagikan:</span>
             <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="hover:bg-blue-600 hover:text-white transition-colors duration-200">
+              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-600 hover:text-white transition-colors duration-200">
                 <Facebook className="h-5 w-5" />
               </Button>
             </a>
             <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="hover:bg-blue-400 hover:text-white transition-colors duration-200">
+              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-400 hover:text-white transition-colors duration-200">
                 <Twitter className="h-5 w-5" />
               </Button>
             </a>
             <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(news.title)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="hover:bg-blue-700 hover:text-white transition-colors duration-200">
+              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-700 hover:text-white transition-colors duration-200">
                 <Linkedin className="h-5 w-5" />
               </Button>
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="hover:bg-green-500 hover:text-white transition-colors duration-200">
-                {/* Removed Whatsapp icon */}
+              <Button variant="outline" className="h-10 px-4 hover:bg-green-500 hover:text-white transition-colors duration-200"> {/* Adjusted for text button */}
                 WhatsApp
               </Button>
             </a>
           </div>
 
-          <Separator />
+          <Separator className="my-8" /> {/* Increased margin for separator */}
 
           {/* Comments Section Placeholder */}
           <div className="py-6">
-            <h3 className="text-2xl font-bold mb-4">Komentar ({news.comments?.toLocaleString() || '0'})</h3>
-            <div className="space-y-4">
-              <p className="text-muted-foreground">
+            <h3 className="text-2xl font-bold mb-6 text-foreground">Komentar ({news.comments?.toLocaleString() || '0'})</h3> {/* Bolder, more space */}
+            <div className="space-y-6"> {/* Increased spacing */}
+              <p className="text-muted-foreground text-base">
                 Bagian komentar akan segera hadir! Anda dapat meninggalkan komentar dan berinteraksi dengan pembaca lain di sini.
               </p>
               {/* Placeholder for comment input */}
               <div className="flex items-start space-x-4">
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-12 w-12"> {/* Larger avatar */}
                   <AvatarImage src="https://api.dicebear.com/8.x/initials/svg?seed=Guest" alt="Guest" />
                   <AvatarFallback>G</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
                   <textarea
-                    className="w-full p-3 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-y min-h-[80px]"
+                    className="w-full p-4 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-y min-h-[100px] text-base bg-background text-foreground placeholder:text-muted-foreground" // Enhanced styling
                     placeholder="Tulis komentar Anda..."
                   ></textarea>
-                  <Button className="mt-2">Kirim Komentar</Button>
+                  <Button className="mt-3 px-6 py-3 text-base">Kirim Komentar</Button> {/* Larger button */}
                 </div>
               </div>
             </div>
@@ -183,8 +181,8 @@ const NewsDetailPage = () => {
 
       {/* Related News Section (Carousel) */}
       {relatedNews.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold mb-8 text-center lg:text-left">Berita Serupa</h2>
+        <section className="mt-20"> {/* Increased top margin */}
+          <h2 className="text-3xl font-bold mb-8 text-center lg:text-left text-foreground">Berita Serupa</h2>
           <Carousel
             opts={{
               align: "start",

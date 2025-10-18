@@ -56,8 +56,17 @@ const Footer = () => {
           <Link to="/resume-builder" className="text-sm text-muted-foreground hover:text-primary transition-colors">
             Buat Resume Online
           </Link>
+          <Link to="/events" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Event
+          </Link>
+          <Link to="/scholarships" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Beasiswa
+          </Link>
           <Link to="/jobs" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Cari Loker
+            Lowongan
+          </Link>
+          <Link to="/news-and-tips" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Berita & Tips
           </Link>
           <Link to="/jobs?workPolicy=Kerja Remote/dari rumah" className="text-sm text-muted-foreground hover:text-primary transition-colors">
             Loker Remote

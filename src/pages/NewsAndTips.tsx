@@ -1,15 +1,12 @@
 import React, { useState, useMemo } from "react";
 import NewsListItem from "@/components/NewsListItem";
-import NewsSidebarCard from "@/components/NewsSidebarCard"; // Import the new sidebar component
-import InfoCard from "@/components/InfoCard"; // Re-use InfoCard for events and scholarships
+import NewsSidebarCard from "@/components/NewsSidebarCard";
+import InfoCard from "@/components/InfoCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json"; // Import the scraped data
-import dummyEvents from "@/data/dummyEvents.json"; // Import dummy events
-import dummyScholarships from "@/pages/Scholarships"; // Import dummy scholarships (assuming it exports the array directly or has a similar structure)
+import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
+import dummyEvents from "@/data/dummyEvents.json";
 
 // Re-import dummyScholarships data directly if it's not exported as default array
-// For now, I'll assume dummyScholarships is an array from the Scholarships page context.
-// If not, you might need to create a separate JSON for it like dummyEvents.
 const dummyScholarshipsData = [
   {
     id: "s1",
@@ -39,11 +36,9 @@ const dummyScholarshipsData = [
 
 
 const NewsAndTips = () => {
-  const featuredNews = scrapedNewsAndTips.filter((_, index) => index % 2 === 0); // Example: every other news item
+  const featuredNews = scrapedNewsAndTips.filter((_, index) => index % 2 === 0);
 
-  // Dummy data for sidebars
   const popularNews = useMemo(() => {
-    // Sort by views for popular news
     return [...scrapedNewsAndTips]
       .sort((a, b) => (b.views || 0) - (a.views || 0))
       .slice(0, 5)
@@ -61,17 +56,17 @@ const NewsAndTips = () => {
     return Array.from(categories).map((cat, index) => ({
       id: `cat-${index}`,
       label: cat,
-      link: `/news-and-tips?category=${encodeURIComponent(cat)}`, // Example link for category filter
+      link: `/news-and-tips?category=${encodeURIComponent(cat)}`,
       metadata: `${scrapedNewsAndTips.filter(n => n.category === cat).length} artikel`,
     }));
   }, []);
 
   const featuredEvents = useMemo(() => {
-    return dummyEvents.slice(0, 2); // Get top 2 events
+    return dummyEvents.slice(0, 2);
   }, []);
 
   const featuredScholarships = useMemo(() => {
-    return dummyScholarshipsData.slice(0, 2); // Get top 2 scholarships
+    return dummyScholarshipsData.slice(0, 2);
   }, []);
 
   return (
@@ -109,23 +104,19 @@ const NewsAndTips = () => {
         {/* Main Content Area */}
         <main className="lg:col-span-2">
           <Tabs defaultValue="for-you" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="for-you">Untuk Anda</TabsTrigger>
-              <TabsTrigger value="featured">Pilihan Editor</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-8 h-12"> {/* Adjusted height for better aesthetic */}
+              <TabsTrigger value="for-you" className="text-base">Untuk Anda</TabsTrigger>
+              <TabsTrigger value="featured" className="text-base">Pilihan Editor</TabsTrigger>
             </TabsList>
-            <TabsContent value="for-you">
-              <div className="space-y-6">
-                {scrapedNewsAndTips.map((newsItem) => (
-                  <NewsListItem key={newsItem.id} {...newsItem} />
-                ))}
-              </div>
+            <TabsContent value="for-you" className="space-y-6">
+              {scrapedNewsAndTips.map((newsItem) => (
+                <NewsListItem key={newsItem.id} {...newsItem} />
+              ))}
             </TabsContent>
-            <TabsContent value="featured">
-              <div className="space-y-6">
-                {featuredNews.map((newsItem) => (
-                  <NewsListItem key={newsItem.id} {...newsItem} />
-                ))}
-              </div>
+            <TabsContent value="featured" className="space-y-6">
+              {featuredNews.map((newsItem) => (
+                <NewsListItem key={newsItem.id} {...newsItem} />
+              ))}
             </TabsContent>
           </Tabs>
         </main>
@@ -135,7 +126,7 @@ const NewsAndTips = () => {
           <NewsSidebarCard
             title="Berita Populer"
             items={popularNews}
-            viewAllLink="/news-and-tips" // Link to all news, maybe with a filter for popular
+            viewAllLink="/news-and-tips"
           />
           <NewsSidebarCard
             title="Kategori Berita"

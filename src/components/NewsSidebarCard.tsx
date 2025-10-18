@@ -16,14 +16,14 @@ interface NewsSidebarCardProps {
 
 const NewsSidebarCard: React.FC<NewsSidebarCardProps> = ({ title, items, viewAllLink }) => {
   return (
-    <Card className="shadow-md">
+    <Card className="shadow-lg transition-all duration-300 hover:shadow-xl"> {/* Added hover effect */}
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-semibold">{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {items.length > 0 ? (
           items.map((item) => (
-            <Link to={item.link} key={item.id} className="block group">
+            <Link to={item.link} key={item.id} className="block group p-2 -mx-2 rounded-md hover:bg-muted transition-colors duration-200"> {/* Added hover background */}
               <div className="flex flex-col">
                 <p className="text-base font-medium text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-2">
                   {item.label}

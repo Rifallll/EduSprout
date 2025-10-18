@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CalendarDays, Eye, MessageSquare, Bookmark, MoreHorizontal } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card"; // Import Card and CardContent
 
 interface NewsListItemProps {
   id: string;
@@ -25,13 +26,22 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
   link,
   imageUrl = "/placeholder.svg",
   author = "EduSprout Team",
-  authorAvatarUrl = "https://api.dicebear.com/8.x/initials/svg?seed=ES", // Default avatar if not provided
-  views = Math.floor(Math.random() * 10000) + 100, // Dummy views if not provided
-  comments = Math.floor(Math.random() * 500) + 10, // Dummy comments if not provided
+  authorAvatarUrl = "https://api.dicebear.com/8.x/initials/svg?seed=ES",
+  views = Math.floor(Math.random() * 10000) + 100,
+  comments = Math.floor(Math.random() * 500) + 10,
 }) => {
   return (
-    <div className="flex items-start justify-between gap-4 py-6 border-b border-border last:border-b-0">
-      <div className="flex-1 space-y-2">
+    <Card className="flex flex-col md:flex-row items-start gap-4 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+      {imageUrl && (
+        <Link to={link} className="flex-shrink-0 w-full md:w-40 h-32 md:h-28 overflow-hidden rounded-md">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
+      )}
+      <CardContent className="flex-1 p-0 space-y-2">
         {/* Author Info */}
         <div className="flex items-center text-sm text-muted-foreground">
           <Avatar className="h-6 w-6 mr-2">
@@ -43,7 +53,7 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
 
         {/* Title */}
         <Link to={link} className="block">
-          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200">
+          <h3 className="text-xl md:text-2xl font-bold leading-tight hover:text-primary transition-colors duration-200 line-clamp-2">
             {title}
           </h3>
         </Link>
@@ -75,19 +85,8 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
             </Button>
           </div>
         </div>
-      </div>
-
-      {/* Image Thumbnail */}
-      {imageUrl && (
-        <Link to={link} className="flex-shrink-0 ml-4">
-          <img
-            src={imageUrl}
-            alt={title}
-            className="w-32 h-24 md:w-40 md:h-28 object-cover rounded-md"
-          />
-        </Link>
-      )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

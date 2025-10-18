@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react"; // Whatsapp removed
+import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NewsListItem from "@/components/NewsListItem"; // Re-use NewsListItem for related news
 import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
@@ -49,7 +49,7 @@ const NewsDetailPage = () => {
   const readingTime = calculateReadingTime(contentToDisplay);
 
   // Filter for related news (excluding the current news)
-  const relatedNews = scrapedNewsAndTips.filter(n => n.id !== news.id).slice(0, 5); // Get up to 5 related news
+  const relatedNews = scrapedNewsAndTips.filter(n => n.id !== news.id).slice(0, 5); // Get up to 5 related jobs
 
   const currentUrl = window.location.href;
   const shareText = `Baca artikel menarik ini: ${news.title}`;
@@ -145,7 +145,7 @@ const NewsDetailPage = () => {
               </Button>
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="h-10 px-4 hover:bg-green-500 hover:text-white transition-colors duration-200"> {/* Adjusted for text button */}
+              <Button className="h-10 px-4 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200"> {/* Adjusted for text button */}
                 WhatsApp
               </Button>
             </a>

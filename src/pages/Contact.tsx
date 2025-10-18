@@ -11,16 +11,10 @@ const Contact = () => {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
-  // GANTI DENGAN API KEY GEOAPIFY ANDA SENDIRI
-  // Anda bisa mendapatkan API Key gratis di https://www.geoapify.com/
-  const apiKey = "YOUR_GEOAPIFY_API_KEY"; 
+  // API Key Geoapify Anda
+  const apiKey = "6c0118d493cb46b99027c584cc5111c9"; 
 
   useEffect(() => {
-    if (apiKey === "YOUR_GEOAPIFY_API_KEY") {
-      console.warn("Peringatan: Harap ganti 'YOUR_GEOAPIFY_API_KEY' dengan API Key Geoapify Anda yang sebenarnya di src/pages/Contact.tsx untuk menampilkan peta.");
-      return;
-    }
-
     fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`)
       .then(response => response.json())
       .then(result => {
@@ -94,7 +88,7 @@ const Contact = () => {
           <MapDisplay latitude={latitude} longitude={longitude} address={address} />
         ) : (
           <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-muted-foreground">
-            Memuat peta atau API Key belum diatur...
+            Memuat peta...
           </div>
         )}
       </div>

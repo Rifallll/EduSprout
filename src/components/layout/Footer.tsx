@@ -68,24 +68,6 @@ const Footer = () => {
           <Link to="/news-and-tips" className="text-sm text-muted-foreground hover:text-primary transition-colors">
             Berita & Tips
           </Link>
-          <Link to="/jobs?workPolicy=Kerja Remote/dari rumah" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Loker Remote
-          </Link>
-          <Link to="/jobs?workPolicy=Kerja di kantor / rumah" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Loker Hybrid
-          </Link>
-          <Link to="/jobs-alert" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Jobs Alert
-          </Link>
-          <Link to="/news-and-tips?category=Karir" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Tips Loker
-          </Link>
-          <Link to="/jobs-locations" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Lokasi Pekerjaan
-          </Link>
-          <Link to="/jobs-categories" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Kategori Pekerjaan
-          </Link>
         </nav>
 
         {/* Column 4: Perusahaan */}

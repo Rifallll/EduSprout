@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
+import MapDisplay from "@/components/MapDisplay"; // Import MapDisplay component
 
 const Contact = () => {
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
+  // GANTI DENGAN API KEY GEOAPIFY ANDA SENDIRI
+  // Anda bisa mendapatkan API Key gratis di https://www.geoapify.com/
+  const apiKey = "YOUR_GEOAPIFY_API_KEY"; 
+
+  useEffect(() => {
+    if (apiKey === "YOUR_GEOAPIFY_API_KEY") {
+      console.warn("Peringatan: Harap ganti 'YOUR_GEOAPIFY_API_KEY' dengan API Key Geoapify Anda yang sebenarnya di src/pages/Contact.tsx untuk menampilkan peta.");
+      return;
+    }
+
+    fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`)
+      .then(response => response.json())
+      .then(result => {
+        if (result.features && result.features.length > 0) {
+          const location = result.features[0].properties;
+          setLatitude(location.lat);
+          setLongitude(location.lon);
+        } else {
+          console.error("Tidak dapat menemukan koordinat untuk alamat yang diberikan.");
+        }
+      })
+      .catch(error => console.error("Error fetching geocoding data:", error));
+  }, [address, apiKey]);
+
   return (
     <div className="container py-8">
       <h1 className="text-4xl font-bold mb-6 text-center">Hubungi Kami</h1>
@@ -56,6 +84,19 @@ const Contact = () => {
             <Twitter size={24} />
           </a>
         </div>
+      </div>
+
+      {/* Lokasi Kami Section */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-semibold mb-4 text-center">Lokasi Kami</h2>
+        <p className="text-muted-foreground text-center mb-6">{address}</p>
+        {latitude !== null && longitude !== null ? (
+          <MapDisplay latitude={latitude} longitude={longitude} address={address} />
+        ) : (
+          <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-muted-foreground">
+            Memuat peta atau API Key belum diatur...
+          </div>
+        )}
       </div>
     </div>
   );

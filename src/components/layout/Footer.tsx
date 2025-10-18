@@ -31,9 +31,7 @@ const Footer = () => {
           <Link to="/news-and-tips" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
             Berita & Tips
           </Link>
-          <Link to="/contact" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Kontak
-          </Link>
+          {/* Removed Kontak Link */}
         </nav>
 
         {/* Legal Links */}

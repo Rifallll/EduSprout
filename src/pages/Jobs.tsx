@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, X, MessageSquare, RotateCcw } from "lucide-react"; // Menambahkan RotateCcw untuk ikon reset
+import { Search, MapPin, X, RotateCcw } from "lucide-react"; // Removed MessageSquare
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 // Define JobItem type to include new fields for better type safety
@@ -333,16 +333,7 @@ const Jobs = () => {
         </main>
       </div>
 
-      {/* Floating WhatsApp Button */}
-      <a
-        href="https://wa.me/6281234567890"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors duration-300 z-50 flex items-center justify-center"
-        aria-label="Hubungi kami via WhatsApp"
-      >
-        <MessageSquare className="h-7 w-7" />
-      </a>
+      {/* Floating WhatsApp Button Removed */}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
 import Scholarships from "./pages/Scholarships";
 import Jobs from "./pages/Jobs";
-import Contact from "./pages/Contact";
+// import Contact from "./pages/Contact"; // Removed import
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -34,7 +34,7 @@ const App = () => (
             <Route path="scholarships" element={<Scholarships />} />
             <Route path="jobs" element={<Jobs />} />
             <Route path="jobs/:jobId" element={<JobDetailPage />} />
-            <Route path="contact" element={<Contact />} />
+            {/* Removed Contact Route */}
             <Route path="news-and-tips" element={<NewsAndTips />} />
             <Route path="news-and-tips/:newsId" element={<NewsDetailPage />} /> {/* New route for news details */}
             <Route path="login" element={<LoginPage />} />

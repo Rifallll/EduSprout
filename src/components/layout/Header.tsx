@@ -40,9 +40,7 @@ const Header = () => {
           <Link to="/news-and-tips" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
             Berita & Tips
           </Link>
-          <Link to="/contact" className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
-            Kontak
-          </Link>
+          {/* Removed Kontak Link */}
           {/* Dropdown untuk Login/Daftar atau Profil/Logout */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -103,9 +101,7 @@ const Header = () => {
                 <Link to="/news-and-tips" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
                   Berita & Tips
                 </Link>
-                <Link to="/contact" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">
-                  Kontak
-                </Link>
+                {/* Removed Kontak Link */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="w-full justify-start text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-200">

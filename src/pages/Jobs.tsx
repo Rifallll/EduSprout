@@ -12,8 +12,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button"; // Import Button component
-import { Search, MapPin, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, MapPin, X, MessageSquare } from "lucide-react"; // Menambahkan MessageSquare
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 const Jobs = () => {
@@ -22,7 +22,7 @@ const Jobs = () => {
   const [selectedSource, setSelectedSource] = useState("all");
   const [jobTypes, setJobTypes] = useState<string[]>([]);
   const [workPolicies, setWorkPolicies] = useState<string[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState("all"); // New state for location filter
+  const [selectedLocation, setSelectedLocation] = useState("all");
 
   const allLocations = useMemo(() => {
     const locations = new Set<string>();
@@ -165,10 +165,18 @@ const Jobs = () => {
             <AccordionItem value="prioritas">
               <AccordionTrigger className="text-lg font-semibold">Prioritas</AccordionTrigger>
               <AccordionContent className="flex gap-2 pt-2">
-                <Button variant={sortBy === "date-desc" ? "default" : "outline"} onClick={() => setSortBy("date-desc")} className="flex-grow">
+                <Button
+                  variant={sortBy === "date-desc" ? "default" : "outline"}
+                  onClick={() => setSortBy("date-desc")}
+                  className="flex-grow"
+                >
                   Terbaru
                 </Button>
-                <Button variant={sortBy === "title-asc" ? "default" : "outline"} onClick={() => setSortBy("title-asc")} className="flex-grow">
+                <Button
+                  variant={sortBy === "title-asc" ? "default" : "outline"}
+                  onClick={() => setSortBy("title-asc")}
+                  className="flex-grow"
+                >
                   Judul (A-Z)
                 </Button>
               </AccordionContent>
@@ -291,10 +299,10 @@ const Jobs = () => {
         href="https://wa.me/6281234567890" // Ganti dengan nomor WhatsApp yang benar
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50"
+        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50 flex items-center justify-center"
         aria-label="Hubungi kami via WhatsApp"
       >
-        {/* Ikon Whatsapp dihapus karena tidak tersedia di lucide-react */}
+        <MessageSquare className="h-7 w-7" />
       </a>
     </div>
   );

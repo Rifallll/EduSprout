@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin, Whatsapp } from "lucide-react";
+import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react"; // Whatsapp removed
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NewsListItem from "@/components/NewsListItem"; // Re-use NewsListItem for related news
 import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
@@ -147,7 +147,8 @@ const NewsDetailPage = () => {
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" size="icon" className="hover:bg-green-500 hover:text-white transition-colors duration-200">
-                <Whatsapp className="h-5 w-5" />
+                {/* Removed Whatsapp icon */}
+                WhatsApp
               </Button>
             </a>
           </div>

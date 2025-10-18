@@ -22,28 +22,28 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-black text-gray-200"> {/* Changed background to black and text to gray-200 */}
+    <header className="sticky top-0 z-50 w-full border-b bg-black text-white"> {/* Changed text to white */}
       <div className="container flex h-14 items-center justify-between">
         <Link to="/" className="text-xl md:text-2xl font-extrabold tracking-tight text-primary transition-colors duration-200">
           EduSprout
         </Link>
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/events" className="text-sm font-medium text-gray-200 hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
+          <Link to="/events" className="text-sm font-medium text-white hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
             Event
           </Link>
-          <Link to="/scholarships" className="text-sm font-medium text-gray-200 hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
+          <Link to="/scholarships" className="text-sm font-medium text-white hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
             Beasiswa
           </Link>
-          <Link to="/jobs" className="text-sm font-medium text-gray-200 hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
+          <Link to="/jobs" className="text-sm font-medium text-white hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
             Lowongan
           </Link>
-          <Link to="/news-and-tips" className="text-sm font-medium text-gray-200 hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
+          <Link to="/news-and-tips" className="text-sm font-medium text-white hover:text-primary transition-colors duration-200"> {/* Adjusted text color */}
             Berita & Tips
           </Link>
           {/* Dropdown untuk Login/Daftar atau Profil/Logout */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="ml-4 text-gray-200 hover:bg-gray-800"> {/* Adjusted text and hover background color */}
+              <Button variant="ghost" size="icon" className="ml-4 text-white hover:bg-gray-800"> {/* Adjusted text color */}
                 <User className="h-5 w-5" />
                 <span className="sr-only">Menu Pengguna</span>
               </Button>
@@ -81,7 +81,7 @@ const Header = () => {
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-gray-200 hover:bg-gray-800"> {/* Adjusted text and hover background color */}
+              <Button variant="ghost" size="icon" className="text-white hover:bg-gray-800"> {/* Adjusted text color */}
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>

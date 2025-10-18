@@ -13,9 +13,10 @@ import Contact from "./pages/Contact";
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import UploadEventPage from "./pages/UploadEventPage"; // Import the new page
-import PartnershipPage from "./pages/PartnershipPage"; // Import the new page
-import CareerPage from "./pages/CareerPage"; // Import the new page
+import UploadEventPage from "./pages/UploadEventPage";
+import PartnershipPage from "./pages/PartnershipPage";
+import CareerPage from "./pages/CareerPage";
+import JobDetailPage from "./pages/JobDetailPage"; // Import the new page
 
 const queryClient = new QueryClient();
 
@@ -31,13 +32,14 @@ const App = () => (
             <Route path="events" element={<Events />} />
             <Route path="scholarships" element={<Scholarships />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="jobs/:jobId" element={<JobDetailPage />} /> {/* New route for job details */}
             <Route path="contact" element={<Contact />} />
             <Route path="news-and-tips" element={<NewsAndTips />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
-            <Route path="upload-event" element={<UploadEventPage />} /> {/* New route */}
-            <Route path="partnership" element={<PartnershipPage />} /> {/* New route */}
-            <Route path="career" element={<CareerPage />} /> {/* New route */}
+            <Route path="upload-event" element={<UploadEventPage />} />
+            <Route path="partnership" element={<PartnershipPage />} />
+            <Route path="career" element={<CareerPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

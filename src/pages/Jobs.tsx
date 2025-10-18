@@ -112,7 +112,7 @@ const Jobs = () => {
               category={jobItem.source} // Using source as category for InfoCard
               location={jobItem.location}
               date={jobItem.date_posted}
-              link={jobItem.link}
+              link={`/jobs/${jobItem.id}`} {/* Changed to internal link */}
               linkText="Lihat Detail"
             />
           ))

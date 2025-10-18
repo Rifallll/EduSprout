@@ -165,7 +165,8 @@ const NewsDetailPage = () => {
                 </div>
               </div>
             </div>
-          </CardContent>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Related News Section (Carousel) */}

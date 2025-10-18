@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
+// Removed unused social media icons as the section is being removed
 
 const Contact = () => {
   return (
@@ -42,22 +42,6 @@ const Contact = () => {
             </form>
           </CardContent>
         </Card>
-      </div>
-      <div className="mt-12 text-center">
-        <h2 className="text-2xl font-semibold mb-4">Informasi Kontak Lainnya</h2>
-        <p className="text-muted-foreground">Email: info@edusprout.com</p>
-        <p className="text-muted-foreground">Telepon: (123) 456-7890</p>
-        <div className="flex justify-center space-x-4 mt-4">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
-            <Facebook size={24} />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
-            <Instagram size={24} />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
-            <Twitter size={24} />
-          </a>
-        </div>
       </div>
     </div>
   );

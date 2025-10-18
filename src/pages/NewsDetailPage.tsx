@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin, Phone } from "lucide-react"; // Added Phone icon
+import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Facebook, Twitter, Linkedin, Phone } from "lucide-react"; // Removed Share2 and Bookmark icons
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NewsListItem from "@/components/NewsListItem"; // Re-use NewsListItem for related news
 import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
@@ -70,17 +70,7 @@ const NewsDetailPage = () => {
           <div className="flex items-center justify-between mb-4"> {/* Increased bottom margin */}
             <Badge className="bg-primary/10 text-primary font-semibold text-sm px-3 py-1 hover:bg-primary/20 transition-colors duration-200"> {/* Enhanced badge styling */}
               {news.category}
-            </Badge>
-            <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"> {/* Enhanced button styling */}
-                <Bookmark className="h-5 w-5" />
-                <span className="sr-only">Simpan Artikel</span>
-              </Button>
-              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"> {/* Enhanced button styling */}
-                <Share2 className="h-5 w-5" />
-                <span className="sr-only">Bagikan Artikel</span>
-              </Button>
-            </div>
+            </Badge>            
           </div>
 
           <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-foreground">{news.title}</CardTitle> {/* Larger, bolder title */}
@@ -175,8 +165,7 @@ const NewsDetailPage = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
+          </CardContent>
       </Card>
 
       {/* Related News Section (Carousel) */}

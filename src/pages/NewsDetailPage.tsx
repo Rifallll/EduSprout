@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin } from "lucide-react";
+import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Share2, Bookmark, Facebook, Twitter, Linkedin, Phone } from "lucide-react"; // Added Phone icon
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NewsListItem from "@/components/NewsListItem"; // Re-use NewsListItem for related news
 import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
@@ -145,8 +145,8 @@ const NewsDetailPage = () => {
               </Button>
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button className="h-10 px-4 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200"> {/* Adjusted for text button */}
-                WhatsApp
+              <Button variant="outline" size="icon" className="h-10 w-10 bg-green-500 text-white hover:bg-green-600 transition-colors duration-200">
+                <Phone className="h-5 w-5" /> {/* Phone icon for WhatsApp */}
               </Button>
             </a>
           </div>

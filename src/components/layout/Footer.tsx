@@ -1,68 +1,100 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react"; // Import social media icons
+import { Facebook, Instagram, Twitter, Linkedin, X } from "lucide-react"; // Import X icon for Twitter
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-700 bg-black text-white py-8"> {/* Changed bg to black, text to white, and border color */}
-      <div className="container flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-        {/* Brand and Copyright */}
+    <footer className="bg-white text-foreground py-12 border-t border-border"> {/* Changed background, text color, and border */}
+      <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Column 1: Brand Info & Social Media */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <Link to="/" className="text-2xl font-bold text-white mb-2"> {/* Changed text-foreground to text-white */}
+          <Link to="/" className="text-3xl font-extrabold text-primary mb-4">
             EduSprout
           </Link>
-          <p className="text-sm text-gray-400"> {/* Changed text-muted-foreground to text-gray-400 */}
-            &copy; {new Date().getFullYear()} EduSprout. All rights reserved.
+          <p className="text-sm text-muted-foreground mb-6 max-w-xs">
+            EduSprout adalah platform informasi dan pengembangan diri terbesar untuk mahasiswa dan pelajar di Indonesia. Kami menghubungkan Anda dengan event, beasiswa, lowongan, dan banyak lagi.
           </p>
-        </div>
-
-        {/* Navigation Links */}
-        <nav className="flex flex-col items-center md:items-start gap-2">
-          <h3 className="text-lg font-semibold mb-2">Tautan Cepat</h3>
-          <Link to="/events" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Event
-          </Link>
-          <Link to="/scholarships" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Beasiswa
-          </Link>
-          <Link to="/jobs" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Lowongan
-          </Link>
-          <Link to="/news-and-tips" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Berita & Tips
-          </Link>
-          {/* Removed Kontak Link */}
-        </nav>
-
-        {/* Legal Links */}
-        <nav className="flex flex-col items-center md:items-start gap-2">
-          <h3 className="text-lg font-semibold mb-2">Informasi</h3>
-          <a href="#" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Kebijakan Privasi
-          </a>
-          <a href="#" className="text-sm text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-            Syarat & Ketentuan
-          </a>
-        </nav>
-
-        {/* Social Media */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <h3 className="text-lg font-semibold mb-2">Ikuti Kami</h3>
           <div className="flex space-x-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-              <Facebook size={24} /> {/* Increased icon size */}
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <X size={20} /> {/* Using X for Twitter */}
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-              <Instagram size={24} /> {/* Increased icon size */}
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <Instagram size={20} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-              <Twitter size={24} /> {/* Increased icon size */}
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <Linkedin size={20} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors"> {/* Adjusted text color */}
-              <Linkedin size={24} /> {/* Increased icon size */}
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <Facebook size={20} />
             </a>
           </div>
         </div>
+
+        {/* Column 2: Tentang Kami */}
+        <nav className="flex flex-col items-center md:items-start gap-3">
+          <h3 className="text-lg font-semibold mb-3">Tentang Kami</h3>
+          <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Hubungi Kami
+          </Link>
+          <Link to="/help-center" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Pusat Bantuan
+          </Link>
+          <Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Kebijakan Privasi
+          </Link>
+          <Link to="/terms-and-conditions" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Syarat & Ketentuan
+          </Link>
+        </nav>
+
+        {/* Column 3: Pencari Kerja */}
+        <nav className="flex flex-col items-center md:items-start gap-3">
+          <h3 className="text-lg font-semibold mb-3">Pencari Kerja</h3>
+          <Link to="/signup" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Registrasi Pencari Kerja
+          </Link>
+          <Link to="/resume-builder" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Buat Resume Online
+          </Link>
+          <Link to="/jobs" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Cari Loker
+          </Link>
+          <Link to="/jobs?workPolicy=Kerja Remote/dari rumah" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Loker Remote
+          </Link>
+          <Link to="/jobs?workPolicy=Kerja di kantor / rumah" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Loker Hybrid
+          </Link>
+          <Link to="/jobs-alert" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Jobs Alert
+          </Link>
+          <Link to="/news-and-tips?category=Karir" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Tips Loker
+          </Link>
+          <Link to="/jobs-locations" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Lokasi Pekerjaan
+          </Link>
+          <Link to="/jobs-categories" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Kategori Pekerjaan
+          </Link>
+        </nav>
+
+        {/* Column 4: Perusahaan */}
+        <nav className="flex flex-col items-center md:items-start gap-3">
+          <h3 className="text-lg font-semibold mb-3">Perusahaan</h3>
+          <Link to="/company-registration" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Registrasi Perusahaan
+          </Link>
+          <Link to="/post-job" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Pasang Loker
+          </Link>
+          <Link to="/products-and-services" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Produk dan Layanan
+          </Link>
+          <Link to="/pricing" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Harga
+          </Link>
+        </nav>
       </div>
     </footer>
   );

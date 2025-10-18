@@ -7,9 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
-import Scholarships from "./pages/Scholarships";
+import Scholarships from "./pages/pages/Scholarships";
 import Jobs from "./pages/Jobs";
-// import Contact from "./pages/Contact"; // Removed import
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -17,7 +16,19 @@ import UploadEventPage from "./pages/UploadEventPage";
 import PartnershipPage from "./pages/PartnershipPage";
 import CareerPage from "./pages/CareerPage";
 import JobDetailPage from "./pages/JobDetailPage";
-import NewsDetailPage from "./pages/NewsDetailPage"; // Import the new NewsDetailPage
+import NewsDetailPage from "./pages/NewsDetailPage";
+import ContactPage from "./pages/ContactPage"; // New
+import HelpCenterPage from "./pages/HelpCenterPage"; // New
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage"; // New
+import TermsAndConditionsPage from "./pages/TermsAndConditionsPage"; // New
+import ResumeBuilderPage from "./pages/ResumeBuilderPage"; // New
+import JobsAlertPage from "./pages/JobsAlertPage"; // New
+import JobLocationsPage from "./pages/JobLocationsPage"; // New
+import JobCategoriesPage from "./pages/JobCategoriesPage"; // New
+import CompanyRegistrationPage from "./pages/CompanyRegistrationPage"; // New
+import PostJobPage from "./pages/PostJobPage"; // New
+import ProductsAndServicesPage from "./pages/ProductsAndServicesPage"; // New
+import PricingPage from "./pages/PricingPage"; // New
 
 const queryClient = new QueryClient();
 
@@ -34,14 +45,26 @@ const App = () => (
             <Route path="scholarships" element={<Scholarships />} />
             <Route path="jobs" element={<Jobs />} />
             <Route path="jobs/:jobId" element={<JobDetailPage />} />
-            {/* Removed Contact Route */}
             <Route path="news-and-tips" element={<NewsAndTips />} />
-            <Route path="news-and-tips/:newsId" element={<NewsDetailPage />} /> {/* New route for news details */}
+            <Route path="news-and-tips/:newsId" element={<NewsDetailPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="upload-event" element={<UploadEventPage />} />
             <Route path="partnership" element={<PartnershipPage />} />
             <Route path="career" element={<CareerPage />} />
+            {/* New Routes from Footer */}
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="help-center" element={<HelpCenterPage />} />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="terms-and-conditions" element={<TermsAndConditionsPage />} />
+            <Route path="resume-builder" element={<ResumeBuilderPage />} />
+            <Route path="jobs-alert" element={<JobsAlertPage />} />
+            <Route path="jobs-locations" element={<JobLocationsPage />} />
+            <Route path="jobs-categories" element={<JobCategoriesPage />} />
+            <Route path="company-registration" element={<CompanyRegistrationPage />} />
+            <Route path="post-job" element={<PostJobPage />} />
+            <Route path="products-and-services" element={<ProductsAndServicesPage />} />
+            <Route path="pricing" element={<PricingPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

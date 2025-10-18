@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays, Eye, MessageSquare, Bookmark, MoreHorizontal } from 'lucide-react';
+import { CalendarDays, Eye, MessageSquare } from 'lucide-react'; // Removed Bookmark, MoreHorizontal
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card"; // Import Card and CardContent
 
@@ -31,9 +31,9 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
   comments = Math.floor(Math.random() * 500) + 10,
 }) => {
   return (
-    <Card className="flex flex-col md:flex-row items-start gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Removed p-4 from Card, adjusted gap */}
+    <Card className="flex flex-col md:flex-row items-start gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       {imageUrl && (
-        <Link to={link} className="flex-shrink-0 w-full md:w-48 h-40 md:h-full overflow-hidden rounded-l-lg"> {/* Increased width, made height full, rounded-l-lg */}
+        <Link to={link} className="flex-shrink-0 w-full md:w-48 h-40 md:h-full overflow-hidden rounded-l-lg">
           <img
             src={imageUrl}
             alt={title}
@@ -41,14 +41,14 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
           />
         </Link>
       )}
-      <CardContent className="flex-1 p-4 space-y-2"> {/* Added p-4 to CardContent */}
+      <CardContent className="flex-1 p-4 space-y-2">
         {/* Author Info */}
-        <div className="flex items-center text-sm text-muted-foreground mb-2"> {/* Added mb-2 */}
+        <div className="flex items-center text-sm text-muted-foreground mb-2">
           <Avatar className="h-6 w-6 mr-2">
             <AvatarImage src={authorAvatarUrl} alt={author} />
             <AvatarFallback>{author.charAt(0)}</AvatarFallback>
           </Avatar>
-          <span className="font-medium text-foreground">{author}</span> {/* Made author name more prominent */}
+          <span className="font-medium text-foreground">{author}</span>
         </div>
 
         {/* Title */}
@@ -59,12 +59,12 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
         </Link>
 
         {/* Description */}
-        <p className="text-muted-foreground line-clamp-4 text-sm md:text-base mt-2"> {/* Added mt-2 */}
+        <p className="text-muted-foreground line-clamp-4 text-sm md:text-base mt-2">
           {description}
         </p>
 
         {/* Metadata and Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-border mt-4"> {/* Added pt-4, border-t, mt-4 */}
+        <div className="flex items-center justify-between pt-4 border-t border-border mt-4">
           <div className="flex items-center text-sm text-muted-foreground space-x-4">
             <span className="flex items-center">
               <CalendarDays className="h-4 w-4 mr-1" /> {date}
@@ -76,14 +76,7 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
               <MessageSquare className="h-4 w-4 mr-1" /> {comments.toLocaleString()}
             </span>
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-              <Bookmark className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </div>
+          {/* Removed Bookmark and MoreHorizontal buttons */}
         </div>
       </CardContent>
     </Card>

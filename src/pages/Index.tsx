@@ -31,13 +31,20 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary to-green-700 text-white py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 bg-pattern opacity-10"></div>
+      <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
+        {/* Background Image */}
+        <img
+          src="https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=EduSprout+Hero" // Ganti dengan URL gambar Anda
+          alt="Hero Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Overlay for text readability */}
+        <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="container relative z-10">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight animate-fade-in-up">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-white animate-fade-in-up">
             Platform Informasi Mahasiswa & Pelajar
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto opacity-0 animate-fade-in-up delay-200">
+          <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto text-white opacity-0 animate-fade-in-up delay-200">
             Jelajahi peluang tanpa batas: event, beasiswa, lowongan, dan banyak lagi untuk masa depan cerahmu!
           </p>
           {/* Tombol "Jelajahi EduSprout" dihapus */}

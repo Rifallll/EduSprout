@@ -28,26 +28,11 @@ const Index = () => {
   // Array of hero image paths
   const heroImages = ["/1 (2).jpg", "/3.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageOpacity, setImageOpacity] = useState(1); // 1 for visible, 0 for hidden
 
   useEffect(() => {
-    const fadeDuration = 1000; // 1 detik untuk fade in/out (sesuai dengan transisi CSS)
-    const visibleDuration = 4000; // Waktu gambar tampil penuh (4 detik)
-    const cycleInterval = visibleDuration + fadeDuration; // Total waktu sebelum fade-out berikutnya dimulai (5 detik)
-
-    // Gambar awal sudah terlihat (opacity 1)
-
     const interval = setInterval(() => {
-      setImageOpacity(0); // Mulai fade-out gambar saat ini
-
-      const timeoutId = setTimeout(() => {
-        // Setelah fade-out selesai, ganti sumber gambar dan mulai fade-in
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-        setImageOpacity(1); // Mulai fade-in gambar baru
-      }, fadeDuration); // Tunggu sampai fade-out selesai
-
-      return () => clearTimeout(timeoutId); // Bersihkan timeout jika komponen di-unmount
-    }, cycleInterval); // Interval ini memicu dimulainya fade-out
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 60000); // Ganti gambar setiap 60 detik (1 menit)
 
     return () => clearInterval(interval); // Bersihkan interval saat komponen di-unmount
   }, [heroImages.length]);
@@ -63,8 +48,7 @@ const Index = () => {
         <img
           src={heroImages[currentImageIndex]} // Menggunakan gambar dari state
           alt="Hero Background"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out" // Transisi CSS
-          style={{ opacity: imageOpacity }} // Kontrol opacity melalui style
+          className="absolute inset-0 w-full h-full object-cover" // Menghapus kelas transisi opacity
         />
         {/* Overlay for text readability */}
         <div className="absolute inset-0 bg-black opacity-50"></div>

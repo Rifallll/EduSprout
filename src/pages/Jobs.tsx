@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, X, MessageSquare } from "lucide-react";
+import { Search, MapPin, X, MessageSquare, RotateCcw } from "lucide-react"; // Menambahkan RotateCcw untuk ikon reset
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 // Define JobItem type to include new fields for better type safety
@@ -64,6 +64,15 @@ const Jobs = () => {
     setWorkPolicies((prev) =>
       checked ? [...prev, policy] : prev.filter((p) => p !== policy)
     );
+  };
+
+  const handleResetFilters = () => {
+    setSearchTerm("");
+    setSortBy("date-desc");
+    setSelectedSource("all");
+    setJobTypes([]);
+    setWorkPolicies([]);
+    setSelectedLocation("all");
   };
 
   const filteredAndSortedJobs = useMemo(() => {
@@ -130,7 +139,7 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-sm">
+      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-lg rounded-b-lg"> {/* Added rounded-b-lg and shadow-lg */}
         <div className="container flex flex-col md:flex-row items-center gap-4">
           <div className="relative flex-grow w-full md:w-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -172,14 +181,14 @@ const Jobs = () => {
 
       <div className="container flex flex-col lg:flex-row gap-8 py-8">
         {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-md border border-border lg:sticky lg:top-[120px] self-start">
+        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-lg border border-border lg:sticky lg:top-[120px] self-start"> {/* Changed shadow-md to shadow-lg */}
           <h2 className="text-2xl font-bold mb-6">Filter Lowongan</h2>
 
           {/* QR Code Section */}
-          <div className="mb-8 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800 text-center shadow-sm">
+          <div className="mb-8 p-4 bg-muted rounded-lg border border-border text-center shadow-sm"> {/* Changed bg-blue-50 to bg-muted, adjusted border */}
             <img src="/placeholder.svg" alt="QR Code" className="w-24 h-24 mx-auto mb-3" />
-            <p className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p>
-            <p className="text-xs text-blue-600 dark:text-blue-400">Scan kode QR untuk download</p>
+            <p className="text-sm font-semibold text-foreground mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p> {/* Changed text color */}
+            <p className="text-xs text-muted-foreground">Scan kode QR untuk download</p>
           </div>
 
           <Accordion type="multiple" defaultValue={["prioritas", "tipe-pekerjaan", "kebijakan-kerja", "sumber"]}>
@@ -277,6 +286,15 @@ const Jobs = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+
+          {/* Reset Filters Button */}
+          <Button
+            variant="outline"
+            onClick={handleResetFilters}
+            className="w-full mt-8 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" /> Reset Filter
+          </Button>
         </aside>
 
         {/* Job Listings */}

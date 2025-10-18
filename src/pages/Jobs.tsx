@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, X, MessageSquare } from "lucide-react"; // Menambahkan MessageSquare
+import { Search, MapPin, X, MessageSquare } from "lucide-react";
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 const Jobs = () => {
@@ -108,7 +108,7 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-3 shadow-sm">
+      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-sm"> {/* Increased py to 4 */}
         <div className="container flex flex-col md:flex-row items-center gap-4">
           <div className="relative flex-grow w-full md:w-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -150,11 +150,11 @@ const Jobs = () => {
 
       <div className="container flex flex-col lg:flex-row gap-8 py-8">
         {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-4 bg-card rounded-lg shadow-sm border border-border lg:sticky lg:top-[120px] self-start">
+        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-md border border-border lg:sticky lg:top-[120px] self-start"> {/* Increased padding, added shadow-md */}
           <h2 className="text-2xl font-bold mb-6">Filter Lowongan</h2>
 
           {/* QR Code Section */}
-          <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800 text-center">
+          <div className="mb-8 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800 text-center shadow-sm"> {/* Increased mb, added shadow-sm */}
             <img src="/placeholder.svg" alt="QR Code" className="w-24 h-24 mx-auto mb-3" />
             <p className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p>
             <p className="text-xs text-blue-600 dark:text-blue-400">Scan kode QR untuk download</p>
@@ -162,7 +162,7 @@ const Jobs = () => {
 
           <Accordion type="multiple" defaultValue={["prioritas", "tipe-pekerjaan", "kebijakan-kerja", "sumber"]}>
             {/* Prioritas Filter */}
-            <AccordionItem value="prioritas">
+            <AccordionItem value="prioritas" className="border-b pb-4 mb-4"> {/* Added pb and mb for spacing */}
               <AccordionTrigger className="text-lg font-semibold">Prioritas</AccordionTrigger>
               <AccordionContent className="flex gap-2 pt-2">
                 <Button
@@ -181,10 +181,10 @@ const Jobs = () => {
                 </Button>
               </AccordionContent>
             </AccordionItem>
-            <Separator className="my-4" />
+            {/* Separator removed as AccordionItem now has border-b and mb */}
 
             {/* Tipe Pekerjaan Filter (Placeholder) */}
-            <AccordionItem value="tipe-pekerjaan">
+            <AccordionItem value="tipe-pekerjaan" className="border-b pb-4 mb-4">
               <AccordionTrigger className="text-lg font-semibold">Tipe Pekerjaan</AccordionTrigger>
               <AccordionContent className="space-y-2 pt-2">
                 <div className="flex items-center space-x-2">
@@ -213,10 +213,10 @@ const Jobs = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
-            <Separator className="my-4" />
+            {/* Separator removed */}
 
             {/* Kebijakan Kerja Filter (Placeholder) */}
-            <AccordionItem value="kebijakan-kerja">
+            <AccordionItem value="kebijakan-kerja" className="border-b pb-4 mb-4">
               <AccordionTrigger className="text-lg font-semibold">Kebijakan Kerja</AccordionTrigger>
               <AccordionContent className="space-y-2 pt-2">
                 <div className="flex items-center space-x-2">
@@ -233,10 +233,10 @@ const Jobs = () => {
                 </div>
               </AccordionContent>
             </AccordionItem>
-            <Separator className="my-4" />
+            {/* Separator removed */}
 
             {/* Sumber Filter */}
-            <AccordionItem value="sumber">
+            <AccordionItem value="sumber" className="pb-4"> {/* No bottom border for the last item */}
               <AccordionTrigger className="text-lg font-semibold">Sumber Lowongan</AccordionTrigger>
               <AccordionContent className="pt-2">
                 <Select onValueChange={setSelectedSource} defaultValue="all">
@@ -260,7 +260,7 @@ const Jobs = () => {
 
         {/* Job Listings */}
         <main className="flex-grow lg:w-3/4">
-          <h1 className="text-4xl font-bold mb-6 text-center lg:text-left">Lowongan Kerja di Indonesia</h1>
+          <h1 className="text-4xl font-bold mb-4 text-center lg:text-left">Lowongan Kerja di Indonesia</h1> {/* Adjusted mb */}
           <p className="text-lg text-center lg:text-left text-muted-foreground mb-8">
             Dapatkan informasi lowongan pekerjaan dan peluang karir terbaru dari berbagai perusahaan.
           </p>
@@ -288,7 +288,7 @@ const Jobs = () => {
                 />
               ))
             ) : (
-              <p className="col-span-full text-center text-muted-foreground">Tidak ada lowongan yang ditemukan.</p>
+              <p className="col-span-full text-center text-muted-foreground py-12">Tidak ada lowongan yang ditemukan.</p>
             )}
           </div>
         </main>

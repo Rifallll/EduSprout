@@ -84,6 +84,8 @@ const Jobs = () => {
             <SelectItem value="lokerbandung">Loker Bandung</SelectItem>
             <SelectItem value="getredy">GetRedy</SelectItem>
             <SelectItem value="jooble">Jooble</SelectItem>
+            <SelectItem value="jobstreet">JobStreet</SelectItem> {/* Added JobStreet */}
+            <SelectItem value="lokerid">Loker.id</SelectItem> {/* Added Loker.id */}
             {/* Add other sources as needed */}
           </SelectContent>
         </Select>

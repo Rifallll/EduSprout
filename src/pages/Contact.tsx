@@ -9,8 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
 
 const Contact = () => {
-  const address = "Garden City 2, Cipagalo, Bojongsoang, Kabupaten Bandung, Jawa Barat, Indonesia";
-
   return (
     <div className="container py-8">
       <h1 className="text-4xl font-bold mb-6 text-center">Hubungi Kami</h1>
@@ -59,15 +57,6 @@ const Contact = () => {
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-foreground transition-colors">
             <Twitter size={24} />
           </a>
-        </div>
-      </div>
-
-      {/* Lokasi Kami Section */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Lokasi Kami</h2>
-        <p className="text-muted-foreground text-center mb-6">{address}</p>
-        <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg text-muted-foreground">
-          Peta telah dihapus.
         </div>
       </div>
     </div>

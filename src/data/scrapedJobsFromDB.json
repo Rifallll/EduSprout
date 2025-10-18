@@ -52,5 +52,50 @@
     "location": "Yogyakarta",
     "link": "https://id.jooble.org/job/hr-recruiter",
     "date_posted": "2024-10-29"
+  },
+  {
+    "id": "job_jobstreet_1",
+    "source": "jobstreet",
+    "title": "Software Engineer (Entry Level)",
+    "company": "Tech Innovators",
+    "location": "Jakarta",
+    "link": "https://www.jobstreet.co.id/job/software-engineer-1",
+    "date_posted": "2024-10-31"
+  },
+  {
+    "id": "job_jobstreet_2",
+    "source": "jobstreet",
+    "title": "Digital Marketing Executive",
+    "company": "Creative Solutions",
+    "location": "Bandung",
+    "link": "https://www.jobstreet.co.id/job/digital-marketing-2",
+    "date_posted": "2024-10-30"
+  },
+  {
+    "id": "job_jobstreet_3",
+    "source": "jobstreet",
+    "title": "UI/UX Designer",
+    "company": "Design Hub",
+    "location": "Surabaya",
+    "link": "https://www.jobstreet.co.id/job/ui-ux-designer-3",
+    "date_posted": "2024-10-29"
+  },
+  {
+    "id": "job_lokerid_1",
+    "source": "lokerid",
+    "title": "Staff Administrasi",
+    "company": "PT Maju Bersama",
+    "location": "Jakarta",
+    "link": "https://www.loker.id/detail/staff-administrasi",
+    "date_posted": "2024-11-01"
+  },
+  {
+    "id": "job_lokerid_2",
+    "source": "lokerid",
+    "title": "Customer Service Representative",
+    "company": "Global Connect",
+    "location": "Remote",
+    "link": "https://www.loker.id/detail/customer-service",
+    "date_posted": "2024-10-31"
   }
 ]

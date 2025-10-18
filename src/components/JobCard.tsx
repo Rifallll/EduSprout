@@ -41,12 +41,12 @@ const JobCard: React.FC<JobCardProps> = ({
   companyLogoUrl,
 }) => {
   return (
-    <Card className="flex flex-col h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      <CardHeader className="pb-2">
+    <Card className="flex flex-col h-full border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Added border and rounded-lg */}
+      <CardHeader className="pb-2 px-6 pt-6"> {/* Adjusted padding */}
         <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl font-bold leading-tight line-clamp-2">{title}</CardTitle>
+          <CardTitle className="text-xl font-bold leading-tight line-clamp-2 text-foreground">{title}</CardTitle> {/* Ensured text-foreground */}
           {salaryRange && (
-            <Badge variant="outline" className="text-primary font-semibold whitespace-nowrap px-3 py-1">
+            <Badge className="bg-primary/10 text-primary font-semibold whitespace-nowrap px-3 py-1"> {/* Adjusted badge styling */}
               {salaryRange}
             </Badge>
           )}
@@ -85,7 +85,7 @@ const JobCard: React.FC<JobCardProps> = ({
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="pt-2 pb-4 flex flex-wrap gap-2 items-center">
+      <CardContent className="pt-2 pb-4 px-6 flex flex-wrap gap-2 items-center"> {/* Adjusted padding */}
         {/* Source Badge */}
         <Badge variant="secondary" className="capitalize bg-muted text-muted-foreground">
           {source.replace(/-/g, " ")} {/* Format source name */}
@@ -105,9 +105,9 @@ const JobCard: React.FC<JobCardProps> = ({
         )}
       </CardContent>
       
-      <CardFooter className="pt-0">
+      <CardFooter className="pt-0 px-6 pb-6"> {/* Adjusted padding */}
         <Link to={link} className="w-full">
-          <Button variant="outline" className="w-full flex items-center justify-center">
+          <Button variant="secondary" className="w-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground"> {/* Changed to variant="secondary" and adjusted hover */}
             Lihat Detail <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>

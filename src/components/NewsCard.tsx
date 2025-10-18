@@ -28,7 +28,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
   // Removed default random generation for views and comments
 }) => {
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 p-4"> {/* Added padding to card */}
+    <Card className="flex flex-col h-full min-h-[320px] overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 p-4"> {/* Added min-h for consistent card height, added padding to card */}
       <CardHeader className="flex-grow p-0 mb-4"> {/* Adjusted padding and margin */}
         <div className="flex items-center mb-4"> {/* Container for small icon and author */}
           {imageUrl ? (

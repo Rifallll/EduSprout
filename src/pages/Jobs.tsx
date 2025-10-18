@@ -65,7 +65,7 @@ const Jobs = () => {
   
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(12); // Number of jobs to display per page
+  const [jobsPerPage] = useState(5); // Changed from 12 to 5 to ensure more pages are visible
 
   useEffect(() => {
     const userPostedJobs: JobItem[] = JSON.parse(localStorage.getItem("userPostedJobs") || "[]");

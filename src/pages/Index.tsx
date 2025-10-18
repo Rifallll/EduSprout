@@ -34,7 +34,7 @@ const Index = () => {
       <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
         {/* Background Image */}
         <img
-          src="/images/your-hero-image.jpg" // Ganti dengan path ke gambar Anda, contoh: "/images/hero-background.jpg"
+          src="/images/1 (2).jpg" // Menggunakan gambar yang Anda berikan
           alt="Hero Background"
           className="absolute inset-0 w-full h-full object-cover"
         />

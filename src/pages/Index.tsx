@@ -26,7 +26,7 @@ const Index = () => {
   const registeredStudents = useCountUp({ end: 2548852, duration: 3000 });
 
   // Array of hero image paths
-  const heroImages = ["/1 (2).jpg", "/3.jpg"];
+  const heroImages = ["/1.jpg", "/2.jpg", "/3.jpg"]; // Diperbarui dengan jalur gambar yang baru
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {

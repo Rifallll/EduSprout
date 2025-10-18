@@ -7,7 +7,7 @@ import JobPostingForm from "@/components/JobPostingForm"; // Import the new form
 const PostJobPage = () => {
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-14rem)] py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-4xl"> {/* Changed max-w-2xl to max-w-4xl */}
         <CardHeader className="text-center">
           <Briefcase className="h-16 w-16 text-primary mx-auto mb-4" />
           <CardTitle className="text-3xl font-bold">Pasang Lowongan Kerja</CardTitle>

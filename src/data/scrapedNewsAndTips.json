@@ -2,37 +2,79 @@
   {
     "id": "sn1",
     "title": "Inovasi Terbaru dalam Teknologi Pendidikan",
-    "description": "Bagaimana teknologi AI dan VR mengubah cara kita belajar di era digital.",
+    "description": "Bagaimana teknologi AI dan VR mengubah cara kita belajar di era digital. Pelajari lebih lanjut tentang masa depan pendidikan.",
     "category": "Teknologi",
-    "date": "2024-10-25",
-    "link": "https://example.com/inovasi-edutech",
-    "imageUrl": "https://via.placeholder.com/400x200/FF5733/FFFFFF?text=EduTech+Innovation"
+    "date": "Oct 25",
+    "link": "/news-and-tips/inovasi-edutech",
+    "imageUrl": "https://via.placeholder.com/400x200/FF5733/FFFFFF?text=EduTech+Innovation",
+    "author": "Budi Santoso",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=BS",
+    "views": 12345,
+    "comments": 234
   },
   {
     "id": "sn2",
     "title": "Tips Efektif Belajar Online untuk Mahasiswa",
-    "description": "Strategi untuk tetap fokus dan produktif saat mengikuti perkuliahan daring.",
+    "description": "Strategi untuk tetap fokus dan produktif saat mengikuti perkuliahan daring. Tingkatkan efisiensi belajar Anda dari rumah.",
     "category": "Tips Belajar",
-    "date": "2024-10-24",
-    "link": "https://example.com/tips-belajar-online",
-    "imageUrl": "https://via.placeholder.com/400x200/33FF57/FFFFFF?text=Online+Learning+Tips"
+    "date": "Oct 24",
+    "link": "/news-and-tips/tips-belajar-online",
+    "imageUrl": "https://via.placeholder.com/400x200/33FF57/FFFFFF?text=Online+Learning+Tips",
+    "author": "Siti Aminah",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=SA",
+    "views": 8765,
+    "comments": 189
   },
   {
     "id": "sn3",
     "title": "Peluang Karir di Bidang Data Science",
-    "description": "Mengenal lebih dalam profesi Data Scientist dan skill yang dibutuhkan.",
+    "description": "Mengenal lebih dalam profesi Data Scientist dan skill yang dibutuhkan. Persiapkan diri Anda untuk karir di bidang data.",
     "category": "Karir",
-    "date": "2024-10-23",
-    "link": "https://example.com/karir-data-science",
-    "imageUrl": "https://via.placeholder.com/400x200/5733FF/FFFFFF?text=Data+Science+Career"
+    "date": "Oct 23",
+    "link": "/news-and-tips/karir-data-science",
+    "imageUrl": "https://via.placeholder.com/400x200/5733FF/FFFFFF?text=Data+Science+Career",
+    "author": "Joko Susilo",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=JS",
+    "views": 15678,
+    "comments": 312
   },
   {
     "id": "sn4",
     "title": "Manfaat Bergabung dengan Komunitas Profesional",
-    "description": "Bagaimana networking dapat mempercepat pertumbuhan karir Anda.",
+    "description": "Bagaimana networking dapat mempercepat pertumbuhan karir Anda. Bangun koneksi yang kuat untuk masa depan Anda.",
     "category": "Pengembangan Diri",
-    "date": "2024-10-22",
-    "link": "https://example.com/komunitas-profesional",
-    "imageUrl": "https://via.placeholder.com/400x200/FF33A1/FFFFFF?text=Professional+Community"
+    "date": "Oct 22",
+    "link": "/news-and-tips/komunitas-profesional",
+    "imageUrl": "https://via.placeholder.com/400x200/FF33A1/FFFFFF?text=Professional+Community",
+    "author": "Dewi Lestari",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=DL",
+    "views": 9876,
+    "comments": 156
+  },
+  {
+    "id": "sn5",
+    "title": "Strategi Efektif untuk Mencari Beasiswa Luar Negeri",
+    "description": "Panduan langkah demi langkah untuk menemukan dan melamar beasiswa internasional. Wujudkan impian studi di luar negeri.",
+    "category": "Beasiswa",
+    "date": "Oct 21",
+    "link": "/news-and-tips/beasiswa-luar-negeri",
+    "imageUrl": "https://via.placeholder.com/400x200/00CED1/FFFFFF?text=Scholarship+Abroad",
+    "author": "Rina Wijaya",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=RW",
+    "views": 11223,
+    "comments": 201
+  },
+  {
+    "id": "sn6",
+    "title": "Membangun Portofolio Impresif untuk Fresh Graduate",
+    "description": "Tips dan trik untuk membuat portofolio yang menonjol di mata rekruter. Dapatkan pekerjaan impian Anda.",
+    "category": "Karir",
+    "date": "Oct 20",
+    "link": "/news-and-tips/portofolio-fresh-graduate",
+    "imageUrl": "https://via.placeholder.com/400x200/FF8C00/FFFFFF?text=Portfolio+Tips",
+    "author": "Andi Pratama",
+    "authorAvatarUrl": "https://api.dicebear.com/8.x/initials/svg?seed=AP",
+    "views": 7890,
+    "comments": 110
   }
 ]

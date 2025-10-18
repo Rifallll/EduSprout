@@ -34,7 +34,7 @@ const Index = () => {
       <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
         {/* Background Image */}
         <img
-          src="https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=EduSprout+Hero" // Ganti dengan URL gambar Anda
+          src="/images/your-hero-image.jpg" // Ganti dengan path ke gambar Anda, contoh: "/images/hero-background.jpg"
           alt="Hero Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -283,7 +283,7 @@ const Index = () => {
               <CardTitle className="text-lg font-semibold">Indah Nurfirmanillah</CardTitle>
               <p className="text-sm text-muted-foreground mb-4">Sekolah Tinggi Manajemen PPM, Peserta FMBPI 2021</p>
               <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece EduSprout yang akan datang! Teman-teman jangan sampe ketinggalan juga ya! Sukses terus EduSprout ❤️”
+                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece EduSprout yang akan datang! Temen-teman jangan sampe ketinggalan juga ya! Sukses terus EduSprout ❤️”
               </CardContent>
             </Card>
           </div>

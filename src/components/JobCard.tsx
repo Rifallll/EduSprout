@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, MapPin, CalendarDays, ArrowRight } from "lucide-react";
+import { Building2, MapPin, CalendarDays, ArrowRight, Briefcase, GraduationCap, Zap, CheckCircle, Star } from "lucide-react";
 
 interface JobCardProps {
   id: string;
@@ -13,6 +13,14 @@ interface JobCardProps {
   source: string;
   date_posted?: string;
   link: string; // This link will be for the internal detail page
+  salaryRange?: string;
+  experience?: string;
+  education?: string;
+  skills?: string[];
+  isPremium?: boolean;
+  isHot?: boolean;
+  isActiveRecruiting?: boolean;
+  companyLogoUrl?: string; // Optional: for company logo
 }
 
 const JobCard: React.FC<JobCardProps> = ({
@@ -23,14 +31,38 @@ const JobCard: React.FC<JobCardProps> = ({
   source,
   date_posted,
   link,
+  salaryRange,
+  experience,
+  education,
+  skills,
+  isPremium,
+  isHot,
+  isActiveRecruiting,
+  companyLogoUrl,
 }) => {
   return (
     <Card className="flex flex-col h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader className="flex-grow pb-2">
-        <CardTitle className="text-xl font-bold line-clamp-2 mb-2">{title}</CardTitle>
+        <div className="flex justify-between items-start mb-2">
+          <CardTitle className="text-xl font-bold line-clamp-2">{title}</CardTitle>
+          {salaryRange && (
+            <Badge variant="outline" className="text-primary font-semibold whitespace-nowrap">
+              {salaryRange}
+            </Badge>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {isPremium && <Badge className="bg-yellow-500 text-white hover:bg-yellow-600">Premium</Badge>}
+          {experience && <Badge variant="secondary">{experience}</Badge>}
+          {education && <Badge variant="secondary">{education}</Badge>}
+          {skills && skills.map((skill, index) => (
+            <Badge key={index} variant="secondary">{skill}</Badge>
+          ))}
+        </div>
         <CardDescription className="space-y-1">
           {company && (
             <div className="flex items-center text-sm text-muted-foreground">
+              {companyLogoUrl && <img src={companyLogoUrl} alt={company} className="h-5 w-5 mr-2 rounded-sm" />}
               <Building2 className="h-4 w-4 mr-2 flex-shrink-0" />
               <span>{company}</span>
             </div>
@@ -49,10 +81,20 @@ const JobCard: React.FC<JobCardProps> = ({
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="pt-2 pb-4">
+      <CardContent className="pt-2 pb-4 flex flex-wrap gap-2">
         <Badge variant="secondary" className="capitalize">
           {source.replace(/-/g, " ")} {/* Format source name */}
         </Badge>
+        {isHot && (
+          <Badge className="bg-red-500 text-white hover:bg-red-600">
+            <Zap className="h-3 w-3 mr-1" /> HOT
+          </Badge>
+        )}
+        {isActiveRecruiting && (
+          <Badge className="bg-green-500 text-white hover:bg-green-600">
+            <CheckCircle className="h-3 w-3 mr-1" /> Aktif Merekrut
+          </Badge>
+        )}
       </CardContent>
       <CardFooter className="pt-0">
         <Link to={link} className="w-full">

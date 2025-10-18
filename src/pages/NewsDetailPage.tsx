@@ -89,10 +89,10 @@ const NewsDetailPage = () => {
               <Clock className="h-4 w-4 mr-1" /> {readingTime}
             </span>
             <span className="flex items-center text-sm text-muted-foreground">
-              <Eye className="h-4 w-4 mr-1" /> {news.views?.toLocaleString() || '0'} views
+              <Eye className="h-4 w-4 mr-1" /> 0 views
             </span>
             <span className="flex items-center text-sm text-muted-foreground">
-              <MessageSquare className="h-4 w-4 mr-1" /> {news.comments?.toLocaleString() || '0'} comments
+              <MessageSquare className="h-4 w-4 mr-1" /> 0 comments
             </span>
           </CardDescription>
         </CardHeader>
@@ -145,7 +145,7 @@ const NewsDetailPage = () => {
 
           {/* Comments Section Placeholder */}
           <div className="py-6">
-            <h3 className="text-2xl font-bold mb-6 text-foreground">Komentar ({news.comments?.toLocaleString() || '0'})</h3> {/* Bolder, more space */}
+            <h3 className="text-2xl font-bold mb-6 text-foreground">Komentar (0)</h3> {/* Bolder, more space */}
             <div className="space-y-6"> {/* Increased spacing */}
               <p className="text-muted-foreground text-base">
                 Bagian komentar akan segera hadir! Anda dapat meninggalkan komentar dan berinteraksi dengan pembaca lain di sini.
@@ -192,8 +192,7 @@ const NewsDetailPage = () => {
                     imageUrl={relatedNewsItem.imageUrl}
                     author={relatedNewsItem.author}
                     authorAvatarUrl={relatedNewsItem.authorAvatarUrl}
-                    views={relatedNewsItem.views}
-                    comments={relatedNewsItem.comments}
+                    // views and comments will now default to 0 from NewsListItem
                   />
                 </CarouselItem>
               ))}

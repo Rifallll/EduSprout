@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays, Eye, MessageSquare } from 'lucide-react'; // Removed Bookmark, MoreHorizontal
+import { CalendarDays, Eye, MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card"; // Import Card and CardContent
+import { Card, CardContent } from "@/components/ui/card";
 
 interface NewsListItemProps {
   id: string;
@@ -14,8 +14,8 @@ interface NewsListItemProps {
   imageUrl?: string;
   author?: string;
   authorAvatarUrl?: string;
-  views?: number;
-  comments?: number;
+  views?: number; // Keep prop for type safety, but will display 0
+  comments?: number; // Keep prop for type safety, but will display 0
 }
 
 const NewsListItem: React.FC<NewsListItemProps> = ({
@@ -27,8 +27,7 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
   imageUrl = "/placeholder.svg",
   author = "EduSprout Team",
   authorAvatarUrl = "https://api.dicebear.com/8.x/initials/svg?seed=ES",
-  views = Math.floor(Math.random() * 10000) + 100,
-  comments = Math.floor(Math.random() * 500) + 10,
+  // Removed default random generation for views and comments
 }) => {
   return (
     <Card className="flex flex-col md:flex-row items-start gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -70,13 +69,12 @@ const NewsListItem: React.FC<NewsListItemProps> = ({
               <CalendarDays className="h-4 w-4 mr-1" /> {date}
             </span>
             <span className="flex items-center">
-              <Eye className="h-4 w-4 mr-1" /> {views.toLocaleString()}
+              <Eye className="h-4 w-4 mr-1" /> 0
             </span>
             <span className="flex items-center">
-              <MessageSquare className="h-4 w-4 mr-1" /> {comments.toLocaleString()}
+              <MessageSquare className="h-4 w-4 mr-1" /> 0
             </span>
           </div>
-          {/* Removed Bookmark and MoreHorizontal buttons */}
         </div>
       </CardContent>
     </Card>

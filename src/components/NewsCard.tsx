@@ -13,8 +13,8 @@ interface NewsCardProps {
   imageUrl?: string; // This will now be the small icon/thumbnail
   author?: string;
   authorAvatarUrl?: string;
-  views?: number;
-  comments?: number;
+  views?: number; // Keep prop for type safety, but will display 0
+  comments?: number; // Keep prop for type safety, but will display 0
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
@@ -25,8 +25,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
   imageUrl, // Now used for the small icon/thumbnail
   author = "EduSprout Team",
   authorAvatarUrl = "https://api.dicebear.com/8.x/initials/svg?seed=ES",
-  views = Math.floor(Math.random() * 10000) + 100,
-  comments = Math.floor(Math.random() * 500) + 10,
+  // Removed default random generation for views and comments
 }) => {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 p-4"> {/* Added padding to card */}
@@ -59,10 +58,10 @@ const NewsCard: React.FC<NewsCardProps> = ({
             <CalendarDays className="h-4 w-4 mr-1" /> {date}
           </span>
           <span className="flex items-center">
-            <Eye className="h-4 w-4 mr-1" /> {views.toLocaleString()}
+            <Eye className="h-4 w-4 mr-1" /> 0
           </span>
           <span className="flex items-center">
-            <MessageSquare className="h-4 w-4 mr-1" /> {comments.toLocaleString()}
+            <MessageSquare className="h-4 w-4 mr-1" /> 0
           </span>
         </div>
         <div className="flex items-center space-x-1">

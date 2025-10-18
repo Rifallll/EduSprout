@@ -12,7 +12,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Search, MapPin, X } from "lucide-react"; // Menghapus Whatsapp dari impor
+import { Button } from "@/components/ui/button"; // Import Button component
+import { Search, MapPin, X } from "lucide-react";
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
 const Jobs = () => {

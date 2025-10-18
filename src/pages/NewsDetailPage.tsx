@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Facebook, Twitter, Linkedin, Phone } from "lucide-react"; // Removed Share2 and Bookmark icons
+import { CalendarDays, Eye, MessageSquare, ArrowLeft, Clock, Facebook, Twitter, Linkedin, Phone } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NewsListItem from "@/components/NewsListItem"; // Re-use NewsListItem for related news
 import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
@@ -70,7 +70,8 @@ const NewsDetailPage = () => {
           <div className="flex items-center justify-between mb-4"> {/* Increased bottom margin */}
             <Badge className="bg-primary/10 text-primary font-semibold text-sm px-3 py-1 hover:bg-primary/20 transition-colors duration-200"> {/* Enhanced badge styling */}
               {news.category}
-            </Badge>            
+            </Badge>
+            {/* Tombol Bookmark dan Share telah dihapus */}
           </div>
 
           <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-foreground">{news.title}</CardTitle> {/* Larger, bolder title */}
@@ -135,7 +136,7 @@ const NewsDetailPage = () => {
               </Button>
             </a>
             <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-green-500 hover:text-white transition-colors duration-200"> {/* Changed to outline and added hover effect */}
+              <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-green-500 hover:text-white transition-colors duration-200">
                 <Phone className="h-5 w-5" />
               </Button>
             </a>
@@ -165,7 +166,8 @@ const NewsDetailPage = () => {
                 </div>
               </div>
             </div>
-          </CardContent>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Related News Section (Carousel) */}

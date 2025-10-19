@@ -46,7 +46,52 @@ const formatText = (text: string) => {
 export const formatScholarshipContent = (content: string | undefined) => {
   if (!content) return null;
 
-  const lines = content.split('\n');
+  let rawLines = content.split('\n');
+  const processedLines: string[] = [];
+
+  // Define patterns that mark the start of the unwanted footer section
+  const footerStartPatterns = [
+    "Bagikan ke temanmu 🙂",
+    "Share",
+    "Click to print (Opens in new window)",
+    "Like this:",
+    "Loading...",
+    "Related",
+    "Kamu akan dibantu:", // Specific call to action list
+    "Ingin Didampingi Sampai Lolos Beasiswa?",
+    "Siap Dibimbing Menuju Beasiswa Jepang?",
+    "Butuh Pendampingan Sebelum Daftar?",
+    "Siap Melangkah Lebih Jauh?",
+    "Masih Bingung Milih Beasiswa?",
+    "Siap Bimbingan Beasiswa Langsung dari Mentor Beasiswa.id?",
+    "Siap Dibimbing Langsung oleh Mentor Beasiswa.id?",
+    "Butuh Bantuan Persiapan Beasiswa?",
+    "🔍 Ingin Serius Daftar Beasiswa? Jangan Berjuang Sendiri!",
+    "🎓 Butuh Pendampingan?",
+    "🚀 Klik di sini untuk mulai didampingi →",
+    "👉 Klik di sini untuk mulai konsultasi →",
+    "👉 Klik di sini untuk daftar sesi konsultasi bareng mentor",
+    "👉 Klik untuk Konsultasi Sekarang",
+    "👉 Daftar Pendampingan Beasiswa Sekarang",
+    "👉 Lynk Konsultasi Beasiswa",
+    "👉 Yuk, mulai dari sekarang dan pastikan kamu nggak ketinggalan beasiswa ke Jepang tahun depan!",
+    "Gabung juga di Channel Telegram INDBeasiswa [UPDATE SETIAP HARI]:",
+    "Channel WhatsApp INDBeasiswa:",
+    "Instagram:",
+    "Official Facebook Page:",
+  ];
+
+  let footerFound = false;
+  for (const line of rawLines) {
+    const trimmedLine = line.trim();
+    if (footerStartPatterns.some(pattern => trimmedLine.startsWith(pattern))) {
+      footerFound = true;
+      break; // Stop processing lines once a footer pattern is found
+    }
+    processedLines.push(line);
+  }
+
+  const lines = processedLines.map(line => line.trim());
   const elements: JSX.Element[] = [];
   let currentList: string[] = [];
   let listType: 'ul' | 'ol' | null = null;
@@ -94,10 +139,8 @@ export const formatScholarshipContent = (content: string | undefined) => {
   };
 
   lines.forEach((line, index) => {
-    const trimmedLine = line.trim();
-
     // Skip empty lines, but allow them to break paragraphs/lists
-    if (trimmedLine === '') {
+    if (line === '') {
       renderParagraph();
       renderList();
       return;
@@ -106,24 +149,24 @@ export const formatScholarshipContent = (content: string | undefined) => {
     // --- Heading Detection ---
     // H2: Major sections, often standalone, title case, relatively short.
     // Example: "Persyaratan Beasiswa", "Pendaftaran Beasiswa", "Jadwal Seleksi Beasiswa"
-    const isH2 = trimmedLine.length > 0 && trimmedLine.length < 50 &&
-                 trimmedLine.match(/^[A-Z][a-zA-Z0-9\s&]+$/) &&
-                 !trimmedLine.includes(':') && // Exclude "Baca Juga:"
-                 !trimmedLine.match(/^\d+\./); // Exclude numbered items
+    const isH2 = line.length > 0 && line.length < 50 &&
+                 line.match(/^[A-Z][a-zA-Z0-9\s&]+$/) &&
+                 !line.includes(':') && // Exclude "Baca Juga:"
+                 !line.match(/^\d+\./); // Exclude numbered items
 
     // H3: Sub-sections, can be numbered or a phrase, might end with a colon.
     // Example: "1. Informasi yang Kami Kumpulkan", "Keamanan Data", "Tips:"
-    const isH3 = !isH2 && trimmedLine.length > 0 && trimmedLine.length < 80 &&
-                 (trimmedLine.match(/^(\d+\.\s+)?([A-Z][a-zA-Z0-9\s&]+:?)$/) || trimmedLine.match(/^[A-Z][a-zA-Z0-9\s&]+:$/));
+    const isH3 = !isH2 && line.length > 0 && line.length < 80 &&
+                 (line.match(/^(\d+\.\s+)?([A-Z][a-zA-Z0-9\s&]+:?)$/) || line.match(/^[A-Z][a-zA-Z0-9\s&]+:$/));
 
     // H4: Smaller points or titles, often starts with an icon or is very short.
     // Example: "💡 1. Siapkan Dokumen dari Jauh-Jauh Hari", "Manfaat:"
-    const isH4 = !isH2 && !isH3 && trimmedLine.length > 0 && trimmedLine.length < 100 &&
-                 trimmedLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
+    const isH4 = !isH2 && !isH3 && line.length > 0 && line.length < 100 &&
+                 line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
 
     // --- Special Patterns ---
-    const isBacaJuga = trimmedLine.startsWith("Baca Juga:");
-    const isKontak = trimmedLine.startsWith("Kontak:");
+    const isBacaJuga = line.startsWith("Baca Juga:");
+    const isKontak = line.startsWith("Kontak:");
 
     if (isH2 || isH3 || isH4 || isBacaJuga || isKontak) {
       renderParagraph(); // Render any pending paragraph
@@ -131,47 +174,47 @@ export const formatScholarshipContent = (content: string | undefined) => {
 
       if (isH2) {
         elements.push(
-          <h2 key={`h2-${index}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+          <h2 key={`h2-${elements.length}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isH3) {
         elements.push(
-          <h3 key={`h3-${index}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+          <h3 key={`h3-${elements.length}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isH4) {
         elements.push(
-          <h4 key={`h4-${index}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+          <h4 key={`h4-${elements.length}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isBacaJuga) {
         elements.push(
-          <p key={`bacajuga-${index}`} className="mb-4 text-base text-muted-foreground italic" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+          <p key={`bacajuga-${elements.length}`} className="mb-4 text-base text-muted-foreground italic" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isKontak) {
         elements.push(
-          <p key={`kontak-${index}`} className="mb-2 text-base font-semibold text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+          <p key={`kontak-${elements.length}`} className="mb-2 text-base font-semibold text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       }
     }
     // --- List Item Detection ---
-    else if (trimmedLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
+    else if (line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
       renderParagraph(); // Render any pending paragraph
       if (listType !== 'ul' && currentList.length > 0) {
         renderList(); // Render previous list if type changed
       }
       listType = 'ul';
-      currentList.push(trimmedLine);
+      currentList.push(line);
     }
-    else if (trimmedLine.match(/^\d+\.\s*(.*)/)) {
+    else if (line.match(/^\d+\.\s*(.*)/)) {
       renderParagraph(); // Render any pending paragraph
       if (listType !== 'ol' && currentList.length > 0) {
         renderList(); // Render previous list if type changed
       }
       listType = 'ol';
-      currentList.push(trimmedLine);
+      currentList.push(line);
     }
     // --- Regular Paragraph ---
     else {
       renderList(); // Render any pending list
-      currentParagraph.push(trimmedLine); // Add to current paragraph buffer
+      currentParagraph.push(line); // Add to current paragraph buffer
     }
   });
 

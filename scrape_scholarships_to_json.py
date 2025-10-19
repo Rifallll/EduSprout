@@ -44,7 +44,7 @@ def parse_detail_page(html_content, link_url, source_name):
     soup = BeautifulSoup(html_content, "html.parser")
     
     full_content = ""
-    content_el = soup.select_one(".entry-content, .post-content, .content, .single-content")
+    content_el = soup.select_one(".entry-content, .post-content, .content, .single-content, div[itemprop='articleBody']")
     if content_el:
         full_content = content_el.get_text(separator="\n", strip=True)
     
@@ -136,7 +136,7 @@ def parse_detail_page(html_content, link_url, source_name):
 # ==========================
 # 1. beasiswa.id
 # ==========================
-def scrape_beasiswa_id(max_items=20):
+def scrape_beasiswa_id(max_items=25):
     source = "beasiswa.id"
     base = "https://beasiswa.id"
     start_url = base + "/category/beasiswa/"
@@ -152,19 +152,14 @@ def scrape_beasiswa_id(max_items=20):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    # Updated selector for beasiswa.id
-    article_containers = soup.select("div.jeg_post.jeg_post_row.format-standard") 
+    # Trying a more general selector for article titles
+    posts = soup.select("h3.jeg_post_title a, .post-title a") 
     
-    if not article_containers:
-        logging.warning(f"[{source}] No article containers found with selector 'div.jeg_post.jeg_post_row.format-standard' on {start_url}")
+    if not posts:
+        logging.warning(f"[{source}] No posts found with selector 'h3.jeg_post_title a, .post-title a' on {start_url}")
         return out
 
-    for i, container in enumerate(article_containers[:max_items]):
-        a_tag = container.select_one("h3.jeg_post_title a")
-        if not a_tag:
-            logging.debug(f"[{source}] Skipping container {i} due to missing title link.")
-            continue
-
+    for i, a_tag in enumerate(posts[:max_items]):
         title = a_tag.get_text(strip=True)
         link = urljoin(base, a_tag.get("href"))
 
@@ -200,7 +195,7 @@ def scrape_beasiswa_id(max_items=20):
 # ==========================
 # 2. indbeasiswa.com
 # ==========================
-def scrape_indbeasiswa(max_items=20):
+def scrape_indbeasiswa(max_items=25):
     source = "indbeasiswa.com"
     base = "https://indbeasiswa.com"
     start_url = base + "/beasiswa-s1/"
@@ -217,11 +212,11 @@ def scrape_indbeasiswa(max_items=20):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    # More robust selector for indbeasiswa.com
-    posts = soup.select("article.post-item h2.post-title a")
+    # Trying a more general selector for article titles
+    posts = soup.select("h2.post-title a, .entry-title a")
     
     if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'article.post-item h2.post-title a' on {start_url}")
+        logging.warning(f"[{source}] No posts found with selector 'h2.post-title a, .entry-title a' on {start_url}")
         return out
 
     for i, a_tag in enumerate(posts[:max_items]):
@@ -256,10 +251,10 @@ def scrape_indbeasiswa(max_items=20):
 # ==========================
 # 3. luarkampus.id
 # ==========================
-def scrape_luarkampus(max_items=20):
+def scrape_luarkampus(max_items=25):
     source = "luarkampus.id"
     base = "https://luarkampus.id"
-    start_url = base + "/beasiswa/" # Updated to a more specific scholarship category page
+    start_url = base + "/beasiswa/" # Confirmed this is a valid category page
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -272,11 +267,11 @@ def scrape_luarkampus(max_items=20):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    # Updated selector for luarkampus.id
-    posts = soup.select("div.elementor-posts-container article.elementor-post h3.elementor-post__title a") 
+    # Trying a more general selector for article titles
+    posts = soup.select("h3.elementor-post__title a, .entry-title a") 
     
     if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'div.elementor-posts-container article.elementor-post h3.elementor-post__title a' on {start_url}")
+        logging.warning(f"[{source}] No posts found with selector 'h3.elementor-post__title a, .entry-title a' on {start_url}")
         return out
 
     for i, a_tag in enumerate(posts[:max_items]):
@@ -311,7 +306,7 @@ def scrape_luarkampus(max_items=20):
 # ==========================
 # 4. scholarship4u.com
 # ==========================
-def scrape_scholarship4u(max_items=20):
+def scrape_scholarship4u(max_items=25):
     source = "scholarship4u.com"
     base = "https://www.scholarship4u.com/"
     start_url = base + "category/scholarships/"
@@ -327,11 +322,11 @@ def scrape_scholarship4u(max_items=20):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    # Selector for scholarship4u.com
-    posts = soup.select("article.post h2.entry-title a")
+    # Trying a more general selector for article titles
+    posts = soup.select("article.post h2.entry-title a, .post-title a")
     
     if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'article.post h2.entry-title a' on {start_url}")
+        logging.warning(f"[{source}] No posts found with selector 'article.post h2.entry-title a, .post-title a' on {start_url}")
         return out
 
     for i, a_tag in enumerate(posts[:max_items]):
@@ -405,13 +400,13 @@ def parse_date_for_sort(date_string):
 
 def main():
     all_data = []
-    all_data += scrape_beasiswa_id(max_items=25) # Increased limit
+    all_data += scrape_beasiswa_id(max_items=25)
     time.sleep(1)
-    all_data += scrape_indbeasiswa(max_items=25) # Increased limit
+    all_data += scrape_indbeasiswa(max_items=25)
     time.sleep(1)
-    all_data += scrape_luarkampus(max_items=25) # Increased limit
+    all_data += scrape_luarkampus(max_items=25)
     time.sleep(1)
-    all_data += scrape_scholarship4u(max_items=25) # Increased limit
+    all_data += scrape_scholarship4u(max_items=25)
 
     merged = dedupe(all_data)
     merged_sorted = sorted(merged, key=lambda x: parse_date_for_sort(x.get("date")), reverse=True)

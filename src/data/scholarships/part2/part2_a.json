@@ -5,7 +5,7 @@
     "organizer": "Universitas Brawijaya",
     "location": "Malang, Indonesia",
     "deadline": "15 Oktober 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ub.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -15,7 +15,7 @@
     "organizer": "Lembaga Pengelola Dana Pendidikan",
     "location": "Berbagai Negara",
     "deadline": "01 November 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://lpdp.kemenkeu.go.id",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -25,7 +25,7 @@
     "organizer": "Universitas Pendidikan Ganesha",
     "location": "Singaraja, Indonesia",
     "deadline": "10 November 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://undiksha.ac.id/beasiswa",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -35,7 +35,7 @@
     "organizer": "Universitas Udayana",
     "location": "Denpasar, Indonesia",
     "deadline": "20 November 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unud.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -45,7 +45,7 @@
     "organizer": "Pemerintah Australia",
     "location": "Australia",
     "deadline": "01 Desember 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.australiaawardsindonesia.org/",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -55,7 +55,7 @@
     "organizer": "Universitas Jenderal Soedirman",
     "location": "Purwokerto, Indonesia",
     "deadline": "15 Desember 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unsoed.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -65,7 +65,7 @@
     "organizer": "Universitas Negeri Padang",
     "location": "Padang, Indonesia",
     "deadline": "31 Desember 2027",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unp.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -75,7 +75,7 @@
     "organizer": "Universitas Negeri Medan",
     "location": "Medan, Indonesia",
     "deadline": "10 Januari 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unimed.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -85,7 +85,7 @@
     "organizer": "Universitas Negeri Makassar",
     "location": "Makassar, Indonesia",
     "deadline": "20 Januari 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unm.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -95,7 +95,7 @@
     "organizer": "Universitas Negeri Gorontalo",
     "location": "Gorontalo, Indonesia",
     "deadline": "05 Februari 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ung.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -105,7 +105,7 @@
     "organizer": "Universitas Negeri Manado",
     "location": "Manado, Indonesia",
     "deadline": "15 Februari 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unima.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -115,7 +115,7 @@
     "organizer": "Universitas Negeri Papua",
     "location": "Manokwari, Indonesia",
     "deadline": "01 Maret 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unipa.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -125,7 +125,7 @@
     "organizer": "Universitas Cenderawasih",
     "location": "Jayapura, Indonesia",
     "deadline": "10 Maret 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uncen.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -135,7 +135,7 @@
     "organizer": "Universitas Pattimura",
     "location": "Ambon, Indonesia",
     "deadline": "20 Maret 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unpatti.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -145,7 +145,7 @@
     "organizer": "Universitas Khairun",
     "location": "Ternate, Indonesia",
     "deadline": "05 April 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unkhair.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -155,7 +155,7 @@
     "organizer": "Universitas Halu Oleo",
     "location": "Kendari, Indonesia",
     "deadline": "15 April 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uho.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -165,7 +165,7 @@
     "organizer": "Universitas Tadulako",
     "location": "Palu, Indonesia",
     "deadline": "01 Mei 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://untad.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -175,7 +175,7 @@
     "organizer": "Universitas Palangka Raya",
     "location": "Palangka Raya, Indonesia",
     "deadline": "10 Mei 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://upr.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -185,7 +185,7 @@
     "organizer": "Universitas Mulawarman",
     "location": "Samarinda, Indonesia",
     "deadline": "20 Mei 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unmul.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -195,7 +195,7 @@
     "organizer": "Universitas Lambung Mangkurat",
     "location": "Banjarmasin, Indonesia",
     "deadline": "05 Juni 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ulm.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -205,7 +205,7 @@
     "organizer": "Universitas Tanjungpura",
     "location": "Pontianak, Indonesia",
     "deadline": "15 Juni 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://untan.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -215,7 +215,7 @@
     "organizer": "Universitas Riau",
     "location": "Pekanbaru, Indonesia",
     "deadline": "01 Juli 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unri.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -225,7 +225,7 @@
     "organizer": "Universitas Jambi",
     "location": "Jambi, Indonesia",
     "deadline": "10 Juli 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unja.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -235,7 +235,7 @@
     "organizer": "Universitas Bengkulu",
     "location": "Bengkulu, Indonesia",
     "deadline": "20 Juli 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unib.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -245,7 +245,7 @@
     "organizer": "Universitas Bangka Belitung",
     "location": "Pangkalpinang, Indonesia",
     "deadline": "05 Agustus 2028",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ubb.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   }

@@ -5,7 +5,7 @@
     "organizer": "Universitas Surabaya",
     "location": "Surabaya, Indonesia",
     "deadline": "15 Juni 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ubaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -15,7 +15,7 @@
     "organizer": "Universitas Kristen Maranatha",
     "location": "Bandung, Indonesia",
     "deadline": "01 Juli 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://maranatha.edu/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -25,7 +25,7 @@
     "organizer": "Universitas Katolik Indonesia Atma Jaya",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Juli 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://atmajaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -35,7 +35,7 @@
     "organizer": "Universitas Tarumanagara",
     "location": "Jakarta, Indonesia",
     "deadline": "20 Juli 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://untar.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -45,7 +45,7 @@
     "organizer": "Universitas Trisakti",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Agustus 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://trisakti.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -55,7 +55,7 @@
     "organizer": "Universitas Mercu Buana",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Agustus 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://mercubuana.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -65,7 +65,7 @@
     "organizer": "Universitas Esa Unggul",
     "location": "Jakarta, Indonesia",
     "deadline": "01 September 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://esaunggul.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -75,7 +75,7 @@
     "organizer": "Universitas Gunadarma",
     "location": "Depok, Indonesia",
     "deadline": "10 September 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://gunadarma.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -85,7 +85,7 @@
     "organizer": "Universitas Pancasila",
     "location": "Jakarta, Indonesia",
     "deadline": "20 September 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://univpancasila.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -95,7 +95,7 @@
     "organizer": "Universitas Kristen Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Oktober 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uki.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -105,7 +105,7 @@
     "organizer": "Universitas Nasional",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Oktober 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unas.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -115,7 +115,7 @@
     "organizer": "Universitas Bhayangkara Jakarta Raya",
     "location": "Jakarta, Indonesia",
     "deadline": "01 November 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ubharajaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -125,7 +125,7 @@
     "organizer": "Universitas Krisnadwipayana",
     "location": "Jakarta, Indonesia",
     "deadline": "10 November 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unkris.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -135,7 +135,7 @@
     "organizer": "Universitas Borobudur",
     "location": "Jakarta, Indonesia",
     "deadline": "20 November 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://univ-borobudur.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -145,7 +145,7 @@
     "organizer": "Universitas Jayabaya",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Desember 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://jayabaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -155,7 +155,7 @@
     "organizer": "Universitas Sahid",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Desember 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://usahid.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -165,7 +165,7 @@
     "organizer": "Universitas Dirgantara Marsekal Suryadarma",
     "location": "Jakarta, Indonesia",
     "deadline": "31 Desember 2029",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://univ-suryadarma.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -175,7 +175,7 @@
     "organizer": "Universitas Muhammadiyah Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Januari 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://umj.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -185,7 +185,7 @@
     "organizer": "Universitas Muhammadiyah Prof. Dr. Hamka",
     "location": "Jakarta, Indonesia",
     "deadline": "20 Januari 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uhamka.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -195,7 +195,7 @@
     "organizer": "Universitas Islam Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Februari 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uij.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -205,7 +205,7 @@
     "organizer": "Universitas Azzahra",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Februari 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://azzahra.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -215,7 +215,7 @@
     "organizer": "Universitas Darma Persada",
     "location": "Jakarta, Indonesia",
     "deadline": "01 Maret 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://darmapersada.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -225,7 +225,7 @@
     "organizer": "Universitas Satya Negara Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Maret 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://usni.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -235,7 +235,7 @@
     "organizer": "Universitas Prof. Dr. Moestopo (Beragama)",
     "location": "Jakarta, Indonesia",
     "deadline": "20 Maret 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://moestopo.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -245,7 +245,7 @@
     "organizer": "Universitas Al Azhar Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "05 April 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uai.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -255,7 +255,7 @@
     "organizer": "Universitas Paramadina",
     "location": "Jakarta, Indonesia",
     "deadline": "15 April 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://paramadina.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -265,7 +265,7 @@
     "organizer": "Universitas Bakrie",
     "location": "Jakarta, Indonesia",
     "deadline": "01 Mei 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://bakrie.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -275,7 +275,7 @@
     "organizer": "Universitas Pertamina",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Mei 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://universitaspertamina.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -285,7 +285,7 @@
     "organizer": "Universitas Prasetiya Mulya",
     "location": "Tangerang, Indonesia",
     "deadline": "20 Mei 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://prasetiyamulya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -295,7 +295,7 @@
     "organizer": "Universitas Bunda Mulia",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Juni 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ubm.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -305,7 +305,7 @@
     "organizer": "Universitas Kristen Krida Wacana",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Juni 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ukrida.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -315,7 +315,7 @@
     "organizer": "Universitas Katolik Atma Jaya",
     "location": "Jakarta, Indonesia",
     "deadline": "01 Juli 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://atmajaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -325,7 +325,7 @@
     "organizer": "Universitas Kristen Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Juli 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uki.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -335,7 +335,7 @@
     "organizer": "Universitas Nasional",
     "location": "Jakarta, Indonesia",
     "deadline": "20 Juli 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unas.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -345,7 +345,7 @@
     "organizer": "Universitas Bhayangkara Jakarta Raya",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Agustus 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ubharajaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -355,7 +355,7 @@
     "organizer": "Universitas Krisnadwipayana",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Agustus 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unkris.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -365,7 +365,7 @@
     "organizer": "Universitas Borobudur",
     "location": "Jakarta, Indonesia",
     "deadline": "01 September 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://univ-borobudur.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -375,7 +375,7 @@
     "organizer": "Universitas Jayabaya",
     "location": "Jakarta, Indonesia",
     "deadline": "10 September 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://jayabaya.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -385,7 +385,7 @@
     "organizer": "Universitas Sahid",
     "location": "Jakarta, Indonesia",
     "deadline": "20 September 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://usahid.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -395,7 +395,7 @@
     "organizer": "Universitas Dirgantara Marsekal Suryadarma",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Oktober 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://univ-suryadarma.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -405,7 +405,7 @@
     "organizer": "Universitas Muhammadiyah Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Oktober 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://umj.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -415,7 +415,7 @@
     "organizer": "Universitas Muhammadiyah Prof. Dr. Hamka",
     "location": "Jakarta, Indonesia",
     "deadline": "01 November 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uhamka.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -425,7 +425,7 @@
     "organizer": "Universitas Islam Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "10 November 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uij.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -435,7 +435,7 @@
     "organizer": "Universitas Azzahra",
     "location": "Jakarta, Indonesia",
     "deadline": "20 November 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://azzahra.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -445,7 +445,7 @@
     "organizer": "Universitas Darma Persada",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Desember 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://darmapersada.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -455,7 +455,7 @@
     "organizer": "Universitas Satya Negara Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Desember 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://usni.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -465,7 +465,7 @@
     "organizer": "Universitas Prof. Dr. Moestopo (Beragama)",
     "location": "Jakarta, Indonesia",
     "deadline": "31 Desember 2030",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://moestopo.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -475,7 +475,7 @@
     "organizer": "Universitas Al Azhar Indonesia",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Januari 2031",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uai.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -485,7 +485,7 @@
     "organizer": "Universitas Paramadina",
     "location": "Jakarta, Indonesia",
     "deadline": "20 Januari 2031",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://paramadina.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -495,7 +495,7 @@
     "organizer": "Universitas Bakrie",
     "location": "Jakarta, Indonesia",
     "deadline": "05 Februari 2031",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://bakrie.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   }

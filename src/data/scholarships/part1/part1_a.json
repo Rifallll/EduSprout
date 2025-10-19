@@ -5,7 +5,7 @@
     "organizer": "Universitas Gadjah Mada",
     "location": "Yogyakarta, Indonesia",
     "deadline": "31 Desember 2025",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ugm.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -15,7 +15,7 @@
     "organizer": "Kementerian Pendidikan dan Kebudayaan",
     "location": "Indonesia (Berbagai Universitas)",
     "deadline": "15 November 2025",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://beasiswaunggulan.kemdikbud.go.id",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -25,7 +25,7 @@
     "organizer": "Politeknik Negeri Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "10 Januari 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://pnj.ac.id/beasiswa",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -35,7 +35,7 @@
     "organizer": "Global Education Fund",
     "location": "Amerika Serikat",
     "deadline": "28 Februari 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://global-scholarship.org/leaders",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -45,7 +45,7 @@
     "organizer": "Tech Innovation Lab",
     "location": "Singapura",
     "deadline": "30 Maret 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://techlab.sg/internship-scholarship",
     "degreeLevels": ["Non-Degree", "S1", "S2"],
     "fundingType": "Mentoring"
   },
@@ -55,7 +55,7 @@
     "organizer": "Universitas Indonesia",
     "location": "Depok, Indonesia",
     "deadline": "10 April 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.ui.ac.id/beasiswa-s2",
     "degreeLevels": ["S2"],
     "fundingType": "Fully Funded"
   },
@@ -65,7 +65,7 @@
     "organizer": "Institut Teknologi Bandung",
     "location": "Bandung, Indonesia",
     "deadline": "20 Mei 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.itb.ac.id/beasiswa-s3",
     "degreeLevels": ["S3"],
     "fundingType": "Riset"
   },
@@ -75,7 +75,7 @@
     "organizer": "Korean Cultural Center",
     "location": "Korea Selatan",
     "deadline": "15 Juni 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://kcc.or.id/exchange-program",
     "degreeLevels": ["S1", "S2"],
     "fundingType": "Exchange"
   },
@@ -85,7 +85,7 @@
     "organizer": "Digital Academy",
     "location": "Online",
     "deadline": "01 Juli 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://digitalacademy.com/scholarship",
     "degreeLevels": ["Non-Degree"],
     "fundingType": "Pelatihan/Studi Singkat"
   },
@@ -95,7 +95,7 @@
     "organizer": "Yayasan Harapan Bangsa",
     "location": "Seluruh Indonesia",
     "deadline": "10 Agustus 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://yayasanharapanbangsa.org/beasiswa-sma",
     "degreeLevels": ["SMA"],
     "fundingType": "Partially Funded"
   },
@@ -105,7 +105,7 @@
     "organizer": "Politeknik Elektronika Negeri Surabaya",
     "location": "Surabaya, Indonesia",
     "deadline": "20 September 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://pens.ac.id/beasiswa",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -115,7 +115,7 @@
     "organizer": "European Union",
     "location": "Eropa (Berbagai Negara)",
     "deadline": "01 Oktober 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/erasmus-mundus-joint-masters-scholarships",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -125,7 +125,7 @@
     "organizer": "Dinas Pendidikan Provinsi Jawa Barat",
     "location": "Bandung, Indonesia",
     "deadline": "05 November 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://disdik.jabarprov.go.id/beasiswa",
     "degreeLevels": ["SMA"],
     "fundingType": "Partially Funded"
   },
@@ -135,7 +135,7 @@
     "organizer": "Pemerintah Australia",
     "location": "Australia",
     "deadline": "30 November 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.australiaawardsindonesia.org/",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -145,7 +145,7 @@
     "organizer": "Lembaga Ilmu Pengetahuan Indonesia (LIPI)",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Desember 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://lipi.go.id/beasiswa-riset",
     "degreeLevels": ["S1"],
     "fundingType": "Riset"
   },
@@ -155,7 +155,7 @@
     "organizer": "Universitas Airlangga",
     "location": "Surabaya, Indonesia",
     "deadline": "20 Januari 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unair.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -165,7 +165,7 @@
     "organizer": "Lembaga Pengelola Dana Pendidikan",
     "location": "Indonesia (Berbagai Universitas)",
     "deadline": "10 Februari 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://lpdp.kemenkeu.go.id",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -175,7 +175,7 @@
     "organizer": "Universitas Diponegoro",
     "location": "Semarang, Indonesia",
     "deadline": "05 Maret 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://undip.ac.id/beasiswa",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -185,7 +185,7 @@
     "organizer": "AMINEF",
     "location": "Amerika Serikat",
     "deadline": "01 April 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.aminef.or.id/grants/for-indonesians/fulbright-programs/",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -195,7 +195,7 @@
     "organizer": "Universitas Brawijaya",
     "location": "Malang, Indonesia",
     "deadline": "25 April 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://ub.ac.id/beasiswa-riset",
     "degreeLevels": ["S1"],
     "fundingType": "Riset"
   },
@@ -205,7 +205,7 @@
     "organizer": "Universitas Padjadjaran",
     "location": "Bandung, Indonesia",
     "deadline": "15 Mei 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unpad.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -215,7 +215,7 @@
     "organizer": "Pemerintah Inggris",
     "location": "Inggris",
     "deadline": "01 Juni 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.chevening.org/",
     "degreeLevels": ["S2"],
     "fundingType": "Fully Funded"
   },
@@ -225,7 +225,7 @@
     "organizer": "Universitas Sebelas Maret",
     "location": "Surakarta, Indonesia",
     "deadline": "10 Juli 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://uns.ac.id/beasiswa",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -235,7 +235,7 @@
     "organizer": "Pemerintah Jerman",
     "location": "Jerman",
     "deadline": "20 Agustus 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://www.daad.id/id/",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -245,7 +245,7 @@
     "organizer": "Universitas Hasanuddin",
     "location": "Makassar, Indonesia",
     "deadline": "05 September 2026",
-    "link": "https://example.com/beasiswa-detail",
+    "link": "https://unhas.ac.id/beasiswa-s1",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   }

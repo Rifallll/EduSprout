@@ -49,49 +49,99 @@ export const formatScholarshipContent = (content: string | undefined) => {
   let rawLines = content.split('\n');
   const processedLines: string[] = [];
 
-  // Define patterns that mark the start of the unwanted footer section
-  const footerStartPatterns = [
-    "Bagikan ke temanmu 🙂", "Share", "Click to print (Opens in new window)", "Print",
-    "Click to share on Facebook (Opens in new window)", "Facebook",
-    "Click to share on LinkedIn (Opens in new window)", "LinkedIn",
-    "Click to share on Reddit (Opens in new window)", "Reddit",
-    "Click to share on X (Opens in new window)", "X",
-    "Click to share on Telegram (Opens in new window)", "Telegram",
-    "Click to share on WhatsApp (Opens in new window)", "WhatsApp",
-    "Like this:", "Like", "Loading...", "Related",
-    "Kamu akan dibantu:", "Ingin Didampingi Sampai Lolos Beasiswa?",
-    "Siap Dibimbing Menuju Beasiswa Jepang?", "Butuh Pendampingan Sebelum Daftar?",
-    "Siap Melangkah Lebih Jauh?", "Masih Bingung Milih Beasiswa?",
-    "Siap Bimbingan Beasiswa Langsung dari Mentor Beasiswa.id?",
-    "Siap Dibimbing Langsung oleh Mentor Beasiswa.id?",
-    "Butuh Bantuan Persiapan Beasiswa?",
-    "🔍 Ingin Serius Daftar Beasiswa? Jangan Berjuang Sendiri!",
-    "🎓 Butuh Pendampingan?", "🚀 Klik di sini untuk mulai didampingi →",
-    "👉 Klik di sini untuk mulai konsultasi →",
-    "👉 Klik di sini untuk daftar sesi konsultasi bareng mentor",
-    "👉 Klik untuk Konsultasi Sekarang", "👉 Daftar Pendampingan Beasiswa Sekarang",
-    "👉 Lynk Konsultasi Beasiswa",
-    "👉 Yuk, mulai dari sekarang dan pastikan kamu nggak ketinggalan beasiswa ke Jepang tahun depan!",
-    "Gabung juga di Channel Telegram INDBeasiswa [UPDATE SETIAP HARI]:",
-    "Channel WhatsApp INDBeasiswa:", "Instagram:", "Official Facebook Page:",
-    "Sumber Informasi Resmi:", "Sumber Website Resmi:", "Kontak:", "Silakan dibagikan pada teman-teman yang membutuhkan. Semoga bermanfaat.",
-    "Silakan bagikan pada teman dan keluarga yang membutuhkan. Semoga bermanfaat.",
-    "Silakan bagikan pada rekan-rekan yang membutuhkan. Selamat mencoba dan semoga bermanfaat.",
-    "Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa.",
-    "Baca Juga:", "Baca Juga" // Added "Baca Juga" as a pattern to stop content parsing
+  // Patterns to identify and remove common introductory/footer boilerplate
+  const boilerplatePatterns = [
+    // Introductory patterns (regex for flexibility)
+    /^INDBeasiswa\.com –/,
+    /^Info beasiswa dalam negeri kali ini datang dari Beasiswa YBM BRILiaN\. Di tahun \d{4} ini,/,
+    /^YBM BRILiaN Smart Scholarship membuka peluang beasiswa bagi mahasiswa semester 1 jenjang D3\/D4\/S1 dari seluruh perguruan tinggi di Indonesia\. Berikut informasi selengkapnya\./,
+    /^Daftar Isi/,
+    /^Beasiswa YBM BRILiaN Smart Scholarship Tahun \d{4}/, // Specific title repetition
+    /^Pernah bermimpi kuliah di Jepang\? Negeri sakura ini bukan cuma menawarkan teknologi canggih dan budaya yang kaya, tapi juga peluang pendidikan tinggi yang terbuka luas — terutama melalui program beasiswa\./,
+    /^Kabar baiknya, jenis beasiswa kuliah di Jepang sangat beragam\. Ada yang diberikan langsung oleh pemerintah Jepang, universitas, hingga organisasi swasta\. Bahkan banyak di antaranya bersifat fully funded alias dibiayai penuh !/,
+    /^Nah, sebelum kamu bingung pilih yang mana, yuk simak ulasan lengkap tentang jenis-jenis beasiswa kuliah di Jepang yang bisa kamu incar sesuai minat dan latar belakangmu\./,
+    /^Kuliah di Jepang jadi impian banyak pelajar Indonesia\. Bukan cuma karena kualitas pendidikannya yang masuk 10 besar dunia, tapi juga karena banyak beasiswa tersedia untuk berbagai jenjang dan bidang studi\./,
+    /^Mulai dari S1, S2, hingga riset akademik, Jepang menyediakan banyak program beasiswa — baik dari pemerintah, universitas, hingga swasta\./,
+    /^Kalau kamu sudah baca jenis-jenis beasiswanya, sekarang waktunya kamu kenalan dengan daftar beasiswa kuliah di Jepang yang paling populer dan bisa kamu daftar\. Yuk simak sampai akhir!/,
+    /^Bermimpi kuliah di Jepang\? Jangan cuma mimpi! Jepang tidak hanya punya sistem pendidikan yang kuat, tetapi juga banyak beasiswa yang bisa kamu raih\. Tapi… semua itu hanya mungkin kalau kamu siap bersaing\./,
+    /^Artikel ini akan membahas tips-tips penting mempersiapkan diri sebelum mendaftar beasiswa kuliah ke Jepang\. Dari akademik hingga dokumen penting — semua dibahas lengkap\. Baca sampai akhir, ya!/,
+    /^Kamu Merasa Salah Pilih Beasiswa\? Ini yang Perlu Kamu Lakukan!/,
+    /^Banyak pelajar bermimpi bisa kuliah ke luar negeri lewat jalur beasiswa\. Tapi, bagaimana kalau ternyata beasiswa yang kamu dapatkan tidak sesuai harapan\?/,
+    /^Tenang\. Rasa kecewa itu wajar, tapi jangan buru-buru menyerah\./,
+    /^Berikut langkah-langkah yang bisa kamu ambil agar tetap berada di jalur yang benar\:/,
+    /^Ingin Dapat Beasiswa Tapi Bingung Mulai dari Mana\?/,
+    /^Banyak pelajar Indonesia bermimpi kuliah dengan beasiswa\. Tapi, kebanyakan hanya fokus pada beasiswa yang sudah umum, padahal ada banyak beasiswa yang jarang diketahui tapi punya peluang besar untuk didapatkan\./,
+    /^Nah, berikut ini 5 beasiswa yang mungkin belum banyak kamu dengar, tapi bisa jadi jalan emas untuk mewujudkan impian kuliahmu—baik di dalam negeri maupun luar negeri\. Yuk, simak sampai tuntas!/,
+    /^Bingung Kapan Waktu Ideal Daftar Beasiswa\? Ini Panduan Wajib Kamu Baca!/,
+    /^Banyak calon penerima beasiswa gagal bukan karena tidak memenuhi syarat, tapi karena telat daftar atau kurang persiapan sejak awal\. Kamu tidak ingin jadi salah satunya, kan\?/,
+    /^Yuk, simak 5 tips menentukan waktu terbaik untuk mendaftar beasiswa berikut ini agar tidak kehilangan kesempatan emas!/,
+    /^“Pilih beasiswa dari pemerintah atau swasta\? Yuk, simak perbedaannya dan pilih yang cocok buat kamu!”/,
+    /^Saat mencari beasiswa, kamu pasti sering dihadapkan pada dua pilihan besar: beasiswa dari pemerintah atau beasiswa dari lembaga swasta\. Kedua jenis ini menawarkan banyak keuntungan, tapi tentu saja, masing-masing punya karakteristik dan keunggulan tersendiri\./,
+    /^Yuk, kita bahas satu per satu!/,
+    /^“Mau dapetin beasiswa buat kuliah di bidang kreatif\? Yuk, simak apa aja yang harus kamu siapin!”/,
+    /^Beasiswa di bidang kreatif sering dianggap langka atau sulit ditemukan\. Padahal, saat ini banyak lembaga dan universitas di dalam maupun luar negeri yang menawarkan beasiswa bagi pelajar yang memiliki potensi di bidang seni dan kreativitas\./,
+    /^Kalau kamu adalah siswa yang aktif di dunia desain, musik, film, arsitektur, media sosial, atau fotografi, ini adalah saat yang tepat buat memulai langkah serius menuju beasiswa!/,
+    /^“Bingung pilih beasiswa yang full funded atau partially funded\? Yuk, simak perbedaannya dan cari tahu mana yang cocok buat kamu!”/,
+    /^Saat ingin melanjutkan studi ke luar negeri, satu hal penting yang harus kamu tentukan sejak awal adalah jenis beasiswa yang ingin kamu incar\. Apakah kamu ingin mencari beasiswa full funded yang menanggung semua kebutuhan\? Atau kamu fleksibel dengan partially funded yang hanya menanggung sebagian\?/,
+    /^Nah, supaya kamu bisa membuat keputusan yang bijak, simak penjelasan berikut ini!/,
+    // Footer patterns (regex for flexibility)
+    /^Bagikan ke temanmu 🙂/, /^Share/, /^Click to print \(Opens in new window\)/, /^Print/,
+    /^Click to share on Facebook \(Opens in new window\)/, /^Facebook/,
+    /^Click to share on LinkedIn \(Opens in new window\)/, /^LinkedIn/,
+    /^Click to share on Reddit \(Opens in new window\)/, /^Reddit/,
+    /^Click to share on X \(Opens in new window\)/, /^X/,
+    /^Click to share on Telegram \(Opens in new window\)/, /^Telegram/,
+    /^Click to share on WhatsApp \(Opens in new window\)/, /^WhatsApp/,
+    /^Like this:/, /^Like/, /^Loading\.\.\./, /^Related/,
+    /^Kamu akan dibantu:/, /^Ingin Didampingi Sampai Lolos Beasiswa\?/,
+    /^Siap Dibimbing Menuju Beasiswa Jepang\?/, /^Butuh Pendampingan Sebelum Daftar\?/,
+    /^Siap Melangkah Lebih Jauh\?/, /^Masih Bingung Milih Beasiswa\?/,
+    /^Siap Bimbingan Beasiswa Langsung dari Mentor Beasiswa\.id\?/,
+    /^Siap Dibimbing Langsung oleh Mentor Beasiswa\.id\?/,
+    /^Butuh Bantuan Persiapan Beasiswa\?/,
+    /^🔍 Ingin Serius Daftar Beasiswa\? Jangan Berjuang Sendiri!/,
+    /^🎓 Butuh Pendampingan\?/, /^🚀 Klik di sini untuk mulai didampingi →/,
+    /^👉 Klik di sini untuk mulai konsultasi →/,
+    /^👉 Klik di sini untuk daftar sesi konsultasi bareng mentor/,
+    /^👉 Klik untuk Konsultasi Sekarang/, /^👉 Daftar Pendampingan Beasiswa Sekarang/,
+    /^👉 Lynk Konsultasi Beasiswa/,
+    /^👉 Yuk, mulai dari sekarang dan pastikan kamu nggak ketinggalan beasiswa ke Jepang tahun depan!/,
+    /^Gabung juga di Channel Telegram INDBeasiswa \[UPDATE SETIAP HARI\]:/,
+    /^Channel WhatsApp INDBeasiswa:/, /^Instagram:/, /^Official Facebook Page:/,
+    /^Sumber Informasi Resmi:/, /^Sumber Website Resmi:/, /^Kontak:/, /^Silakan dibagikan pada teman-teman yang membutuhkan\. Semoga bermanfaat\./,
+    /^Silakan bagikan pada teman dan keluarga yang membutuhkan\. Semoga bermanfaat\./,
+    /^Silakan bagikan pada rekan-rekan yang membutuhkan\. Selamat mencoba dan semoga bermanfaat\./,
+    /^Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa\./,
+    /^Baca Juga:/, /^Baca Juga/
   ];
 
-  let footerFound = false;
-  for (const line of rawLines) {
-    const trimmedLine = line.trim();
-    if (footerStartPatterns.some(pattern => trimmedLine.startsWith(pattern))) {
-      footerFound = true;
-      break; // Stop processing lines once a footer pattern is found
+  let startIndex = 0;
+  // Skip introductory boilerplate from the beginning
+  while (startIndex < rawLines.length) {
+    const line = rawLines[startIndex].trim();
+    const isBoilerplate = boilerplatePatterns.some(pattern => pattern.test(line));
+
+    if (isBoilerplate || line === '') {
+      startIndex++;
+    } else {
+      break;
     }
-    processedLines.push(line);
   }
 
-  const lines = processedLines.map(line => line.trim());
+  let endIndex = rawLines.length;
+  // Trim footer boilerplate from the end
+  while (endIndex > startIndex) {
+    const line = rawLines[endIndex - 1].trim();
+    const isBoilerplate = boilerplatePatterns.some(pattern => pattern.test(line));
+
+    if (isBoilerplate || line === '') {
+      endIndex--;
+    } else {
+      break;
+    }
+  }
+
+  const lines = rawLines.slice(startIndex, endIndex).map(line => line.trim());
   const elements: JSX.Element[] = [];
   let currentList: string[] = [];
   let listType: 'ul' | 'ol' | null = null;
@@ -115,7 +165,7 @@ export const formatScholarshipContent = (content: string | undefined) => {
         elements.push(
           <ul key={`ul-${elements.length}`} className="list-none space-y-3 pl-0 mb-4">
             {currentList.map((item, idx) => {
-              const iconMatch = item.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)\s*(.*)/);
+              const iconMatch = item.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/);
               const IconComponent = iconMatch ? iconMap[iconMatch[1]] : null;
               const itemText = iconMatch ? iconMatch[2].trim() : item.trim();
               return (
@@ -264,13 +314,13 @@ export const formatScholarshipContent = (content: string | undefined) => {
     }
     // --- Regular Paragraph ---
     else {
-      renderList(); // Render any pending list
-      currentParagraph.push(line); // Add to current paragraph buffer
+      renderList();
+      currentParagraph.push(line);
     }
   });
 
-  renderParagraph(); // Render any remaining paragraph
-  renderList();     // Render any remaining list items
+  renderParagraph();
+  renderList();
 
   return <>{elements}</>;
 };

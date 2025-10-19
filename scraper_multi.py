@@ -48,29 +48,40 @@ def scrape_beasiswa_id(max_items=50):
         r.raise_for_status()
         s = BeautifulSoup(r.text, "html.parser")
 
-        # Broader selectors for posts
-        posts = s.select("article.jeg_post, div.jeg_post_wrapper, div.jeg_postblock_content, .post, .listing, article")
+        # More specific selectors for actual scholarship posts on beasiswa.id
+        # Targeting articles within the main content block
+        posts = s.select("div.jeg_postblock_content article.jeg_post")
         if not posts:
-            logging.warning(f"[{source}] No specific job listing elements found. Falling back to generic 'div.card, article'.")
-            posts = s.select("div.card, article") # Fallback to generic if specific fails
+            logging.warning(f"[{source}] No specific 'div.jeg_postblock_content article.jeg_post' elements found. Trying broader 'article.jeg_post'.")
+            posts = s.select("article.jeg_post") # Fallback to broader article if specific fails
+        if not posts:
+            logging.warning(f"[{source}] No 'article.jeg_post' elements found. Trying even broader 'article'.")
+            posts = s.select("article") # Even broader fallback
 
         for i, p in enumerate(posts[:max_items]):
-            h2 = p.select_one("h2.entry-title a, h3 a, .entry-title a, .post-title a")
-            if not h2:
-                h2 = p.select_one("a") # Fallback to any link
-            if not h2:
+            # Try to find the main job title link first using more specific selectors
+            title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, .entry-title a, .post-title a") 
+            if not title_el:
+                title_el = p.select_one("a") # Fallback to any link if specific title link isn't found
+            
+            if not title_el:
                 logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
                 continue
-            
-            title = h2.get_text(strip=True)
-            link = urljoin(base, h2.get("href"))
+
+            title = title_el.get_text(strip=True)
+            link = urljoin(base, title_el.get("href"))
+
+            # Filter out generic titles like "DAFTAR SEKARANG" or links to non-scholarship content
+            if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower():
+                logging.debug(f"[{source}] Skipping promotional post: {title} - {link}")
+                continue
             
             # Initialize detail fields
             excerpt = ""
             full_content = ""
             organizer = ""
             location = ""
-            deadline = "Tidak diketahui"
+            deadline = "Tidak diketahui" # Initialize deadline here
 
             try:
                 if allowed(link):
@@ -101,7 +112,7 @@ def scrape_beasiswa_id(max_items=50):
                                 continue
                     
                     # Fallback for deadline from time tag if not found in content
-                    if deadline == "Tidak diketahui":
+                    if deadline == "Tidak diketahui": # Only try fallback if still unknown
                         time_el = s_detail.select_one("time[datetime]")
                         if time_el and time_el.has_attr("datetime"):
                             try:
@@ -191,7 +202,7 @@ def scrape_indbeasiswa(max_items=50):
             full_content = ""
             organizer = ""
             location = ""
-            deadline = "Tidak diketahui"
+            deadline = "Tidak diketahui" # Initialize deadline here
 
             try:
                 if allowed(link):
@@ -224,7 +235,7 @@ def scrape_indbeasiswa(max_items=50):
                                 continue
                     
                     # Fallback for deadline from time tag if not found in content
-                    if deadline == "Tidak diketahui":
+                    if deadline == "Tidak diketahui": # Only try fallback if still unknown
                         time_el = s_detail.select_one("time[datetime]")
                         if time_el and time_el.has_attr("datetime"):
                             try:

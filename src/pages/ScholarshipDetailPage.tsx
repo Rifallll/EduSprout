@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CalendarDays, MapPin, Globe, Building2, BookOpen } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import InfoCard from "@/components/InfoCard"; // Re-use InfoCard for related scholarships
+import { formatScholarshipContent } from "@/utils/contentFormatter"; // Import the new formatter
 
 // Import all scholarship data sources
 import dummyScholarshipsData from "@/data/dummyScholarships.json";
@@ -33,6 +34,7 @@ const ScholarshipDetailPage = () => {
   const { scholarshipId } = useParams<{ scholarshipId: string }>();
 
   const allScholarships: ScholarshipItem[] = useMemo(() => {
+    // Add a 'source' property to each scholarship from different files
     const dummy = dummyScholarshipsData.map(s => ({ ...s, source: "manual" }));
     const beasiswaId = scrapedScholarshipsBeasiswaId.map(s => ({ ...s, source: "beasiswa.id" }));
     const indbeasiswa = scrapedScholarshipsIndbeasiswa.map(s => ({ ...s, source: "indbeasiswa.com" }));
@@ -106,9 +108,7 @@ const ScholarshipDetailPage = () => {
           <div className="prose dark:prose-invert max-w-none text-lg leading-relaxed text-foreground">
             <h3 className="text-xl font-semibold mb-3">Deskripsi Beasiswa</h3>
             {scholarship.fullContent ? (
-              scholarship.fullContent.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-2">{paragraph.trim()}</p>
-              ))
+              formatScholarshipContent(scholarship.fullContent)
             ) : (
               <p className="mb-2">{scholarship.description}</p>
             )}
@@ -147,7 +147,7 @@ const ScholarshipDetailPage = () => {
                     category={relatedScholarship.category}
                     date={relatedScholarship.date}
                     location={relatedScholarship.location}
-                    link={relatedScholarship.link}
+                    link={`/scholarships/${relatedScholarship.id}`}
                     linkText="Lihat Beasiswa"
                   />
                 </CarouselItem>

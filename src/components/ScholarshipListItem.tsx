@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Bookmark, CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+// import { Link } from "react-router-dom"; // Tidak lagi diperlukan untuk tautan utama
 
 interface ScholarshipListItemProps {
   id: string;
@@ -12,7 +12,7 @@ interface ScholarshipListItemProps {
   location?: string; // Country/City
   startDate?: string; // "Mulai"
   deadline: string; // "Deadline"
-  link: string; // External link to the scholarship website (now used in detail page)
+  link: string; // External link to the scholarship website
   degreeLevels?: string[]; // e.g., ["SMA", "S1", "S2"]
   fundingType?: string; // e.g., "Fully Funded"
 }
@@ -24,7 +24,7 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
   location,
   startDate,
   deadline,
-  link, // Keep link prop for passing to detail page
+  link, // Ini adalah tautan eksternal yang akan digunakan
   degreeLevels,
   fundingType,
 }) => {
@@ -47,8 +47,8 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
           <Bookmark className="h-4 w-4" />
         </Button>
       </div>
-      {/* Link to the internal ScholarshipDetailPage */}
-      <Link to={`/scholarships/${id}`} className="block flex-grow">
+      {/* Mengubah Link internal menjadi tag <a> eksternal */}
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block flex-grow">
         <h3 className="text-lg font-semibold leading-snug text-foreground hover:text-primary transition-colors duration-200 line-clamp-2">
           {title}
         </h3>
@@ -59,7 +59,7 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
             <span>{location}</span>
           </div>
         )}
-      </Link>
+      </a>
       <CardContent className="flex flex-col space-y-1 text-xs text-muted-foreground p-0 pt-3 mt-3 border-t border-border">
         {startDate && (
           <div className="flex items-center">

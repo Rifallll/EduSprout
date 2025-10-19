@@ -5,7 +5,7 @@
     "description": "Beasiswa penuh untuk mahasiswa berprestasi di berbagai universitas terbaik di Indonesia.",
     "category": "Lokal",
     "date": "Deadline: 31 Januari 2025",
-    "link": "/scholarships/unggulan-dalam-negeri",
+    "link": "https://example.com/beasiswa-unggulan-dalam-negeri",
     "location": "Indonesia"
   },
   {
@@ -14,7 +14,7 @@
     "description": "Kesempatan studi S2/S3 di universitas terkemuka di Amerika Serikat dengan pendanaan penuh.",
     "category": "Internasional",
     "date": "Deadline: 15 Februari 2025",
-    "link": "/scholarships/global-leaders-usa",
+    "link": "https://example.com/global-leaders-usa",
     "location": "USA"
   },
   {
@@ -23,7 +23,7 @@
     "description": "Dukungan dana untuk proyek penelitian inovatif mahasiswa di bidang sains dan teknologi.",
     "category": "Lokal",
     "date": "Deadline: 28 Februari 2025",
-    "link": "/scholarships/riset-inovasi",
+    "link": "https://example.com/beasiswa-riset-inovasi",
     "location": "Indonesia"
   },
   {
@@ -32,7 +32,7 @@
     "description": "Beasiswa bergengsi untuk program master bersama di berbagai negara Eropa.",
     "category": "Internasional",
     "date": "Deadline: 10 Maret 2025",
-    "link": "/scholarships/erasmus-mundus",
+    "link": "https://example.com/erasmus-mundus",
     "location": "Eropa"
   },
   {
@@ -41,7 +41,7 @@
     "description": "Program beasiswa khusus bagi calon guru yang berkomitmen untuk memajukan pendidikan di daerah terpencil.",
     "category": "Lokal",
     "date": "Deadline: 20 Maret 2025",
-    "link": "/scholarships/pendidikan-guru",
+    "link": "https://example.com/beasiswa-pendidikan-guru",
     "location": "Indonesia"
   },
   {
@@ -50,7 +50,7 @@
     "description": "Beasiswa penuh untuk studi pascasarjana di universitas-universitas di Inggris.",
     "category": "Internasional",
     "date": "Deadline: 05 April 2025",
-    "link": "/scholarships/chevening",
+    "link": "https://example.com/chevening",
     "location": "UK"
   }
 ]

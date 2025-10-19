@@ -110,7 +110,7 @@ export const formatScholarshipContent = (content: string | undefined) => {
     if (currentList.length > 0) {
       if (listType === 'ul') {
         elements.push(
-          <ul key={`ul-${elements.length}`} className="list-none space-y-2 pl-0 mb-4">
+          <ul key={`ul-${elements.length}`} className="list-none space-y-3 pl-0 mb-4">
             {currentList.map((item, idx) => {
               const iconMatch = item.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)\s*(.*)/);
               const IconComponent = iconMatch ? iconMap[iconMatch[1]] : null;
@@ -126,7 +126,7 @@ export const formatScholarshipContent = (content: string | undefined) => {
         );
       } else if (listType === 'ol') {
         elements.push(
-          <ol key={`ol-${elements.length}`} className="list-decimal list-inside space-y-2 pl-4 mb-4 text-base text-foreground">
+          <ol key={`ol-${elements.length}`} className="list-decimal list-inside space-y-3 pl-4 mb-4 text-base text-foreground">
             {currentList.map((item, idx) => (
               <li key={idx} dangerouslySetInnerHTML={{ __html: formatText(item.replace(/^\d+\.\s*/, '')) }} />
             ))}
@@ -174,15 +174,15 @@ export const formatScholarshipContent = (content: string | undefined) => {
 
       if (isH2) {
         elements.push(
-          <h2 key={`h2-${elements.length}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
+          <h2 key={`h2-${elements.length}`} className="text-2xl md:text-3xl font-bold mt-8 mb-6 text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isH3) {
         elements.push(
-          <h3 key={`h3-${elements.length}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
+          <h3 key={`h3-${elements.length}`} className="text-xl md:text-2xl font-bold mt-6 mb-4 text-foreground leading-snug" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isH4) {
         elements.push(
-          <h4 key={`h4-${elements.length}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
+          <h4 key={`h4-${elements.length}`} className="text-lg font-semibold mt-4 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
       } else if (isBacaJuga) {
         elements.push(

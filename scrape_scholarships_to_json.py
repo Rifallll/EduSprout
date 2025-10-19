@@ -1,45 +1,66 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
-import time, random, json, hashlib, urllib.robotparser
+import urllib.robotparser
+import time, random, json, hashlib, logging
 from datetime import datetime
-import re
-import logging
+import feedparser
+from dateutil import parser as dateparser
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s - %(funcName)s')
+# -------- CONFIG ----------
+HEADERS = {"User-Agent": "Mozilla/5.0 (EduScraper/1.0; +https://example.com)"}
+DELAY_MIN, DELAY_MAX = 0.8, 1.6
+OUTPUT_RAW = "data/beasiswa_all.json"
+LOG_FILE = "logs/scraper.log"
+MAX_PER_SITE = 25  # safety limit per site, increased to get more data
+# List of scrapers to run (functions defined below)
+# You can add/remove functions from this list
+# ---------------------------
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; EduScraper/1.0; +https://example.com)"}
-DELAY_MIN = 0.8
-DELAY_MAX = 1.6
-OUTPUT = "beasiswa_all.json"
+logging.basicConfig(level=logging.INFO, filename=LOG_FILE,
+                    format="%(asctime)s %(levelname)s: %(message)s")
 
-def allowed(url):
+def allowed_by_robots(url):
     try:
-        parsed = urlparse(url)
-        robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
+        p = urlparse(url)
+        robots_url = f"{p.scheme}://{p.netloc}/robots.txt"
         rp = urllib.robotparser.RobotFileParser()
         rp.set_url(robots_url)
         rp.read()
         return rp.can_fetch(HEADERS["User-Agent"], url)
     except Exception as e:
-        logging.warning(f"Error checking robots.txt for {url}: {e}. Assuming allowed.")
-        return True
+        logging.warning(f"robots.txt check failed for {url}: {e}")
+        return True  # be permissive if robots can't be read
+
+def safe_get(url, timeout=15, allow_redirects=True):
+    """GET with headers and simple retry/backoff"""
+    for attempt in range(3):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=timeout, allow_redirects=allow_redirects)
+            if r.status_code == 200:
+                return r.text
+            else:
+                logging.warning(f"GET {url} returned status {r.status_code}")
+                time.sleep(1 + attempt)
+        except Exception as e:
+            logging.warning(f"GET {url} exception: {e}")
+            time.sleep(1 + attempt)
+    return ""
 
 def make_id(source, title, link):
     s = f"{source}|{title}|{link}"
     return hashlib.sha1(s.encode("utf-8")).hexdigest()
 
-def safe_request(url):
+def parse_date_safe(text):
+    if not text:
+        return ""
     try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
-        return res.text
-    except requests.exceptions.RequestException as e:
-        logging.warning(f"Error fetching {url}: {e}")
-    return None
+        dt = dateparser.parse(text, fuzzy=True)
+        return dt.date().isoformat()
+    except Exception:
+        return text.strip()
 
-def parse_detail_page(html_content, link_url, source_name):
+def parse_detail_page_generic(html_content, link_url, source_name):
     """Parses common detail page elements like full content, organizer, location, and deadline."""
     soup = BeautifulSoup(html_content, "html.parser")
     
@@ -48,67 +69,29 @@ def parse_detail_page(html_content, link_url, source_name):
     if content_el:
         full_content = content_el.get_text(separator="\n", strip=True)
     
-    excerpt = full_content[:300] if full_content else "" # Use first 300 chars as excerpt
+    excerpt = full_content[:600] if full_content else ""
 
     organizer = ""
     organizer_match = re.search(r"(?:Penyelenggara|Organized by|Oleh):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
     if organizer_match:
         organizer = organizer_match.group(1).strip()
-    elif source_name == "indbeasiswa.com": # Default for indbeasiswa if not found in content
-        organizer = "Indbeasiswa.com"
 
     deadline = "Tidak diketahui"
-    # 1. Try to find explicit deadline phrases
     deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", full_content, re.IGNORECASE)
     if deadline_match:
-        date_str = deadline_match.group(1).strip()
-        for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
-            try:
-                parsed_date = datetime.strptime(date_str, fmt)
-                deadline = parsed_date.strftime("%d %B %Y") # Standardize to "DD Month YYYY"
-                break
-            except ValueError:
-                continue
-    
-    # 2. Fallback: try to get date from time tag (if not already found)
-    if deadline == "Tidak diketahui":
+        deadline = parse_date_safe(deadline_match.group(1).strip())
+    else:
         time_el = soup.select_one("time[datetime]")
         if time_el and time_el.has_attr("datetime"):
-            try:
-                parsed_date = datetime.strptime(time_el["datetime"], "%Y-%m-%d")
-                deadline = parsed_date.strftime("%d %B %Y")
-            except ValueError:
-                pass
-
-    # 3. Fallback: search for any date-like pattern in the content
-    if deadline == "Tidak diketahui":
-        date_patterns = [
-            r'\b(\d{1,2}\s+(?:Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)\s+\d{4})\b',
-            r'\b(\d{4}-\d{2}-\d{2})\b',
-            r'\b(\d{1,2}/\d{1,2}/\d{4})\b'
-        ]
-        for pattern in date_patterns:
-            match = re.search(pattern, full_content, re.IGNORECASE)
-            if match:
-                date_str = match.group(1).strip()
-                for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
-                    try:
-                        parsed_date = datetime.strptime(date_str, fmt)
-                        deadline = parsed_date.strftime("%d %B %Y")
-                        break
-                    except ValueError:
-                        continue
-                if deadline != "Tidak diketahui":
-                    break
+            deadline = parse_date_safe(time_el["datetime"])
+        elif time_el:
+            deadline = parse_date_safe(time_el.get_text(strip=True))
 
     location = "Tidak diketahui"
-    # 1. Try to find explicit location phrases
     location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota|Wilayah):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
     if location_match:
         location = location_match.group(1).strip()
-    
-    # 2. Fallback: check for common keywords in full content
-    if location == "Tidak diketahui":
+    else:
         lower_content = full_content.lower()
         if "online" in lower_content or "daring" in lower_content or "virtual" in lower_content:
             location = "Online"
@@ -127,237 +110,298 @@ def parse_detail_page(html_content, link_url, source_name):
 
     return {
         "fullContent": full_content,
-        "description": excerpt,
+        "excerpt": excerpt,
         "organizer": organizer,
-        "date": deadline, # Renamed to 'date' to match RawScholarshipItem
+        "date_posted": deadline, # Use date_posted for consistency
         "location": location
     }
 
-# ==========================
-# 1. beasiswa.id
-# ==========================
-def scrape_beasiswa_id(max_items=25):
+
+# -------------------------
+# SCRAPER: beasiswa.id
+# -------------------------
+def scrape_beasiswa_id(limit=MAX_PER_SITE):
     source = "beasiswa.id"
-    base = "https://beasiswa.id"
-    start_url = base + "/category/beasiswa/"
-    out = []
-
-    logging.info(f"[{source}] Scraping {start_url} ...")
-    if not allowed(start_url):
-        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
-        return out
-
-    html = safe_request(start_url)
+    base = "https://beasiswa.id/"
+    items = []
+    if not allowed_by_robots(base):
+        logging.info(f"{source} blocked in robots.txt")
+        return items
+    html = safe_get(base)
     if not html:
-        return out
-    
+        return items
     soup = BeautifulSoup(html, "html.parser")
-    # Trying a more general selector for article titles
-    posts = soup.select("h3.jeg_post_title a, .post-title a") 
+    # More robust selector for beasiswa.id
+    posts = soup.select("article.jeg_post, div.jeg_post_wrapper") 
     
-    if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'h3.jeg_post_title a, .post-title a' on {start_url}")
-        return out
+    for p in posts[:limit]:
+        try:
+            a = p.select_one("h3.jeg_post_title a, h2.entry-title a, h2 a, a")
+            if not a:
+                continue
+            title = a.get_text(strip=True)
+            link = urljoin(base, a.get("href"))
+            
+            if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower() or "whatsapp" in link.lower():
+                logging.debug(f"[{source}] Skipping promotional post: {title} - {link}")
+                continue
 
-    for i, a_tag in enumerate(posts[:max_items]):
-        title = a_tag.get_text(strip=True)
-        link = urljoin(base, a_tag.get("href"))
+            # Fetch detail page for robust fields
+            full_data = {}
+            if allowed_by_robots(link):
+                time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                det_html = safe_get(link)
+                if det_html:
+                    full_data = parse_detail_page_generic(det_html, link, source)
+            
+            items.append({
+                "id": make_id(source, title, link),
+                "source": source,
+                "title": title,
+                "link": link,
+                "date_posted": full_data.get("date_posted", ""),
+                "excerpt": full_data.get("excerpt", ""),
+                "fullContent": full_data.get("fullContent", ""),
+                "organizer": full_data.get("organizer", ""),
+                "location": full_data.get("location", "")
+            })
+        except Exception as e:
+            logging.exception(f"{source} parse item error: {e}")
+    logging.info(f"{source} scraped {len(items)} items")
+    return items
 
-        if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower() or "whatsapp" in link.lower():
-            logging.debug(f"[{source}] Skipping promotional post: {title} - {link}")
-            continue
-
-        logging.info(f"[{source}] Processing: {title}")
-        detail_html = safe_request(link)
-        if not detail_html:
-            continue
-        
-        detail_data = parse_detail_page(detail_html, link, source)
-        
-        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
-
-        out.append({
-            "id": make_id(source, title, link),
-            "source": source,
-            "title": title,
-            "description": detail_data["description"],
-            "category": category,
-            "date": detail_data["date"],
-            "location": detail_data["location"],
-            "link": link,
-            "fullContent": detail_data["fullContent"],
-            "organizer": detail_data["organizer"],
-        })
-        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-    logging.info(f"✅ {len(out)} data from {source}")
-    return out
-
-# ==========================
-# 2. indbeasiswa.com
-# ==========================
-def scrape_indbeasiswa(max_items=25):
+# -------------------------
+# SCRAPER: indbeasiswa.com
+# -------------------------
+def scrape_indbeasiswa(limit=MAX_PER_SITE):
     source = "indbeasiswa.com"
-    base = "https://indbeasiswa.com"
-    start_url = base + "/beasiswa-s1/"
-    out = []
-
-    logging.info(f"[{source}] Scraping {start_url} ...")
-    # Temporarily bypass robots.txt for testing purposes
-    # if not allowed(start_url):
-    #     logging.warning(f"[{source}] blocked by robots.txt — skipping.")
-    #     return out
-
-    html = safe_request(start_url)
+    base = "https://indbeasiswa.com/"
+    items = []
+    if not allowed_by_robots(base):
+        logging.info(f"{source} blocked in robots.txt")
+        return items
+    html = safe_get(base)
     if not html:
-        return out
-    
+        return items
     soup = BeautifulSoup(html, "html.parser")
-    # Trying a more general selector for article titles
-    posts = soup.select("h2.post-title a, .entry-title a")
+    # More robust selector for indbeasiswa.com
+    posts = soup.select("article.post-item, article.jeg_post")
     
-    if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'h2.post-title a, .entry-title a' on {start_url}")
-        return out
+    for p in posts[:limit]:
+        try:
+            a = p.select_one("h2.post-title a, h3.jeg_post_title a, .entry-title a, h2 a, a")
+            if not a:
+                continue
+            title = a.get_text(strip=True)
+            link = urljoin(base, a.get("href"))
+            
+            # Fetch detail page for robust fields
+            full_data = {}
+            if allowed_by_robots(link):
+                time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                det_html = safe_get(link)
+                if det_html:
+                    full_data = parse_detail_page_generic(det_html, link, source)
+            
+            items.append({
+                "id": make_id(source, title, link),
+                "source": source,
+                "title": title,
+                "link": link,
+                "date_posted": full_data.get("date_posted", ""),
+                "excerpt": full_data.get("excerpt", ""),
+                "fullContent": full_data.get("fullContent", ""),
+                "organizer": full_data.get("organizer", ""),
+                "location": full_data.get("location", "")
+            })
+        except Exception as e:
+            logging.exception(f"{source} parse item error: {e}")
+    logging.info(f"{source} scraped {len(items)} items")
+    return items
 
-    for i, a_tag in enumerate(posts[:max_items]):
-        title = a_tag.get_text(strip=True)
-        link = urljoin(base, a_tag.get("href"))
-
-        logging.info(f"[{source}] Processing: {title}")
-        detail_html = safe_request(link)
-        if not detail_html:
-            continue
-        
-        detail_data = parse_detail_page(detail_html, link, source)
-        
-        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
-
-        out.append({
-            "id": make_id(source, title, link),
-            "source": source,
-            "title": title,
-            "description": detail_data["description"],
-            "category": category,
-            "date": detail_data["date"],
-            "location": detail_data["location"],
-            "link": link,
-            "fullContent": detail_data["fullContent"],
-            "organizer": detail_data["organizer"],
-        })
-        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-    logging.info(f"✅ {len(out)} data from {source}")
-    return out
-
-# ==========================
-# 3. luarkampus.id
-# ==========================
-def scrape_luarkampus(max_items=25):
+# -------------------------
+# SCRAPER: luarkampus.id (category beasiswa)
+# -------------------------
+def scrape_luarkampus(limit=MAX_PER_SITE):
     source = "luarkampus.id"
-    base = "https://luarkampus.id"
-    start_url = base + "/beasiswa/" # Confirmed this is a valid category page
-    out = []
-
-    logging.info(f"[{source}] Scraping {start_url} ...")
-    if not allowed(start_url):
-        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
-        return out
-
-    html = safe_request(start_url)
+    start = "https://luarkampus.id/beasiswa/" # Corrected URL
+    items = []
+    if not allowed_by_robots(start):
+        logging.info(f"{source} blocked in robots.txt")
+        return items
+    html = safe_get(start)
     if not html:
-        return out
-    
+        return items
     soup = BeautifulSoup(html, "html.parser")
-    # Trying a more general selector for article titles
-    posts = soup.select("h3.elementor-post__title a, .entry-title a") 
+    # More robust selector for luarkampus.id
+    posts = soup.select("div.elementor-posts-container article.elementor-post")
     
-    if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'h3.elementor-post__title a, .entry-title a' on {start_url}")
-        return out
+    for p in posts[:limit]:
+        try:
+            a = p.select_one("h3.elementor-post__title a, h2.entry-title a, h2 a, a")
+            if not a:
+                continue
+            title = a.get_text(strip=True)
+            link = urljoin(start, a.get("href"))
+            
+            # Fetch detail page for robust fields
+            full_data = {}
+            if allowed_by_robots(link):
+                time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                det_html = safe_get(link)
+                if det_html:
+                    full_data = parse_detail_page_generic(det_html, link, source)
+            
+            items.append({
+                "id": make_id(source, title, link),
+                "source": source,
+                "title": title,
+                "link": link,
+                "date_posted": full_data.get("date_posted", ""),
+                "excerpt": full_data.get("excerpt", ""),
+                "fullContent": full_data.get("fullContent", ""),
+                "organizer": full_data.get("organizer", ""),
+                "location": full_data.get("location", "")
+            })
+        except Exception as e:
+            logging.exception(f"{source} parse item error: {e}")
+    logging.info(f"{source} scraped {len(items)} items")
+    return items
 
-    for i, a_tag in enumerate(posts[:max_items]):
-        title = a_tag.get_text(strip=True)
-        link = urljoin(base, a_tag.get("href"))
-
-        logging.info(f"[{source}] Processing: {title}")
-        detail_html = safe_request(link)
-        if not detail_html:
-            continue
-        
-        detail_data = parse_detail_page(detail_html, link, source)
-        
-        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
-
-        out.append({
-            "id": make_id(source, title, link),
-            "source": source,
-            "title": title,
-            "description": detail_data["description"],
-            "category": category,
-            "date": detail_data["date"],
-            "location": detail_data["location"],
-            "link": link,
-            "fullContent": detail_data["fullContent"],
-            "organizer": detail_data["organizer"],
-        })
-        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-    logging.info(f"✅ {len(out)} data from {source}")
-    return out
-
-# ==========================
-# 4. scholarship4u.com
-# ==========================
-def scrape_scholarship4u(max_items=25):
-    source = "scholarship4u.com"
-    base = "https://www.scholarship4u.com/"
-    start_url = base + "category/scholarships/"
-    out = []
-
-    logging.info(f"[{source}] Scraping {start_url} ...")
-    if not allowed(start_url):
-        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
-        return out
-
-    html = safe_request(start_url)
+# -------------------------
+# SCRAPER: schoters (schoters.com) - aggregator indonesia
+# -------------------------
+def scrape_schoters(limit=MAX_PER_SITE):
+    source = "schoters.com"
+    start = "https://www.schoters.com/id/beasiswa/"
+    items = []
+    if not allowed_by_robots(start):
+        logging.info(f"{source} blocked in robots.txt")
+        return items
+    html = safe_get(start)
     if not html:
-        return out
-    
+        return items
     soup = BeautifulSoup(html, "html.parser")
-    # Trying a more general selector for article titles
-    posts = soup.select("article.post h2.entry-title a, .post-title a")
+    # More robust selector for schoters.com
+    cards = soup.select(".jeg_post_wrapper, .post-item, article.post, .card")
     
-    if not posts:
-        logging.warning(f"[{source}] No posts found with selector 'article.post h2.entry-title a, .post-title a' on {start_url}")
-        return out
+    for p in cards[:limit]:
+        try:
+            a = p.select_one("h2 a, h3 a, .title a, a")
+            if not a or not a.get("href"):
+                continue
+            title = a.get_text(" ", strip=True)[:240] or a.get("title","").strip()
+            link = urljoin(start, a.get("href"))
+            
+            # Fetch detail page for robust fields
+            full_data = {}
+            if allowed_by_robots(link):
+                time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                det_html = safe_get(link)
+                if det_html:
+                    full_data = parse_detail_page_generic(det_html, link, source)
+            
+            items.append({
+                "id": make_id(source, title, link),
+                "source": source,
+                "title": title,
+                "link": link,
+                "date_posted": full_data.get("date_posted", ""),
+                "excerpt": full_data.get("excerpt", ""),
+                "fullContent": full_data.get("fullContent", ""),
+                "organizer": full_data.get("organizer", ""),
+                "location": full_data.get("location", "")
+            })
+        except Exception as e:
+            logging.exception(f"{source} parse item error: {e}")
+    logging.info(f"{source} scraped {len(items)} items")
+    return items
 
-    for i, a_tag in enumerate(posts[:max_items]):
-        title = a_tag.get_text(strip=True)
-        link = urljoin(base, a_tag.get("href"))
+# -------------------------
+# SCRAPER: scholarshipportal (international aggregator) - uses search RSS where possible
+# -------------------------
+def scrape_scholarshipportal(limit=MAX_PER_SITE):
+    source = "scholarshipportal.com"
+    base = "https://www.scholarshipportal.com/"
+    items = []
+    
+    # Try RSS feed first
+    feed_url = "https://www.scholarshipportal.com/rss"
+    try:
+        f = feedparser.parse(feed_url)
+        if f and f.entries:
+            for e in f.entries[:limit]:
+                title = e.get("title", "")[:240]
+                link = e.get("link", "")
+                date = parse_date_safe(e.get("published", e.get("updated", "")))
+                
+                # Attempt to fetch detail page for RSS items too
+                full_data = {}
+                if allowed_by_robots(link):
+                    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                    det_html = safe_get(link)
+                    if det_html:
+                        full_data = parse_detail_page_generic(det_html, link, source)
 
-        logging.info(f"[{source}] Processing: {title}")
-        detail_html = safe_request(link)
-        if not detail_html:
-            continue
-        
-        detail_data = parse_detail_page(detail_html, link, source)
-        
-        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
+                items.append({
+                    "id": make_id(source, title, link),
+                    "source": source,
+                    "title": title,
+                    "link": link,
+                    "date_posted": full_data.get("date_posted", date), # Prefer detail page date, fallback to RSS date
+                    "excerpt": full_data.get("excerpt", e.get("summary","")[:400]),
+                    "fullContent": full_data.get("fullContent", ""),
+                    "organizer": full_data.get("organizer", ""),
+                    "location": full_data.get("location", "")
+                })
+            logging.info(f"{source} scraped {len(items)} items via RSS")
+            return items
+    except Exception as e:
+        logging.warning(f"{source} feed error: {e}")
 
-        out.append({
-            "id": make_id(source, title, link),
-            "source": source,
-            "title": title,
-            "description": detail_data["description"],
-            "category": category,
-            "date": detail_data["date"],
-            "location": detail_data["location"],
-            "link": link,
-            "fullContent": detail_data["fullContent"],
-            "organizer": detail_data["organizer"],
-        })
-        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-    logging.info(f"✅ {len(out)} data from {source}")
-    return out
+    # Fallback: do basic GET and try some selectors (best-effort)
+    html = safe_get(base)
+    if not html:
+        return items
+    soup = BeautifulSoup(html, "html.parser")
+    # More robust selector for scholarshipportal.com
+    posts = soup.select(".search-result-item, .card, article, .item")
+    
+    for p in posts[:limit]:
+        try:
+            a = p.select_one("h2 a, h3 a, .title a, a")
+            if not a or not a.get("href"):
+                continue
+            title = a.get_text(" ", strip=True)[:240]
+            link = urljoin(base, a.get("href"))
+            
+            # Fetch detail page for robust fields
+            full_data = {}
+            if allowed_by_robots(link):
+                time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                det_html = safe_get(link)
+                if det_html:
+                    full_data = parse_detail_page_generic(det_html, link, source)
 
+            items.append({
+                "id": make_id(source, title, link),
+                "source": source,
+                "title": title,
+                "link": link,
+                "date_posted": full_data.get("date_posted", ""),
+                "excerpt": full_data.get("excerpt", ""),
+                "fullContent": full_data.get("fullContent", ""),
+                "organizer": full_data.get("organizer", ""),
+                "location": full_data.get("location", "")
+            })
+        except Exception as e:
+            logging.exception(f"{source} fallback error: {e}")
+    logging.info(f"{source} scraped {len(items)} items (fallback)")
+    return items
+
+# -------------------------
+# Merge, dedupe, save
+# -------------------------
 def dedupe(items):
     seen = set()
     out = []
@@ -368,52 +412,50 @@ def dedupe(items):
         out.append(it)
     return out
 
-def parse_date_for_sort(date_string):
-    if not date_string or date_string == "Tidak diketahui":
-        return datetime.min # Treat unknown dates as very old
-
-    # Try parsing "DD Month YYYY"
-    month_map = {
-        "januari": 1, "februari": 2, "maret": 3, "april": 4, "mei": 5, "juni": 6,
-        "juli": 7, "agustus": 8, "september": 9, "oktober": 10, "november": 11, "desember": 12
-    }
-    match = re.match(r'(\d{1,2})\s*(\w+)\s*(\d{4})', date_string, re.IGNORECASE)
-    if match:
-        day, month_name, year = match.groups()
-        month_num = month_map.get(month_name.lower())
-        if month_num:
-            return datetime(int(year), month_num, int(day))
-    
-    # Try parsing "YYYY-MM-DD"
+def scrape_all():
+    all_items = []
     try:
-        return datetime.strptime(date_string, "%Y-%m-%d")
-    except ValueError:
-        pass
-
-    # Try parsing "DD/MM/YYYY"
+        all_items.extend(scrape_beasiswa_id())
+    except Exception:
+        logging.exception("Error scraping beasiswa.id")
+    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
     try:
-        return datetime.strptime(date_string, "%d/%m/%Y")
-    except ValueError:
-        pass
+        all_items.extend(scrape_indbeasiswa())
+    except Exception:
+        logging.exception("Error scraping indbeasiswa")
+    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    try:
+        all_items.extend(scrape_luarkampus())
+    except Exception:
+        logging.exception("Error scraping luarkampus")
+    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    try:
+        all_items.extend(scrape_schoters())
+    except Exception:
+        logging.exception("Error scraping schoters")
+    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    try:
+        all_items.extend(scrape_scholarshipportal())
+    except Exception:
+        logging.exception("Error scraping scholarshipportal")
+    # add other scrapers similarly...
 
-    return datetime.min # Fallback for unparseable dates
-
-def main():
-    all_data = []
-    all_data += scrape_beasiswa_id(max_items=25)
-    time.sleep(1)
-    all_data += scrape_indbeasiswa(max_items=25)
-    time.sleep(1)
-    all_data += scrape_luarkampus(max_items=25)
-    time.sleep(1)
-    all_data += scrape_scholarship4u(max_items=25)
-
-    merged = dedupe(all_data)
-    merged_sorted = sorted(merged, key=lambda x: parse_date_for_sort(x.get("date")), reverse=True)
-
-    with open(OUTPUT, "w", encoding="utf-8") as f:
+    merged = dedupe(all_items)
+    # best-effort sort by date_posted (descending), else keep as scraped
+    def sort_key(x):
+        return x.get("date_posted") or ""
+    merged_sorted = sorted(merged, key=sort_key, reverse=True)
+    # ensure data folder exists
+    import os
+    os.makedirs("data", exist_ok=True)
+    with open(OUTPUT_RAW, "w", encoding="utf-8") as f:
         json.dump(merged_sorted, f, ensure_ascii=False, indent=2)
-    print(f"\n🎉 Semua selesai! Total {len(merged_sorted)} data disimpan di {OUTPUT}")
+    logging.info(f"Saved total {len(merged_sorted)} items to {OUTPUT_RAW}")
+    return merged_sorted
 
 if __name__ == "__main__":
-    main()
+    start = datetime.utcnow().isoformat()
+    logging.info("Scraper started")
+    items = scrape_all()
+    logging.info(f"Scraper finished, {len(items)} items")
+    print(f"Done. {len(items)} items saved to {OUTPUT_RAW}")

@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/pagination";
 
 // Import all scholarship data sources
-// Removed dummyScholarshipsData import
 import scrapedScholarshipsBeasiswaId from "@/data/scrapedScholarships.json";
 import scrapedScholarshipsIndbeasiswa from "@/data/scrapedIndbeasiswa.json";
 
@@ -57,7 +56,7 @@ const Scholarships = () => {
   const [selectedFundingTypes, setSelectedFundingTypes] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("all");
   const [selectedInstitution, setSelectedInstitution] = useState(""); // For institution search
-  const [selectedMonth, setSelectedMonth] = useState(monthNames[new Date().getMonth()]); // Default to current month
+  const [selectedMonth, setSelectedMonth] = useState("all"); // Changed default to "all"
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +64,6 @@ const Scholarships = () => {
 
   const allScholarships: EnrichedScholarshipItem[] = useMemo(() => {
     const rawScholarships = [
-      // Removed dummyScholarshipsData
       ...scrapedScholarshipsBeasiswaId.map(s => ({ ...s, source: "beasiswa.id" })),
       ...scrapedScholarshipsIndbeasiswa.map(s => ({ ...s, source: "indbeasiswa.com" })),
     ];
@@ -105,7 +103,7 @@ const Scholarships = () => {
     setSelectedFundingTypes([]);
     setSelectedCountry("all");
     setSelectedInstitution("");
-    setSelectedMonth(monthNames[new Date().getMonth()]);
+    setSelectedMonth("all"); // Reset to "all"
     setCurrentPage(1);
   };
 
@@ -344,7 +342,6 @@ const Scholarships = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Semua Sumber</SelectItem>
-                    {/* Removed manual source */}
                     <SelectItem value="beasiswa.id">Beasiswa.id</SelectItem>
                     <SelectItem value="indbeasiswa.com">Indbeasiswa.com</SelectItem>
                   </SelectContent>
@@ -387,6 +384,9 @@ const Scholarships = () => {
             setCurrentPage(1);
           }} className="w-full mb-8">
             <TabsList className="grid w-full grid-cols-6 md:grid-cols-12 h-auto p-1 bg-muted rounded-lg">
+              <TabsTrigger key="all" value="all" className="text-sm font-medium py-2 px-1 md:px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-colors duration-200">
+                SEMUA
+              </TabsTrigger>
               {monthNames.map((month) => (
                 <TabsTrigger key={month} value={month} className="text-sm font-medium py-2 px-1 md:px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-colors duration-200">
                   {month.substring(0, 3).toUpperCase()}

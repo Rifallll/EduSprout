@@ -22,8 +22,8 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 
-// Import the new dummy scholarship data
-import dummyScholarships from "@/data/dummyScholarships.json";
+// Import the new modular scholarship data
+import dummyScholarships from "@/data/scholarships";
 
 // Import the new ScholarshipListItem component
 import ScholarshipListItem from "@/components/ScholarshipListItem";

@@ -138,7 +138,7 @@ const ScholarshipDetailPage = () => {
                   <InfoCard
                     key={relatedScholarship.id}
                     title={relatedScholarship.title}
-                    description={""} {/* Description is now explicitly empty */}
+                    description={""}
                     category={relatedScholarship.category}
                     date={relatedScholarship.date}
                     location={relatedScholarship.location}

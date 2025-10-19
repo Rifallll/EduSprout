@@ -12,7 +12,7 @@ import InfoCard from "@/components/InfoCard"; // Re-use InfoCard for related sch
 // import { formatScholarshipContent } from "@/utils/contentFormatter"; // Removed as content is no longer displayed
 
 // Import all scholarship data sources
-import dummyScholarshipsData from "@/data/dummyScholarships.json";
+// Removed dummyScholarshipsData import
 import scrapedScholarshipsBeasiswaId from "@/data/scrapedScholarships.json";
 import scrapedScholarshipsIndbeasiswa from "@/data/scrapedIndbeasiswa.json";
 
@@ -35,10 +35,10 @@ const ScholarshipDetailPage = () => {
 
   const allScholarships: ScholarshipItem[] = useMemo(() => {
     // Add a 'source' property to each scholarship from different files
-    const dummy = dummyScholarshipsData.map(s => ({ ...s, source: "manual" }));
+    // Removed dummy data mapping
     const beasiswaId = scrapedScholarshipsBeasiswaId.map(s => ({ ...s, source: "beasiswa.id" }));
     const indbeasiswa = scrapedScholarshipsIndbeasiswa.map(s => ({ ...s, source: "indbeasiswa.com" }));
-    return [...dummy, ...beasiswaId, ...indbeasiswa];
+    return [...beasiswaId, ...indbeasiswa];
   }, []);
 
   // Find the scholarship by matching the end of its link with the scholarshipId

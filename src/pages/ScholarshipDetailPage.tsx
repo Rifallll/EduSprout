@@ -105,7 +105,7 @@ const ScholarshipDetailPage = () => {
             {scholarship.fullContent ? (
               formatScholarshipContent(scholarship.fullContent)
             ) : (
-              <p className="mb-2">{scholarship.description}</p>
+              <p className="mb-2">Deskripsi lengkap tidak tersedia. Silakan kunjungi tautan resmi beasiswa untuk informasi lebih lanjut.</p>
             )}
             <p className="mt-4 text-muted-foreground italic text-base">
               Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa.
@@ -138,7 +138,7 @@ const ScholarshipDetailPage = () => {
                   <InfoCard
                     key={relatedScholarship.id}
                     title={relatedScholarship.title}
-                    description={relatedScholarship.description}
+                    description={""} {/* Description is now explicitly empty */}
                     category={relatedScholarship.category}
                     date={relatedScholarship.date}
                     location={relatedScholarship.location}

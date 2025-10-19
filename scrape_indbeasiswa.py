@@ -7,7 +7,7 @@ from datetime import datetime # Import datetime
 
 # --------- CONFIG ---------
 BASE = "https://indbeasiswa.com"
-LIST_URL = "https://indbeasiswa.com/category/beasiswa/"
+LIST_URL = "https://indbeasiswa.com/beasiswa-s1/" # Changed to S1 category as per user's request
 HEADERS = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115 Safari/537.36"}
 
 # Configure logging
@@ -22,7 +22,6 @@ def fetch(url):
 def parse_list(html):
     soup = BeautifulSoup(html, "html.parser")
     # More robust selectors for post items on indbeasiswa.com category page
-    # Added 'div.jeg_post', 'article.post-item', 'div.entry-card' as common patterns
     posts = soup.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
     results = []
     for p in posts:
@@ -71,11 +70,11 @@ def parse_detail(html):
     return {"content": content, "date": date}
 
 def main():
-    logging.info("Starting scholarship scraping from Indbeasiswa.com")
+    logging.info("Starting scholarship scraping from Indbeasiswa.com (S1 Category)")
     try:
         html = fetch(LIST_URL)
         items = parse_list(html)
-        logging.info(f"Found {len(items)} items in the listing page.") # Added this line for debugging
+        logging.info(f"Found {len(items)} items in the listing page.")
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch listing page: {e}")
         return
@@ -91,6 +90,7 @@ def main():
             # Infer category and location
             category = "Internasional" if "luar negeri" in it["title"].lower() or "international" in d["content"].lower() else "Lokal"
             location = "Online" if "online" in d["content"].lower() else "Tidak diketahui"
+            organizer = "Indbeasiswa.com" # Default organizer for this source
 
             out.append({
                 "id": f"indbeasiswa_{i}",
@@ -101,6 +101,7 @@ def main():
                 "location": location,
                 "link": it["link"],
                 "fullContent": d["content"],
+                "organizer": organizer,
             })
         except requests.exceptions.RequestException as e:
             logging.warning(f"Error fetching detail page for {it['link']}: {e}")

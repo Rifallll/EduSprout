@@ -98,5 +98,55 @@
     "link": "https://yayasanharapanbangsa.org/beasiswa-sma",
     "degreeLevels": ["SMA"],
     "fundingType": "Partially Funded"
+  },
+  {
+    "id": "ds11",
+    "title": "Beasiswa Unggulan D3/D4 Politeknik Elektronika Negeri Surabaya",
+    "organizer": "Politeknik Elektronika Negeri Surabaya",
+    "location": "Surabaya, Indonesia",
+    "deadline": "20 September 2026",
+    "link": "https://pens.ac.id/beasiswa",
+    "degreeLevels": ["D3", "D4"],
+    "fundingType": "Partially Funded"
+  },
+  {
+    "id": "ds12",
+    "title": "Erasmus Mundus Scholarship (S2/S3 Internasional)",
+    "organizer": "European Union",
+    "location": "Eropa (Berbagai Negara)",
+    "deadline": "01 Oktober 2026",
+    "link": "https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/erasmus-mundus-joint-masters-scholarships",
+    "degreeLevels": ["S2", "S3"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds13",
+    "title": "Beasiswa Prestasi SMA/SMK Unggulan",
+    "organizer": "Dinas Pendidikan Provinsi Jawa Barat",
+    "location": "Bandung, Indonesia",
+    "deadline": "05 November 2026",
+    "link": "https://disdik.jabarprov.go.id/beasiswa",
+    "degreeLevels": ["SMA"],
+    "fundingType": "Partially Funded"
+  },
+  {
+    "id": "ds14",
+    "title": "Australia Awards Scholarship (S2/S3)",
+    "organizer": "Pemerintah Australia",
+    "location": "Australia",
+    "deadline": "30 November 2026",
+    "link": "https://www.australiaawardsindonesia.org/",
+    "degreeLevels": ["S2", "S3"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds15",
+    "title": "Beasiswa Riset Mahasiswa (S1)",
+    "organizer": "Lembaga Ilmu Pengetahuan Indonesia (LIPI)",
+    "location": "Jakarta, Indonesia",
+    "deadline": "15 Desember 2026",
+    "link": "https://lipi.go.id/beasiswa-riset",
+    "degreeLevels": ["S1"],
+    "fundingType": "Riset"
   }
 ]

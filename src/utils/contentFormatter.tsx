@@ -51,34 +51,34 @@ export const formatScholarshipContent = (content: string | undefined) => {
 
   // Define patterns that mark the start of the unwanted footer section
   const footerStartPatterns = [
-    "Bagikan ke temanmu 🙂",
-    "Share",
-    "Click to print (Opens in new window)",
-    "Like this:",
-    "Loading...",
-    "Related",
-    "Kamu akan dibantu:", // Specific call to action list
-    "Ingin Didampingi Sampai Lolos Beasiswa?",
-    "Siap Dibimbing Menuju Beasiswa Jepang?",
-    "Butuh Pendampingan Sebelum Daftar?",
-    "Siap Melangkah Lebih Jauh?",
-    "Masih Bingung Milih Beasiswa?",
+    "Bagikan ke temanmu 🙂", "Share", "Click to print (Opens in new window)", "Print",
+    "Click to share on Facebook (Opens in new window)", "Facebook",
+    "Click to share on LinkedIn (Opens in new window)", "LinkedIn",
+    "Click to share on Reddit (Opens in new window)", "Reddit",
+    "Click to share on X (Opens in new window)", "X",
+    "Click to share on Telegram (Opens in new window)", "Telegram",
+    "Click to share on WhatsApp (Opens in new window)", "WhatsApp",
+    "Like this:", "Like", "Loading...", "Related",
+    "Kamu akan dibantu:", "Ingin Didampingi Sampai Lolos Beasiswa?",
+    "Siap Dibimbing Menuju Beasiswa Jepang?", "Butuh Pendampingan Sebelum Daftar?",
+    "Siap Melangkah Lebih Jauh?", "Masih Bingung Milih Beasiswa?",
     "Siap Bimbingan Beasiswa Langsung dari Mentor Beasiswa.id?",
     "Siap Dibimbing Langsung oleh Mentor Beasiswa.id?",
     "Butuh Bantuan Persiapan Beasiswa?",
     "🔍 Ingin Serius Daftar Beasiswa? Jangan Berjuang Sendiri!",
-    "🎓 Butuh Pendampingan?",
-    "🚀 Klik di sini untuk mulai didampingi →",
+    "🎓 Butuh Pendampingan?", "🚀 Klik di sini untuk mulai didampingi →",
     "👉 Klik di sini untuk mulai konsultasi →",
     "👉 Klik di sini untuk daftar sesi konsultasi bareng mentor",
-    "👉 Klik untuk Konsultasi Sekarang",
-    "👉 Daftar Pendampingan Beasiswa Sekarang",
+    "👉 Klik untuk Konsultasi Sekarang", "👉 Daftar Pendampingan Beasiswa Sekarang",
     "👉 Lynk Konsultasi Beasiswa",
     "👉 Yuk, mulai dari sekarang dan pastikan kamu nggak ketinggalan beasiswa ke Jepang tahun depan!",
     "Gabung juga di Channel Telegram INDBeasiswa [UPDATE SETIAP HARI]:",
-    "Channel WhatsApp INDBeasiswa:",
-    "Instagram:",
-    "Official Facebook Page:",
+    "Channel WhatsApp INDBeasiswa:", "Instagram:", "Official Facebook Page:",
+    "Sumber Informasi Resmi:", "Sumber Website Resmi:", "Kontak:", "Silakan dibagikan pada teman-teman yang membutuhkan. Semoga bermanfaat.",
+    "Silakan bagikan pada teman dan keluarga yang membutuhkan. Semoga bermanfaat.",
+    "Silakan bagikan pada rekan-rekan yang membutuhkan. Selamat mencoba dan semoga bermanfaat.",
+    "Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa.",
+    "Baca Juga:", "Baca Juga" // Added "Baca Juga" as a pattern to stop content parsing
   ];
 
   let footerFound = false;
@@ -99,9 +99,12 @@ export const formatScholarshipContent = (content: string | undefined) => {
 
   const renderParagraph = () => {
     if (currentParagraph.length > 0) {
-      elements.push(
-        <p key={`p-${elements.length}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(currentParagraph.join(' ')) }} />
-      );
+      const paragraphText = currentParagraph.join(' ').trim();
+      if (paragraphText) { // Only render if there's actual text
+        elements.push(
+          <p key={`p-${elements.length}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(paragraphText) }} />
+        );
+      }
       currentParagraph = [];
     }
   };
@@ -147,28 +150,55 @@ export const formatScholarshipContent = (content: string | undefined) => {
     }
 
     // --- Heading Detection ---
-    // H2: Major sections, often standalone, title case, relatively short.
-    // Example: "Persyaratan Beasiswa", "Pendaftaran Beasiswa", "Jadwal Seleksi Beasiswa"
-    const isH2 = line.length > 0 && line.length < 50 &&
-                 line.match(/^[A-Z][a-zA-Z0-9\s&]+$/) &&
-                 !line.includes(':') && // Exclude "Baca Juga:"
-                 !line.match(/^\d+\./); // Exclude numbered items
+    // H2: All uppercase, or starts with "Daftar Isi", "CAKUPAN BEASISWA", "PERSYARATAN", "CARA MENDAFTAR", "KONTAK"
+    const isH2 = line.length > 0 && (
+      line.toUpperCase() === line || // All caps
+      line.startsWith("Daftar Isi") ||
+      line.startsWith("CAKUPAN BEASISWA") ||
+      line.startsWith("PERSYARATAN BEASISWA") ||
+      line.startsWith("BERKAS DOKUMEN") ||
+      line.startsWith("CARA MENDAFTAR BEASISWA") ||
+      line.startsWith("KONTAK") ||
+      line.startsWith("TIMELINE")
+    );
 
-    // H3: Sub-sections, can be numbered or a phrase, might end with a colon.
-    // Example: "1. Informasi yang Kami Kumpulkan", "Keamanan Data", "Tips:"
-    const isH3 = !isH2 && line.length > 0 && line.length < 80 &&
-                 (line.match(/^(\d+\.\s+)?([A-Z][a-zA-Z0-9\s&]+:?)$/) || line.match(/^[A-Z][a-zA-Z0-9\s&]+:$/));
+    // H3: Title case, often program names or questions, or starts with "APA ITU"
+    const isH3 = !isH2 && line.length > 0 && (
+      line.startsWith("APA ITU") ||
+      line.startsWith("Beasiswa YBM BRILiaN Smart Scholarship Tahun") ||
+      line.startsWith("Beasiswa DataPrint") ||
+      line.startsWith("Bantuan Kuliah S1 – S3") ||
+      line.startsWith("Beasiswa ORBIT Yogyakarta") ||
+      line.startsWith("Beasiswa Aktivis Nusantara") ||
+      line.startsWith("Skema Bantuan Kuliah S1 – S3") ||
+      line.startsWith("Cakupan Bantuan Kuliah S1 – S3") ||
+      line.startsWith("Sasaran Bantuan Kuliah S1 – S3") ||
+      line.startsWith("Penyaluran") ||
+      line.startsWith("Persyaratan") ||
+      line.startsWith("Berkas dokumen yang dibutuhkan") ||
+      line.startsWith("Cara Mendaftar") ||
+      line.startsWith("Timeline Pendaftaran") ||
+      line.startsWith("Kontak") ||
+      line.startsWith("Apa itu") || // General "Apa itu..."
+      line.startsWith("FASILITAS YANG AKAN DIDAPATKAN") ||
+      line.startsWith("MITRA KAMPUS BAKTI NUSA") ||
+      line.startsWith("PERSYARATAN UMUM") ||
+      line.startsWith("BERKAS DOKUMEN YANG DIBUTUHKAN") ||
+      line.startsWith("CARA MENDAFTAR") ||
+      line.startsWith("TIMELINE DAN TAHAPAN SELEKSI") ||
+      line.startsWith("KETENTUAN UMUM") ||
+      line.startsWith("KETENTUAN KHUSUS") ||
+      line.startsWith("CATATAN YANG PERLU DIPERHATIKAN")
+    );
 
     // H4: Smaller points or titles, often starts with an icon or is very short.
-    // Example: "💡 1. Siapkan Dokumen dari Jauh-Jauh Hari", "Manfaat:"
     const isH4 = !isH2 && !isH3 && line.length > 0 && line.length < 100 &&
                  line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
 
     // --- Special Patterns ---
     const isBacaJuga = line.startsWith("Baca Juga:");
-    const isKontak = line.startsWith("Kontak:");
 
-    if (isH2 || isH3 || isH4 || isBacaJuga || isKontak) {
+    if (isH2 || isH3 || isH4 || isBacaJuga) {
       renderParagraph(); // Render any pending paragraph
       renderList();     // Render any pending list
 
@@ -188,13 +218,10 @@ export const formatScholarshipContent = (content: string | undefined) => {
         elements.push(
           <p key={`bacajuga-${elements.length}`} className="mb-4 text-base text-muted-foreground italic" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
         );
-      } else if (isKontak) {
-        elements.push(
-          <p key={`kontak-${elements.length}`} className="mb-2 text-base font-semibold text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
-        );
       }
     }
     // --- List Item Detection ---
+    // Improved list detection: lines starting with icons, bullets, or numbers
     else if (line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
       renderParagraph(); // Render any pending paragraph
       if (listType !== 'ul' && currentList.length > 0) {
@@ -210,6 +237,30 @@ export const formatScholarshipContent = (content: string | undefined) => {
       }
       listType = 'ol';
       currentList.push(line);
+    }
+    // Special handling for implicit list items under certain headings (e.g., "CAKUPAN BEASISWA")
+    else if (
+      (elements.length > 0 && (elements[elements.length - 1].key?.toString().includes('h2') || elements[elements.length - 1].key?.toString().includes('h3'))) &&
+      (
+        elements[elements.length - 1].props.dangerouslySetInnerHTML.__html.includes("CAKUPAN BEASISWA") ||
+        elements[elements.length - 1].props.dangerouslySetInnerHTML.__html.includes("PERSYARATAN") ||
+        elements[elements.length - 1].props.dangerouslySetInnerHTML.__html.includes("BERKAS DOKUMEN") ||
+        elements[elements.length - 1].props.dangerouslySetInnerHTML.__html.includes("FASILITAS YANG AKAN DIDAPATKAN")
+      ) &&
+      line.length > 0 && !line.startsWith("INDBeasiswa.com") && !line.startsWith("Daftar Isi") && !line.startsWith("Beasiswa YBM BRILiaN Smart Scholarship Tahun")
+    ) {
+      renderParagraph(); // Render any pending paragraph
+      if (listType !== 'ul' && currentList.length > 0) {
+        renderList();
+      }
+      listType = 'ul';
+      // Split by common list item delimiters if it's a long line
+      const potentialListItems = line.split(/;\s*(?=[A-Z])|\.\s*(?=[A-Z])/).filter(item => item.trim() !== '');
+      if (potentialListItems.length > 1) {
+        currentList.push(...potentialListItems);
+      } else {
+        currentList.push(line);
+      }
     }
     // --- Regular Paragraph ---
     else {

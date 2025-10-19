@@ -5,7 +5,7 @@ import { CheckCircle, Lightbulb, MapPin, GraduationCap, Star, BookOpen, MessageC
 const iconMap: { [key: string]: React.ElementType } = {
   '✅': CheckCircle,
   '💡': Lightbulb,
-  '📌': MapPin, // Using MapPin for general "point"
+  '📌': MapPin,
   '🎓': GraduationCap,
   '✨': Star,
   '✔️': CheckCircle,
@@ -18,7 +18,7 @@ const iconMap: { [key: string]: React.ElementType } = {
   '🎯': Star,
   '🚀': Plane,
   '🌟': Star,
-  '🔥': Zap, // Assuming Zap for 'HOT' or 'fire'
+  '🔥': Zap,
   '📣': Megaphone,
   '🤔': MessageCircleQuestion,
   '💰': DollarSign,
@@ -36,13 +36,15 @@ const formatText = (text: string) => {
   let formattedText = text.replace(/\*\*(.*?)\*\*|__(.*?)__/g, '<strong>$1$2</strong>');
   // Handle italic: *text* or _text_
   formattedText = formattedText.replace(/\*(.*?)\*|_(.*?)_/g, '<em>$1$2</em>');
+  // Handle links: [text](url)
+  formattedText = formattedText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">$1</a>');
   return formattedText;
 };
 
 export const formatScholarshipContent = (content: string | undefined) => {
   if (!content) return null;
 
-  const lines = content.split('\n').filter(line => line.trim() !== '');
+  const lines = content.split('\n').map(line => line.trim());
   const elements: JSX.Element[] = [];
   let currentList: string[] = [];
   let listType: 'ul' | 'ol' | null = null;
@@ -82,48 +84,70 @@ export const formatScholarshipContent = (content: string | undefined) => {
   };
 
   lines.forEach((line, index) => {
-    const trimmedLine = line.trim();
+    const nextLine = lines[index + 1] || '';
+    const prevLine = lines[index - 1] || '';
 
-    // Check for headings (h3 for main sections, h4 for sub-sections)
-    const isH3 = trimmedLine.match(/^(\d+\.\s+)?([A-Z][a-zA-Z0-9\s&]+)$/) && trimmedLine.length < 60; // e.g., "1. Informasi yang Kami Kumpulkan" or "Keamanan Data"
-    const isH4 = trimmedLine.match(/^(💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/) && trimmedLine.length < 80 && !isH3; // e.g., "Tips:" or "Manfaat:"
+    // Check for main headings (h2) - often short, bold, and followed by a blank line or paragraph
+    const isH2 = line.length > 0 && line.length < 70 &&
+                 (line.match(/^[A-Z][a-zA-Z0-9\s&]+$/) || line.match(/^\d+\.\s+[A-Z][a-zA-Z0-9\s&]+$/)) &&
+                 (nextLine === '' || nextLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-|\d+\.)/));
 
-    if (isH3) {
+    // Check for sub-headings (h3) - slightly longer, or specific patterns
+    const isH3 = !isH2 && line.length > 0 && line.length < 100 &&
+                 (line.match(/^[A-Z][a-zA-Z0-9\s&]+:?$/) || line.match(/^\d+\.\s+[A-Z][a-zA-Z0-9\s&]+:?$/)) &&
+                 (nextLine === '' || nextLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-|\d+\.)/));
+
+    // Check for smaller points/titles (h4) - often starts with an icon or is very short
+    const isH4 = !isH2 && !isH3 && line.length > 0 && line.length < 80 &&
+                 line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
+
+
+    if (isH2) {
       renderList();
       elements.push(
-        <h3 key={`h3-${index}`} className="text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        <h2 key={`h2-${index}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
+      );
+    } else if (isH3) {
+      renderList();
+      elements.push(
+        <h3 key={`h3-${index}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
       );
     } else if (isH4) {
       renderList();
       elements.push(
-        <h4 key={`h4-${index}`} className="text-xl font-semibold mt-5 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        <h4 key={`h4-${index}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
       );
     }
     // Check for unordered list items (starting with specific icons or bullet points)
-    else if (trimmedLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
+    else if (line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
       if (listType !== 'ul' && currentList.length > 0) {
         renderList();
       }
       listType = 'ul';
-      currentList.push(trimmedLine);
+      currentList.push(line);
     }
     // Check for ordered list items (starting with numbers)
-    else if (trimmedLine.match(/^\d+\.\s*(.*)/)) {
+    else if (line.match(/^\d+\.\s*(.*)/)) {
       if (listType !== 'ol' && currentList.length > 0) {
         renderList();
       }
       listType = 'ol';
-      currentList.push(trimmedLine);
+      currentList.push(line);
       olCounter++;
+    }
+    // Handle blank lines as separators for paragraphs
+    else if (line === '') {
+      renderList();
+      // If the previous element was not a paragraph or list, and this is a blank line,
+      // we might want to add some vertical space, but usually, paragraph margins handle this.
+      // For now, just ensure lists are rendered.
     }
     // Regular paragraph
     else {
       renderList();
-      if (trimmedLine) {
-        elements.push(
-          <p key={`p-${index}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
-        );
-      }
+      elements.push(
+        <p key={`p-${index}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
+      );
     }
   });
 

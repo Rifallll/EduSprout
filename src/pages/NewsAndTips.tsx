@@ -7,10 +7,13 @@ import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
 import dummyEvents from "@/data/dummyEvents.json";
 
 const NewsAndTips = () => {
-  const featuredNews = scrapedNewsAndTips.filter((_, index) => index % 2 === 0);
+  // Filter out any entries that are actually scholarships (e.g., from beasiswa_id)
+  const actualNewsAndTips = scrapedNewsAndTips.filter(item => !item.id.startsWith("beasiswa_id_") && !item.id.startsWith("indbeasiswa_"));
+
+  const featuredNews = actualNewsAndTips.filter((_, index) => index % 2 === 0);
 
   const popularNews = useMemo(() => {
-    return [...scrapedNewsAndTips]
+    return [...actualNewsAndTips]
       .sort((a, b) => (b.views || 0) - (a.views || 0))
       .slice(0, 5)
       .map(news => ({
@@ -19,21 +22,21 @@ const NewsAndTips = () => {
         link: news.link,
         metadata: `${news.views?.toLocaleString()} views`,
       }));
-  }, []);
+  }, [actualNewsAndTips]);
 
   const newsCategories = useMemo(() => {
     const categories = new Set<string>();
-    scrapedNewsAndTips.forEach(news => categories.add(news.category));
+    actualNewsAndTips.forEach(news => categories.add(news.category));
     return Array.from(categories).map((cat, index) => ({
       id: `cat-${index}`,
       label: cat,
       link: `/news-and-tips?category=${encodeURIComponent(cat)}`,
-      metadata: `${scrapedNewsAndTips.filter(n => n.category === cat).length} artikel`,
+      metadata: `${actualNewsAndTips.filter(n => n.category === cat).length} artikel`,
     }));
-  }, []);
+  }, [actualNewsAndTips]);
 
   const featuredEvents = useMemo(() => {
-    return dummyEvents.slice(0, 5); // Mengubah dari 2 menjadi 5
+    return dummyEvents.slice(0, 5);
   }, []);
 
   return (
@@ -60,12 +63,12 @@ const NewsAndTips = () => {
         {/* Main Content Area */}
         <main className="lg:col-span-2">
           <Tabs defaultValue="for-you" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8 h-12"> {/* Adjusted height for better aesthetic */}
+            <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
               <TabsTrigger value="for-you" className="text-base">Untuk Anda</TabsTrigger>
               <TabsTrigger value="featured" className="text-base">Pilihan Editor</TabsTrigger>
             </TabsList>
             <TabsContent value="for-you" className="space-y-6">
-              {scrapedNewsAndTips.map((newsItem) => (
+              {actualNewsAndTips.map((newsItem) => (
                 <NewsListItem key={newsItem.id} {...newsItem} />
               ))}
             </TabsContent>

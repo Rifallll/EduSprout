@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Lightbulb, MapPin, GraduationCap, Star, BookOpen, MessageCircleQuestion, DollarSign, Users, Briefcase, Clock, Home, TrendingUp, Heart, Upload, Handshake, Megaphone, Award, Plane } from 'lucide-react';
+import { CheckCircle, Lightbulb, MapPin, GraduationCap, Star, BookOpen, MessageCircleQuestion, DollarSign, Users, Briefcase, Clock, Home, TrendingUp, Heart, Upload, Handshake, Megaphone, Award, Plane, Zap } from 'lucide-react';
 
 // Map common prefixes to Lucide icons
 const iconMap: { [key: string]: React.ElementType } = {

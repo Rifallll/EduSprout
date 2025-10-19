@@ -21,15 +21,22 @@ def fetch(url):
 
 def parse_list(html):
     soup = BeautifulSoup(html, "html.parser")
-    posts = soup.select("article, .post, .loop-post")
+    # More robust selectors for post items on indbeasiswa.com category page
+    # Added 'div.jeg_post', 'article.post-item', 'div.entry-card' as common patterns
+    posts = soup.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
     results = []
     for p in posts:
-        a = p.select_one("h2 a, .entry-title a")
-        if not a: continue
+        # More specific selectors for title link
+        a = p.select_one("h2 a, .jeg_post_title a, .entry-title a, .post-title a")
+        if not a:
+            a = p.select_one("a") # Fallback to any link
+            if not a: continue
+        
         title = a.get_text(strip=True)
         link = urljoin(BASE, a["href"])
 
-        excerpt_el = p.select_one(".entry-summary p, .post-excerpt p, .description")
+        # More specific selectors for excerpt
+        excerpt_el = p.select_one(".jeg_post_excerpt p, .entry-summary p, .post-excerpt p, .description")
         excerpt = excerpt_el.get_text(strip=True)[:200] if excerpt_el else ""
 
         results.append({"title": title, "link": link, "excerpt": excerpt})
@@ -68,12 +75,13 @@ def main():
     try:
         html = fetch(LIST_URL)
         items = parse_list(html)
+        logging.info(f"Found {len(items)} items in the listing page.") # Added this line for debugging
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch listing page: {e}")
         return
 
     out = []
-    for i, it in enumerate(items[:50], 1):
+    for i, it in enumerate(items[:50], 1): # Limiting to 50 items to avoid excessive requests
         logging.info(f"[{i}/{len(items[:50])}] Processing: {it['title']}")
         try:
             time.sleep(random.uniform(0.8,1.6))

@@ -166,7 +166,7 @@ const Scholarships = () => {
               category={scholarshipItem.category}
               date={scholarshipItem.date}
               location={scholarshipItem.location}
-              link={scholarshipItem.link}
+              link={`/scholarships/${scholarshipItem.id}`} {/* Changed to internal route */}
               linkText="Lihat Beasiswa"
             />
           ))

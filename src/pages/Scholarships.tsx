@@ -131,7 +131,6 @@ const Scholarships = () => {
             <SelectItem value="Internasional">Internasional</SelectItem>
           </SelectContent>
         </Select>
-        {/* New Select for Source Filter */}
         <Select onValueChange={setSelectedSource} defaultValue="all">
           <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Filter Sumber" />
@@ -166,7 +165,7 @@ const Scholarships = () => {
               category={scholarshipItem.category}
               date={scholarshipItem.date}
               location={scholarshipItem.location}
-              link={`/scholarships/${scholarshipItem.id}`} {/* Changed to internal route */}
+              link={`/scholarships/${scholarshipItem.id}`}
               linkText="Lihat Beasiswa"
             />
           ))

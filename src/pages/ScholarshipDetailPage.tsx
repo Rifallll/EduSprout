@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CalendarDays, MapPin, Globe, Building2, BookOpen } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import InfoCard from "@/components/InfoCard"; // Re-use InfoCard for related scholarships
-import { formatScholarshipContent } from "@/utils/contentFormatter"; // Import the new formatter
+// import { formatScholarshipContent } from "@/utils/contentFormatter"; // Removed as content is no longer displayed
 
 // Import all scholarship data sources
 import dummyScholarshipsData from "@/data/dummyScholarships.json";
@@ -105,6 +105,8 @@ const ScholarshipDetailPage = () => {
         <CardContent className="space-y-6">
           <Separator />
 
+          {/* Removed the detailed description section */}
+          {/*
           <div className="prose dark:prose-invert max-w-none text-lg leading-relaxed text-foreground">
             <h3 className="text-xl font-semibold mb-3">Deskripsi Beasiswa</h3>
             {scholarship.fullContent ? (
@@ -116,6 +118,7 @@ const ScholarshipDetailPage = () => {
               Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa.
             </p>
           </div>
+          */}
 
           <div className="pt-6 border-t mt-6">
             <a href={scholarship.link} target="_blank" rel="noopener noreferrer">

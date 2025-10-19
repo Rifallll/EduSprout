@@ -32,7 +32,7 @@ import PricingPage from "./pages/PricingPage";
 import BasicPlanConfirmationPage from "./pages/BasicPlanConfirmationPage";
 import ProPlanPaymentPage from "./pages/ProPlanPaymentPage";
 import EnterpriseContactPage from "./pages/EnterpriseContactPage";
-import ScholarshipDetailPage from "./pages/ScholarshipDetailPage"; // Import the new ScholarshipDetailPage
+// import ScholarshipDetailPage from "./pages/ScholarshipDetailPage"; // Import the new ScholarshipDetailPage
 
 const queryClient = new QueryClient();
 
@@ -47,7 +47,7 @@ const App = () => (
             <Route index element={<Index />} />
             <Route path="events" element={<Events />} />
             <Route path="scholarships" element={<Scholarships />} />
-            <Route path="scholarships/:scholarshipId" element={<ScholarshipDetailPage />} /> {/* New route for scholarship details */}
+            {/* <Route path="scholarships/:scholarshipId" element={<ScholarshipDetailPage />} /> */} {/* Removed route for scholarship details */}
             <Route path="jobs" element={<Jobs />} />
             <Route path="jobs/:jobId" element={<JobDetailPage />} />
             <Route path="news-and-tips" element={<NewsAndTips />} />

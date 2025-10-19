@@ -1,0 +1,102 @@
+[
+  {
+    "id": "ds1",
+    "title": "Beasiswa Penuh S1 Universitas Gadjah Mada",
+    "organizer": "Universitas Gadjah Mada",
+    "location": "Yogyakarta, Indonesia",
+    "deadline": "31 Desember 2025",
+    "link": "https://ugm.ac.id/beasiswa-s1",
+    "degreeLevels": ["S1"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds2",
+    "title": "Beasiswa Unggulan Kemendikbudristek (S2/S3)",
+    "organizer": "Kementerian Pendidikan dan Kebudayaan",
+    "location": "Indonesia (Berbagai Universitas)",
+    "deadline": "15 November 2025",
+    "link": "https://beasiswaunggulan.kemdikbud.go.id",
+    "degreeLevels": ["S2", "S3"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds3",
+    "title": "Beasiswa Parsial D3/D4 Politeknik Negeri Jakarta",
+    "organizer": "Politeknik Negeri Jakarta",
+    "location": "Jakarta, Indonesia",
+    "deadline": "10 Januari 2026",
+    "link": "https://pnj.ac.id/beasiswa",
+    "degreeLevels": ["D3", "D4"],
+    "fundingType": "Partially Funded"
+  },
+  {
+    "id": "ds4",
+    "title": "Global Leaders Scholarship (S1 Internasional)",
+    "organizer": "Global Education Fund",
+    "location": "Amerika Serikat",
+    "deadline": "28 Februari 2026",
+    "link": "https://global-scholarship.org/leaders",
+    "degreeLevels": ["S1"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds5",
+    "title": "Program Magang & Beasiswa Riset (Non-Degree)",
+    "organizer": "Tech Innovation Lab",
+    "location": "Singapura",
+    "deadline": "30 Maret 2026",
+    "link": "https://techlab.sg/internship-scholarship",
+    "degreeLevels": ["Non-Degree", "S1", "S2"],
+    "fundingType": "Mentoring"
+  },
+  {
+    "id": "ds6",
+    "title": "Beasiswa Penuh S2 Universitas Indonesia",
+    "organizer": "Universitas Indonesia",
+    "location": "Depok, Indonesia",
+    "deadline": "10 April 2026",
+    "link": "https://www.ui.ac.id/beasiswa-s2",
+    "degreeLevels": ["S2"],
+    "fundingType": "Fully Funded"
+  },
+  {
+    "id": "ds7",
+    "title": "Beasiswa Riset Doktoral (S3) ITB",
+    "organizer": "Institut Teknologi Bandung",
+    "location": "Bandung, Indonesia",
+    "deadline": "20 Mei 2026",
+    "link": "https://www.itb.ac.id/beasiswa-s3",
+    "degreeLevels": ["S3"],
+    "fundingType": "Riset"
+  },
+  {
+    "id": "ds8",
+    "title": "Exchange Program ke Korea Selatan (S1/S2)",
+    "organizer": "Korean Cultural Center",
+    "location": "Korea Selatan",
+    "deadline": "15 Juni 2026",
+    "link": "https://kcc.or.id/exchange-program",
+    "degreeLevels": ["S1", "S2"],
+    "fundingType": "Exchange"
+  },
+  {
+    "id": "ds9",
+    "title": "Beasiswa Pelatihan Digital Marketing (Non-Degree)",
+    "organizer": "Digital Academy",
+    "location": "Online",
+    "deadline": "01 Juli 2026",
+    "link": "https://digitalacademy.com/scholarship",
+    "degreeLevels": ["Non-Degree"],
+    "fundingType": "Pelatihan/Studi Singkat"
+  },
+  {
+    "id": "ds10",
+    "title": "Beasiswa SMA Berprestasi Yayasan Harapan Bangsa",
+    "organizer": "Yayasan Harapan Bangsa",
+    "location": "Seluruh Indonesia",
+    "deadline": "10 Agustus 2026",
+    "link": "https://yayasanharapanbangsa.org/beasiswa-sma",
+    "degreeLevels": ["SMA"],
+    "fundingType": "Partially Funded"
+  }
+]

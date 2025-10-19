@@ -6,6 +6,7 @@ import time, random, json, hashlib, logging
 from datetime import datetime
 import feedparser
 from dateutil import parser as dateparser
+import os # Import the os module
 
 # -------- CONFIG ----------
 HEADERS = {"User-Agent": "Mozilla/5.0 (EduScraper/1.0; +https://example.com)"}
@@ -16,6 +17,9 @@ MAX_PER_SITE = 25  # safety limit per site, increased to get more data
 # List of scrapers to run (functions defined below)
 # You can add/remove functions from this list
 # ---------------------------
+
+# Ensure the logs directory exists
+os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 
 logging.basicConfig(level=logging.INFO, filename=LOG_FILE,
                     format="%(asctime)s %(levelname)s: %(message)s")

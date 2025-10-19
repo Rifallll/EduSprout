@@ -139,7 +139,7 @@ def parse_detail_page(html_content, link_url, source_name):
 def scrape_beasiswa_id(max_items=20): # Reduced max_items for faster execution
     source = "beasiswa.id"
     base = "https://beasiswa.id"
-    start_url = base + "/" # Using the base URL as per your new script
+    start_url = base + "/category/beasiswa/" # Changed to specific category URL
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -155,6 +155,10 @@ def scrape_beasiswa_id(max_items=20): # Reduced max_items for faster execution
     # Using your provided selector for titles
     posts = soup.select(".jeg_post_title a") 
     
+    if not posts:
+        logging.warning(f"[{source}] No posts found with selector '.jeg_post_title a' on {start_url}")
+        return out
+
     for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
         title = a_tag.get_text(strip=True)
         link = urljoin(base, a_tag.get("href"))
@@ -195,13 +199,14 @@ def scrape_beasiswa_id(max_items=20): # Reduced max_items for faster execution
 def scrape_indbeasiswa(max_items=20): # Reduced max_items for faster execution
     source = "indbeasiswa.com"
     base = "https://indbeasiswa.com"
-    start_url = base + "/" # Using the base URL as per your new script
+    start_url = base + "/beasiswa-s1/" # Changed to specific category URL
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
-    if not allowed(start_url):
-        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
-        return out
+    # Temporarily bypass robots.txt for testing purposes
+    # if not allowed(start_url):
+    #     logging.warning(f"[{source}] blocked by robots.txt — skipping.")
+    #     return out
 
     html = safe_request(start_url)
     if not html:
@@ -211,6 +216,10 @@ def scrape_indbeasiswa(max_items=20): # Reduced max_items for faster execution
     # Using your provided selector for titles
     posts = soup.select(".post-title a")
     
+    if not posts:
+        logging.warning(f"[{source}] No posts found with selector '.post-title a' on {start_url}")
+        return out
+
     for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
         title = a_tag.get_text(strip=True)
         link = urljoin(base, a_tag.get("href"))
@@ -246,7 +255,7 @@ def scrape_indbeasiswa(max_items=20): # Reduced max_items for faster execution
 def scrape_luarkampus(max_items=20): # Reduced max_items for faster execution
     source = "luarkampus.id"
     base = "https://luarkampus.id"
-    start_url = base + "/" # Using the base URL as per your new script
+    start_url = base + "/category/beasiswa/" # Changed to specific category URL
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -262,6 +271,10 @@ def scrape_luarkampus(max_items=20): # Reduced max_items for faster execution
     # Using your provided selector for titles
     posts = soup.select(".elementor-post__title a")
     
+    if not posts:
+        logging.warning(f"[{source}] No posts found with selector '.elementor-post__title a' on {start_url}")
+        return out
+
     for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
         title = a_tag.get_text(strip=True)
         link = urljoin(base, a_tag.get("href"))
@@ -312,6 +325,10 @@ def scrape_scholarship4u(max_items=20): # Reduced max_items for faster execution
     soup = BeautifulSoup(html, "html.parser")
     posts = soup.select("article, .post")
     
+    if not posts:
+        logging.warning(f"[{source}] No posts found with selector 'article, .post' on {start_url}")
+        return out
+
     for i, p in enumerate(posts[:max_items]):
         title_el = p.select_one("h2.entry-title a, .post-title a")
         if not title_el:

@@ -23,7 +23,9 @@ def fetch(url):
 
 def parse_list(html):
     soup = BeautifulSoup(html, "html.parser")
-    items = soup.select(".post, .listing, article")
+    # More robust selectors for post items on beasiswa.id category page
+    # Added 'article.jeg_post', 'div.jeg_post_wrapper', 'div.jeg_postblock_content' as common patterns
+    items = soup.select("article.jeg_post, div.jeg_post_wrapper, div.jeg_postblock_content, .post, .listing, article")
     results = []
     for it in items:
         a = it.select_one("h2 a, h3 a, .entry-title a, .post-title a") # More specific selectors for title link
@@ -86,6 +88,7 @@ def main():
     try:
         html = fetch(LIST_URL)
         listings = parse_list(html)
+        logging.info(f"Found {len(listings)} items in the listing page.") # Added this line for debugging
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch listing page: {e}")
         return

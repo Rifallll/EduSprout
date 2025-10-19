@@ -47,44 +47,77 @@ def parse_detail(html):
     full_content = content_el.get_text(separator="\n", strip=True) if content_el else ""
     
     organizer = None
-    # Try to find "Penyelenggara:" or "Organized by:" in content
     organizer_match = re.search(r"(?:Penyelenggara|Organized by):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
     if organizer_match:
         organizer = organizer_match.group(1).strip()
 
     deadline_date = "Tidak diketahui"
-    # Look for "Deadline:" or "Batas waktu pendaftaran:" in content
-    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4})", full_content, re.IGNORECASE)
+    # 1. Try to find explicit deadline phrases
+    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", full_content, re.IGNORECASE)
     if deadline_match:
-        deadline_date = deadline_match.group(1).strip()
-    else:
-        # Fallback to date from time tag or general text if no specific deadline found
+        date_str = deadline_match.group(1).strip()
+        for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
+            try:
+                parsed_date = datetime.strptime(date_str, fmt)
+                deadline_date = parsed_date.strftime("%d %B %Y") # Standardize to "DD Month YYYY"
+                break
+            except ValueError:
+                continue
+    
+    # 2. Fallback: try to get date from time tag (if not already found)
+    if deadline_date == "Tidak diketahui":
         time_el = soup.select_one("time[datetime]")
         if time_el and time_el.has_attr("datetime"):
-            deadline_date = time_el["datetime"]
-        else:
-            date_text_el = soup.select_one(".post-date, .published-date, .entry-date, .meta-date")
-            if date_text_el:
-                date_text = date_text_el.get_text(strip=True)
-                for fmt in ["%d %B %Y", "%Y-%m-%d", "%b %d, %Y"]:
+            try:
+                parsed_date = datetime.strptime(time_el["datetime"], "%Y-%m-%d")
+                deadline_date = parsed_date.strftime("%d %B %Y")
+            except ValueError:
+                pass
+
+    # 3. Fallback: search for any date-like pattern in the content
+    if deadline_date == "Tidak diketahui":
+        date_patterns = [
+            r'\b(\d{1,2}\s+(?:Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)\s+\d{4})\b',
+            r'\b(\d{4}-\d{2}-\d{2})\b',
+            r'\b(\d{1,2}/\d{1,2}/\d{4})\b'
+        ]
+        for pattern in date_patterns:
+            match = re.search(pattern, full_content, re.IGNORECASE)
+            if match:
+                date_str = match.group(1).strip()
+                for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
                     try:
-                        parsed_date = datetime.strptime(date_text, fmt)
-                        deadline_date = parsed_date.strftime("%d %B %Y") # Format consistently
+                        parsed_date = datetime.strptime(date_str, fmt)
+                        deadline_date = parsed_date.strftime("%d %B %Y")
                         break
                     except ValueError:
                         continue
-    
+                if deadline_date != "Tidak diketahui":
+                    break
+
     location = "Tidak diketahui"
-    # Look for "Lokasi:", "Tempat:", "Negara:", "Kota:" in content
-    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
+    # 1. Try to find explicit location phrases
+    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota|Wilayah):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
     if location_match:
         location = location_match.group(1).strip()
-    elif "online" in full_content.lower():
-        location = "Online"
-    elif "dalam negeri" in full_content.lower():
-        location = "Indonesia"
-    elif "luar negeri" in full_content.lower() or "international" in full_content.lower():
-        location = "Internasional"
+    
+    # 2. Fallback: check for common keywords in full content
+    if location == "Tidak diketahui":
+        lower_content = full_content.lower()
+        if "online" in lower_content or "daring" in lower_content or "virtual" in lower_content:
+            location = "Online"
+        elif "remote" in lower_content or "dari rumah" in lower_content:
+            location = "Remote"
+        elif "indonesia" in lower_content or "dalam negeri" in lower_content:
+            location = "Indonesia"
+        elif "luar negeri" in lower_content or "internasional" in lower_content:
+            location = "Internasional"
+        else:
+            cities = ["Jakarta", "Bandung", "Surabaya", "Yogyakarta", "Medan", "Makassar", "Semarang", "Denpasar"]
+            for city in cities:
+                if city.lower() in lower_content:
+                    location = city
+                    break
 
     return {"fullContent": full_content, "organizer": organizer, "date": deadline_date, "location": location}
 

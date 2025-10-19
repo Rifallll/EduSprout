@@ -136,10 +136,10 @@ def parse_detail_page(html_content, link_url, source_name):
 # ==========================
 # 1. beasiswa.id
 # ==========================
-def scrape_beasiswa_id(max_items=50):
+def scrape_beasiswa_id(max_items=20): # Reduced max_items for faster execution
     source = "beasiswa.id"
     base = "https://beasiswa.id"
-    start_url = base + "/"
+    start_url = base + "/" # Using the base URL as per your new script
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -152,16 +152,12 @@ def scrape_beasiswa_id(max_items=50):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    posts = soup.select("div.jeg_postblock_content article.jeg_post, article.jeg_post") # More specific selectors
+    # Using your provided selector for titles
+    posts = soup.select(".jeg_post_title a") 
     
-    for i, p in enumerate(posts[:max_items]):
-        title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, .entry-title a, .post-title a")
-        if not title_el:
-            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
-            continue
-        
-        title = title_el.get_text(strip=True)
-        link = urljoin(base, title_el.get("href"))
+    for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
+        title = a_tag.get_text(strip=True)
+        link = urljoin(base, a_tag.get("href"))
 
         # Filter out generic titles like "DAFTAR SEKARANG" or links to non-scholarship content
         if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower() or "whatsapp" in link.lower():
@@ -196,10 +192,10 @@ def scrape_beasiswa_id(max_items=50):
 # ==========================
 # 2. indbeasiswa.com
 # ==========================
-def scrape_indbeasiswa(max_items=50):
+def scrape_indbeasiswa(max_items=20): # Reduced max_items for faster execution
     source = "indbeasiswa.com"
     base = "https://indbeasiswa.com"
-    start_url = base + "/category/beasiswa/"
+    start_url = base + "/" # Using the base URL as per your new script
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -212,16 +208,12 @@ def scrape_indbeasiswa(max_items=50):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    posts = soup.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
+    # Using your provided selector for titles
+    posts = soup.select(".post-title a")
     
-    for i, p in enumerate(posts[:max_items]):
-        title_el = p.select_one("h2.entry-title a, .jeg_post_title a, .entry-title a, h2 a")
-        if not title_el:
-            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
-            continue
-        
-        title = title_el.get_text(strip=True)
-        link = urljoin(base, title_el.get("href"))
+    for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
+        title = a_tag.get_text(strip=True)
+        link = urljoin(base, a_tag.get("href"))
 
         logging.info(f"[{source}] Processing: {title}")
         detail_html = safe_request(link)
@@ -251,10 +243,10 @@ def scrape_indbeasiswa(max_items=50):
 # ==========================
 # 3. luarkampus.id
 # ==========================
-def scrape_luarkampus(max_items=50):
+def scrape_luarkampus(max_items=20): # Reduced max_items for faster execution
     source = "luarkampus.id"
     base = "https://luarkampus.id"
-    start_url = base + "/category/beasiswa/"
+    start_url = base + "/" # Using the base URL as per your new script
     out = []
 
     logging.info(f"[{source}] Scraping {start_url} ...")
@@ -267,16 +259,12 @@ def scrape_luarkampus(max_items=50):
         return out
     
     soup = BeautifulSoup(html, "html.parser")
-    posts = soup.select("article, .jeg_post")
+    # Using your provided selector for titles
+    posts = soup.select(".elementor-post__title a")
     
-    for i, p in enumerate(posts[:max_items]):
-        title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, a.jeg_post_title")
-        if not title_el:
-            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
-            continue
-        
-        title = title_el.get_text(strip=True)
-        link = urljoin(base, title_el.get("href"))
+    for i, a_tag in enumerate(posts[:max_items]): # Iterate directly over <a> tags
+        title = a_tag.get_text(strip=True)
+        link = urljoin(base, a_tag.get("href"))
 
         logging.info(f"[{source}] Processing: {title}")
         detail_html = safe_request(link)
@@ -306,7 +294,7 @@ def scrape_luarkampus(max_items=50):
 # ==========================
 # 4. scholarship4u.com
 # ==========================
-def scrape_scholarship4u(max_items=50):
+def scrape_scholarship4u(max_items=20): # Reduced max_items for faster execution
     source = "scholarship4u.com"
     base = "https://www.scholarship4u.com/"
     start_url = base + "category/scholarships/" # Changed to a more specific category URL

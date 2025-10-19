@@ -30,263 +30,332 @@ def make_id(source, title, link):
     s = f"{source}|{title}|{link}"
     return hashlib.sha1(s.encode("utf-8")).hexdigest()
 
-# -------- scraper for beasiswa.id --------
+def safe_request(url):
+    try:
+        res = requests.get(url, headers=HEADERS, timeout=15)
+        res.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        return res.text
+    except requests.exceptions.RequestException as e:
+        logging.warning(f"Error fetching {url}: {e}")
+    return None
+
+def parse_detail_page(html_content, link_url, source_name):
+    """Parses common detail page elements like full content, organizer, location, and deadline."""
+    soup = BeautifulSoup(html_content, "html.parser")
+    
+    full_content = ""
+    content_el = soup.select_one(".entry-content, .post-content, .content, .single-content")
+    if content_el:
+        full_content = content_el.get_text(separator="\n", strip=True)
+    
+    excerpt = full_content[:300] if full_content else "" # Use first 300 chars as excerpt
+
+    organizer = ""
+    organizer_match = re.search(r"(?:Penyelenggara|Organized by|Oleh):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
+    if organizer_match:
+        organizer = organizer_match.group(1).strip()
+    elif source_name == "indbeasiswa.com": # Default for indbeasiswa if not found in content
+        organizer = "Indbeasiswa.com"
+
+    deadline = "Tidak diketahui"
+    # 1. Try to find explicit deadline phrases
+    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", full_content, re.IGNORECASE)
+    if deadline_match:
+        date_str = deadline_match.group(1).strip()
+        for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
+            try:
+                parsed_date = datetime.strptime(date_str, fmt)
+                deadline = parsed_date.strftime("%d %B %Y") # Standardize to "DD Month YYYY"
+                break
+            except ValueError:
+                continue
+    
+    # 2. Fallback: try to get date from time tag (if not already found)
+    if deadline == "Tidak diketahui":
+        time_el = soup.select_one("time[datetime]")
+        if time_el and time_el.has_attr("datetime"):
+            try:
+                parsed_date = datetime.strptime(time_el["datetime"], "%Y-%m-%d")
+                deadline = parsed_date.strftime("%d %B %Y")
+            except ValueError:
+                pass
+
+    # 3. Fallback: search for any date-like pattern in the content
+    if deadline == "Tidak diketahui":
+        date_patterns = [
+            r'\b(\d{1,2}\s+(?:Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)\s+\d{4})\b',
+            r'\b(\d{4}-\d{2}-\d{2})\b',
+            r'\b(\d{1,2}/\d{1,2}/\d{4})\b'
+        ]
+        for pattern in date_patterns:
+            match = re.search(pattern, full_content, re.IGNORECASE)
+            if match:
+                date_str = match.group(1).strip()
+                for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
+                    try:
+                        parsed_date = datetime.strptime(date_str, fmt)
+                        deadline = parsed_date.strftime("%d %B %Y")
+                        break
+                    except ValueError:
+                        continue
+                if deadline != "Tidak diketahui":
+                    break
+
+    location = "Tidak diketahui"
+    # 1. Try to find explicit location phrases
+    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota|Wilayah):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
+    if location_match:
+        location = location_match.group(1).strip()
+    
+    # 2. Fallback: check for common keywords in full content
+    if location == "Tidak diketahui":
+        lower_content = full_content.lower()
+        if "online" in lower_content or "daring" in lower_content or "virtual" in lower_content:
+            location = "Online"
+        elif "remote" in lower_content or "dari rumah" in lower_content:
+            location = "Remote"
+        elif "indonesia" in lower_content or "dalam negeri" in lower_content:
+            location = "Indonesia"
+        elif "luar negeri" in lower_content or "internasional" in lower_content:
+            location = "Internasional"
+        else:
+            cities = ["Jakarta", "Bandung", "Surabaya", "Yogyakarta", "Medan", "Makassar", "Semarang", "Denpasar"]
+            for city in cities:
+                if city.lower() in lower_content:
+                    location = city
+                    break
+
+    return {
+        "fullContent": full_content,
+        "description": excerpt,
+        "organizer": organizer,
+        "date": deadline, # Renamed to 'date' to match RawScholarshipItem
+        "location": location
+    }
+
+# ==========================
+# 1. beasiswa.id
+# ==========================
 def scrape_beasiswa_id(max_items=50):
     source = "beasiswa.id"
     base = "https://beasiswa.id"
-    start = base + "/"
+    start_url = base + "/"
     out = []
 
-    logging.info(f"[{source}] Starting to scrape from {start}")
+    logging.info(f"[{source}] Scraping {start_url} ...")
+    if not allowed(start_url):
+        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
+        return out
 
-    try:
-        if not allowed(start):
-            logging.warning(f"[{source}] blocked by robots.txt — skip")
-            return out
+    html = safe_request(start_url)
+    if not html:
+        return out
+    
+    soup = BeautifulSoup(html, "html.parser")
+    posts = soup.select("div.jeg_postblock_content article.jeg_post, article.jeg_post") # More specific selectors
+    
+    for i, p in enumerate(posts[:max_items]):
+        title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, .entry-title a, .post-title a")
+        if not title_el:
+            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
+            continue
+        
+        title = title_el.get_text(strip=True)
+        link = urljoin(base, title_el.get("href"))
 
-        r = requests.get(start, headers=HEADERS, timeout=15)
-        r.raise_for_status()
-        s = BeautifulSoup(r.text, "html.parser")
+        # Filter out generic titles like "DAFTAR SEKARANG" or links to non-scholarship content
+        if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower() or "whatsapp" in link.lower():
+            logging.debug(f"[{source}] Skipping promotional post: {title} - {link}")
+            continue
 
-        # More specific selectors for actual scholarship posts on beasiswa.id
-        # Targeting articles within the main content block
-        posts = s.select("div.jeg_postblock_content article.jeg_post")
-        if not posts:
-            logging.warning(f"[{source}] No specific 'div.jeg_postblock_content article.jeg_post' elements found. Trying broader 'article.jeg_post'.")
-            posts = s.select("article.jeg_post") # Fallback to broader article if specific fails
-        if not posts:
-            logging.warning(f"[{source}] No 'article.jeg_post' elements found. Trying even broader 'article'.")
-            posts = s.select("article") # Even broader fallback
+        logging.info(f"[{source}] Processing: {title}")
+        detail_html = safe_request(link)
+        if not detail_html:
+            continue
+        
+        detail_data = parse_detail_page(detail_html, link, source)
+        
+        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
 
-        for i, p in enumerate(posts[:max_items]):
-            # Try to find the main job title link first using more specific selectors
-            title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, .entry-title a, .post-title a") 
-            if not title_el:
-                title_el = p.select_one("a") # Fallback to any link if specific title link isn't found
-            
-            if not title_el:
-                logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
-                continue
-
-            title = title_el.get_text(strip=True)
-            link = urljoin(base, title_el.get("href"))
-
-            # Filter out generic titles like "DAFTAR SEKARANG" or links to non-scholarship content
-            if title.upper() == "DAFTAR SEKARANG" or "kirimwa.id" in link.lower():
-                logging.debug(f"[{source}] Skipping promotional post: {title} - {link}")
-                continue
-            
-            # Initialize detail fields
-            excerpt = ""
-            full_content = ""
-            organizer = ""
-            location = ""
-            deadline = "Tidak diketahui" # Initialize deadline here
-
-            try:
-                if allowed(link):
-                    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-                    r_detail = requests.get(link, headers=HEADERS, timeout=15)
-                    r_detail.raise_for_status()
-                    s_detail = BeautifulSoup(r_detail.text, "html.parser")
-                    
-                    content_el = s_detail.select_one(".entry-content, .post-content, .content")
-                    full_content = content_el.get_text(separator="\n", strip=True) if content_el else ""
-                    excerpt = full_content[:300] if full_content else "" # Use first 300 chars as excerpt
-
-                    # Extract organizer
-                    organizer_match = re.search(r"(?:Penyelenggara|Organized by):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
-                    if organizer_match:
-                        organizer = organizer_match.group(1).strip()
-
-                    # Extract deadline
-                    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", full_content, re.IGNORECASE)
-                    if deadline_match:
-                        date_str = deadline_match.group(1).strip()
-                        for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
-                            try:
-                                parsed_date = datetime.strptime(date_str, fmt)
-                                deadline = parsed_date.strftime("%d %B %Y")
-                                break
-                            except ValueError:
-                                continue
-                    
-                    # Fallback for deadline from time tag if not found in content
-                    if deadline == "Tidak diketahui": # Only try fallback if still unknown
-                        time_el = s_detail.select_one("time[datetime]")
-                        if time_el and time_el.has_attr("datetime"):
-                            try:
-                                parsed_date = datetime.strptime(time_el["datetime"], "%Y-%m-%d")
-                                deadline = parsed_date.strftime("%d %B %Y")
-                            except ValueError:
-                                pass
-
-                    # Extract location
-                    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota|Wilayah):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
-                    if location_match:
-                        location = location_match.group(1).strip()
-                    else:
-                        lower_content = full_content.lower()
-                        if "online" in lower_content or "daring" in lower_content or "virtual" in lower_content:
-                            location = "Online"
-                        elif "remote" in lower_content or "dari rumah" in lower_content:
-                            location = "Remote"
-                        elif "indonesia" in lower_content or "dalam negeri" in lower_content:
-                            location = "Indonesia"
-                        elif "luar negeri" in lower_content or "internasional" in lower_content:
-                            location = "Internasional"
-                        else:
-                            cities = ["Jakarta", "Bandung", "Surabaya", "Yogyakarta", "Medan", "Makassar", "Semarang", "Denpasar"]
-                            for city in cities:
-                                if city.lower() in lower_content:
-                                    location = city
-                                    break
-
-            except requests.exceptions.RequestException as e:
-                logging.warning(f"[{source}] Error fetching detail page for {link}: {e}")
-            except Exception as e:
-                logging.error(f"[{source}] Unexpected error during detail page parsing for {link}: {e}")
-            
-            category = "Internasional" if "luar negeri" in title.lower() or "international" in full_content.lower() else "Lokal"
-
-            out.append({
-                "id": make_id(source, title, link),
-                "source": source,
-                "title": title,
-                "description": excerpt,
-                "category": category,
-                "date": deadline, # Use 'date' for deadline
-                "location": location,
-                "link": link,
-                "fullContent": full_content,
-                "organizer": organizer,
-            })
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[{source}] Failed to fetch listing page: {e}")
-    logging.info(f"[{source}] found {len(out)} items")
+        out.append({
+            "id": make_id(source, title, link),
+            "source": source,
+            "title": title,
+            "description": detail_data["description"],
+            "category": category,
+            "date": detail_data["date"],
+            "location": detail_data["location"],
+            "link": link,
+            "fullContent": detail_data["fullContent"],
+            "organizer": detail_data["organizer"],
+        })
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    logging.info(f"✅ {len(out)} data from {source}")
     return out
 
-# -------- scraper for indbeasiswa.com --------
+# ==========================
+# 2. indbeasiswa.com
+# ==========================
 def scrape_indbeasiswa(max_items=50):
     source = "indbeasiswa.com"
     base = "https://indbeasiswa.com"
-    start = base + "/category/beasiswa/"
+    start_url = base + "/category/beasiswa/"
     out = []
 
-    logging.info(f"[{source}] Starting to scrape from {start}")
+    logging.info(f"[{source}] Scraping {start_url} ...")
+    if not allowed(start_url):
+        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
+        return out
 
-    try:
-        if not allowed(start):
-            logging.warning(f"[{source}] blocked by robots.txt — skip")
-            return out
+    html = safe_request(start_url)
+    if not html:
+        return out
+    
+    soup = BeautifulSoup(html, "html.parser")
+    posts = soup.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
+    
+    for i, p in enumerate(posts[:max_items]):
+        title_el = p.select_one("h2.entry-title a, .jeg_post_title a, .entry-title a, h2 a")
+        if not title_el:
+            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
+            continue
+        
+        title = title_el.get_text(strip=True)
+        link = urljoin(base, title_el.get("href"))
 
-        r = requests.get(start, headers=HEADERS, timeout=15)
-        r.raise_for_status()
-        s = BeautifulSoup(r.text, "html.parser")
+        logging.info(f"[{source}] Processing: {title}")
+        detail_html = safe_request(link)
+        if not detail_html:
+            continue
+        
+        detail_data = parse_detail_page(detail_html, link, source)
+        
+        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
 
-        posts = s.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
-        if not posts:
-            logging.warning(f"[{source}] No specific job listing elements found. Falling back to generic 'div.card, article'.")
-            posts = s.select("div.card, article") # Fallback to generic if specific fails
+        out.append({
+            "id": make_id(source, title, link),
+            "source": source,
+            "title": title,
+            "description": detail_data["description"],
+            "category": category,
+            "date": detail_data["date"],
+            "location": detail_data["location"],
+            "link": link,
+            "fullContent": detail_data["fullContent"],
+            "organizer": detail_data["organizer"],
+        })
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    logging.info(f"✅ {len(out)} data from {source}")
+    return out
 
-        for i, p in enumerate(posts[:max_items]):
-            a = p.select_one("h2.entry-title a, .jeg_post_title a, .entry-title a, h2 a")
-            if not a:
-                logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
-                continue
-            title = a.get_text(strip=True)
-            link = urljoin(base, a.get("href"))
-            
-            # fetch detail for excerpt, date, full content, organizer, location
-            excerpt = ""
-            full_content = ""
-            organizer = ""
-            location = ""
-            deadline = "Tidak diketahui" # Initialize deadline here
+# ==========================
+# 3. luarkampus.id
+# ==========================
+def scrape_luarkampus(max_items=50):
+    source = "luarkampus.id"
+    base = "https://luarkampus.id"
+    start_url = base + "/category/beasiswa/"
+    out = []
 
-            try:
-                if allowed(link):
-                    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-                    r_detail = requests.get(link, headers=HEADERS, timeout=15)
-                    r_detail.raise_for_status()
-                    s_detail = BeautifulSoup(r_detail.text, "html.parser")
-                    
-                    content_el = s_detail.select_one(".entry-content, .post-content, .single-content")
-                    full_content = content_el.get_text(separator="\n", strip=True) if content_el else ""
-                    excerpt = full_content[:400] if full_content else "" # Use first 400 chars as excerpt
+    logging.info(f"[{source}] Scraping {start_url} ...")
+    if not allowed(start_url):
+        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
+        return out
 
-                    # Extract organizer
-                    organizer_match = re.search(r"(?:Penyelenggara|Organized by):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
-                    if organizer_match:
-                        organizer = organizer_match.group(1).strip()
-                    else:
-                        organizer = "Indbeasiswa.com" # Default if not found
+    html = safe_request(start_url)
+    if not html:
+        return out
+    
+    soup = BeautifulSoup(html, "html.parser")
+    posts = soup.select("article, .jeg_post")
+    
+    for i, p in enumerate(posts[:max_items]):
+        title_el = p.select_one("h3.jeg_post_title a, h2.entry-title a, a.jeg_post_title")
+        if not title_el:
+            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
+            continue
+        
+        title = title_el.get_text(strip=True)
+        link = urljoin(base, title_el.get("href"))
 
-                    # Extract deadline
-                    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", full_content, re.IGNORECASE)
-                    if deadline_match:
-                        date_str = deadline_match.group(1).strip()
-                        for fmt in ["%d %B %Y", "%Y-%m-%d", "%d/%m/%Y"]:
-                            try:
-                                parsed_date = datetime.strptime(date_str, fmt)
-                                deadline = parsed_date.strftime("%d %B %Y")
-                                break
-                            except ValueError:
-                                continue
-                    
-                    # Fallback for deadline from time tag if not found in content
-                    if deadline == "Tidak diketahui": # Only try fallback if still unknown
-                        time_el = s_detail.select_one("time[datetime]")
-                        if time_el and time_el.has_attr("datetime"):
-                            try:
-                                parsed_date = datetime.strptime(time_el["datetime"], "%Y-%m-%d")
-                                deadline = parsed_date.strftime("%d %B %Y")
-                            except ValueError:
-                                pass
+        logging.info(f"[{source}] Processing: {title}")
+        detail_html = safe_request(link)
+        if not detail_html:
+            continue
+        
+        detail_data = parse_detail_page(detail_html, link, source)
+        
+        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
 
-                    # Extract location
-                    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota|Wilayah):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
-                    if location_match:
-                        location = location_match.group(1).strip()
-                    else:
-                        lower_content = full_content.lower()
-                        if "online" in lower_content or "daring" in lower_content or "virtual" in lower_content:
-                            location = "Online"
-                        elif "remote" in lower_content or "dari rumah" in lower_content:
-                            location = "Remote"
-                        elif "indonesia" in lower_content or "dalam negeri" in lower_content:
-                            location = "Indonesia"
-                        elif "luar negeri" in lower_content or "internasional" in lower_content:
-                            location = "Internasional"
-                        else:
-                            cities = ["Jakarta", "Bandung", "Surabaya", "Yogyakarta", "Medan", "Makassar", "Semarang", "Denpasar"]
-                            for city in cities:
-                                if city.lower() in lower_content:
-                                    location = city
-                                    break
+        out.append({
+            "id": make_id(source, title, link),
+            "source": source,
+            "title": title,
+            "description": detail_data["description"],
+            "category": category,
+            "date": detail_data["date"],
+            "location": detail_data["location"],
+            "link": link,
+            "fullContent": detail_data["fullContent"],
+            "organizer": detail_data["organizer"],
+        })
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    logging.info(f"✅ {len(out)} data from {source}")
+    return out
 
-            except requests.exceptions.RequestException as e:
-                logging.warning(f"[{source}] Error fetching detail page for {link}: {e}")
-            except Exception as e:
-                logging.error(f"[{source}] Unexpected error during detail page parsing for {link}: {e}")
+# ==========================
+# 4. scholarship4u.com
+# ==========================
+def scrape_scholarship4u(max_items=50):
+    source = "scholarship4u.com"
+    base = "https://www.scholarship4u.com/"
+    start_url = base + "category/scholarships/" # Changed to a more specific category URL
+    out = []
 
-            category = "Internasional" if "luar negeri" in title.lower() or "international" in full_content.lower() else "Lokal"
+    logging.info(f"[{source}] Scraping {start_url} ...")
+    if not allowed(start_url):
+        logging.warning(f"[{source}] blocked by robots.txt — skipping.")
+        return out
 
-            out.append({
-                "id": make_id(source, title, link),
-                "source": source,
-                "title": title,
-                "description": excerpt,
-                "category": category,
-                "date": deadline, # Use 'date' for deadline
-                "location": location,
-                "link": link,
-                "fullContent": full_content,
-                "organizer": organizer,
-            })
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[{source}] Failed to fetch listing page: {e}")
-    logging.info(f"[{source}] found {len(out)} items")
+    html = safe_request(start_url)
+    if not html:
+        return out
+    
+    soup = BeautifulSoup(html, "html.parser")
+    posts = soup.select("article, .post")
+    
+    for i, p in enumerate(posts[:max_items]):
+        title_el = p.select_one("h2.entry-title a, .post-title a")
+        if not title_el:
+            logging.debug(f"[{source}] Skipping post {i} due to missing title link.")
+            continue
+        
+        title = title_el.get_text(strip=True)
+        link = urljoin(base, title_el.get("href"))
+
+        logging.info(f"[{source}] Processing: {title}")
+        detail_html = safe_request(link)
+        if not detail_html:
+            continue
+        
+        detail_data = parse_detail_page(detail_html, link, source)
+        
+        category = "Internasional" if "luar negeri" in title.lower() or "international" in detail_data["fullContent"].lower() else "Lokal"
+
+        out.append({
+            "id": make_id(source, title, link),
+            "source": source,
+            "title": title,
+            "description": detail_data["description"],
+            "category": category,
+            "date": detail_data["date"],
+            "location": detail_data["location"],
+            "link": link,
+            "fullContent": detail_data["fullContent"],
+            "organizer": detail_data["organizer"],
+        })
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+    logging.info(f"✅ {len(out)} data from {source}")
     return out
 
 def dedupe(items):
@@ -330,18 +399,21 @@ def parse_date_for_sort(date_string):
     return datetime.min # Fallback for unparseable dates
 
 def main():
-    all_items = []
-    all_items += scrape_beasiswa_id(max_items=100)
-    time.sleep(1.0)
-    # all_items += scrape_indbeasiswa(max_items=100) # Commented out due to robots.txt
+    all_data = []
+    all_data += scrape_beasiswa_id(max_items=20) # Limit to 20 for faster testing
+    time.sleep(1)
+    all_data += scrape_indbeasiswa(max_items=20) # Limit to 20 for faster testing
+    time.sleep(1)
+    all_data += scrape_luarkampus(max_items=20) # Limit to 20 for faster testing
+    time.sleep(1)
+    all_data += scrape_scholarship4u(max_items=20) # Limit to 20 for faster testing
 
-    merged = dedupe(all_items)
-    
+    merged = dedupe(all_data)
     merged_sorted = sorted(merged, key=lambda x: parse_date_for_sort(x.get("date")), reverse=True)
 
     with open(OUTPUT, "w", encoding="utf-8") as f:
         json.dump(merged_sorted, f, ensure_ascii=False, indent=2)
-    logging.info(f"Saved {len(merged_sorted)} items to {OUTPUT}")
+    print(f"\n🎉 Semua selesai! Total {len(merged_sorted)} data disimpan di {OUTPUT}")
 
 if __name__ == "__main__":
     main()

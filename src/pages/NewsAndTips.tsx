@@ -7,56 +7,56 @@ import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
 import dummyEvents from "@/data/dummyEvents.json";
 
 // Re-import dummyScholarships data directly if it's not exported as default array
-const dummyScholarshipsData = [
-  {
-    id: "s1",
-    title: "Beasiswa Unggulan Dalam Negeri 2025",
-    description: "Beasiswa penuh untuk mahasiswa berprestasi di berbagai universitas terbaik di Indonesia.",
-    category: "Lokal",
-    date: "Deadline: 31 Januari 2025",
-    link: "/scholarships/unggulan-dalam-negeri",
-  },
-  {
-    id: "s2",
-    title: "Global Leaders Scholarship (USA)",
-    description: "Kesempatan studi S2/S3 di universitas terkemuka di Amerika Serikat dengan pendanaan penuh.",
-    category: "Internasional",
-    date: "Deadline: 15 Februari 2025",
-    link: "/scholarships/global-leaders-usa",
-  },
-  {
-    id: "s3",
-    title: "Beasiswa Riset Inovasi (Lokal)",
-    description: "Dukungan dana untuk proyek penelitian inovatif mahasiswa di bidang sains dan teknologi.",
-    category: "Lokal",
-    date: "Deadline: 28 Februari 2025",
-    link: "/scholarships/riset-inovasi",
-  },
-  {
-    id: "s4",
-    title: "Erasmus Mundus Scholarship (Europe)",
-    description: "Beasiswa bergengsi untuk program master bersama di berbagai negara Eropa.",
-    category: "Internasional",
-    date: "Deadline: 10 Maret 2025",
-    link: "/scholarships/erasmus-mundus",
-  },
-  {
-    id: "s5",
-    title: "Beasiswa Pendidikan Guru (Lokal)",
-    description: "Program beasiswa khusus bagi calon guru yang berkomitmen untuk memajukan pendidikan di daerah terpencil.",
-    category: "Lokal",
-    date: "Deadline: 20 Maret 2025",
-    link: "/scholarships/pendidikan-guru",
-  },
-  {
-    id: "s6",
-    title: "Chevening Scholarship (UK)",
-    description: "Beasiswa penuh untuk studi pascasarjana di universitas-universitas di Inggris.",
-    category: "Internasional",
-    date: "Deadline: 05 April 2025",
-    link: "/scholarships/chevening",
-  },
-];
+// const dummyScholarshipsData = [ // Removed this block
+//   {
+//     id: "s1",
+//     title: "Beasiswa Unggulan Dalam Negeri 2025",
+//     description: "Beasiswa penuh untuk mahasiswa berprestasi di berbagai universitas terbaik di Indonesia.",
+//     category: "Lokal",
+//     date: "Deadline: 31 Januari 2025",
+//     link: "/scholarships/unggulan-dalam-negeri",
+//   },
+//   {
+//     id: "s2",
+//     title: "Global Leaders Scholarship (USA)",
+//     description: "Kesempatan studi S2/S3 di universitas terkemuka di Amerika Serikat dengan pendanaan penuh.",
+//     category: "Internasional",
+//     date: "Deadline: 15 Februari 2025",
+//     link: "/scholarships/global-leaders-usa",
+//   },
+//   {
+//     id: "s3",
+//     title: "Beasiswa Riset Inovasi (Lokal)",
+//     description: "Dukungan dana untuk proyek penelitian inovatif mahasiswa di bidang sains dan teknologi.",
+//     category: "Lokal",
+//     date: "Deadline: 28 Februari 2025",
+//     link: "/scholarships/riset-inovasi",
+//   },
+//   {
+//     id: "s4",
+//     title: "Erasmus Mundus Scholarship (Europe)",
+//     description: "Beasiswa bergengsi untuk program master bersama di berbagai negara Eropa.",
+//     category: "Internasional",
+//     date: "Deadline: 10 Maret 2025",
+//     link: "/scholarships/erasmus-mundus",
+//   },
+//   {
+//     id: "s5",
+//     title: "Beasiswa Pendidikan Guru (Lokal)",
+//     description: "Program beasiswa khusus bagi calon guru yang berkomitmen untuk memajukan pendidikan di daerah terpencil.",
+//     category: "Lokal",
+//     date: "Deadline: 20 Maret 2025",
+//     link: "/scholarships/pendidikan-guru",
+//   },
+//   {
+//     id: "s6",
+//     title: "Chevening Scholarship (UK)",
+//     description: "Beasiswa penuh untuk studi pascasarjana di universitas-universitas di Inggris.",
+//     category: "Internasional",
+//     date: "Deadline: 05 April 2025",
+//     link: "/scholarships/chevening",
+//   },
+// ];
 
 
 const NewsAndTips = () => {
@@ -89,9 +89,10 @@ const NewsAndTips = () => {
     return dummyEvents.slice(0, 5); // Mengubah dari 2 menjadi 5
   }, []);
 
-  const featuredScholarships = useMemo(() => {
-    return dummyScholarshipsData.slice(0, 5); // Mengubah dari 2 menjadi 5
-  }, []);
+  // Removed featuredScholarships as dummyScholarshipsData is no longer imported
+  // const featuredScholarships = useMemo(() => {
+  //   return dummyScholarshipsData.slice(0, 5); // Mengubah dari 2 menjadi 5
+  // }, []);
 
   return (
     <div className="container py-8">
@@ -113,7 +114,8 @@ const NewsAndTips = () => {
             }))}
             // viewAllLink="/events" // Dihapus
           />
-          <NewsSidebarCard
+          {/* Removed Scholarship Sidebar Card */}
+          {/* <NewsSidebarCard
             title="Beasiswa Unggulan"
             items={featuredScholarships.map(scholarship => ({
               id: scholarship.id,
@@ -122,7 +124,7 @@ const NewsAndTips = () => {
               metadata: scholarship.date,
             }))}
             // viewAllLink="/scholarships" // Dihapus
-          />
+          /> */}
         </aside>
 
         {/* Main Content Area */}

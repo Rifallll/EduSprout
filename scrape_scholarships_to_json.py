@@ -126,27 +126,31 @@ def parse_detail_page_generic(html_content, link_url, source_name):
 # -------------------------
 def scrape_beasiswa_id(limit=MAX_PER_SITE):
     source = "beasiswa.id"
-    base = "https://beasiswa.id/"
+    base = "https://beasiswa.id/category/beasiswa/" # Changed to category page
     items = []
     if not allowed_by_robots(base):
         logging.info(f"[{source}] blocked in robots.txt")
         return items
     html = safe_get(base)
     if not html:
+        logging.warning(f"[{source}] Failed to fetch listing page: {base}")
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for beasiswa.id
-    posts = soup.select("article.jeg_post, div.jeg_post_wrapper, .td_module_wrap, .post-item") 
+    posts = soup.select("article.jeg_post, div.jeg_post_wrapper, .td_module_wrap, .post-item, .jeg_post") 
     
     if not posts:
-        logging.warning(f"[{source}] No general post containers found on {base}")
-        return items
+        logging.warning(f"[{source}] No specific post containers found on {base}. Trying more generic selectors.")
+        posts = soup.select("article, div.post, .entry-card") # Fallback to more generic
+        if not posts:
+            logging.warning(f"[{source}] No generic post containers found on {base} either.")
+            return items
 
     for p in posts[:limit]:
         try:
             a = p.select_one("h3.jeg_post_title a, h2.entry-title a, h2 a, .td-module-title a, a")
             if not a:
-                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
+                logging.debug(f"[{source}] Skipping post due to missing link or title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
             link = urljoin(base, a.get("href"))
@@ -162,6 +166,10 @@ def scrape_beasiswa_id(limit=MAX_PER_SITE):
                 det_html = safe_get(link)
                 if det_html:
                     full_data = parse_detail_page_generic(det_html, link, source)
+                else:
+                    logging.warning(f"[{source}] Failed to fetch detail page for {link}")
+            else:
+                logging.info(f"[{source}] Detail page {link} blocked by robots.txt")
             
             items.append({
                 "id": make_id(source, title, link),
@@ -184,27 +192,31 @@ def scrape_beasiswa_id(limit=MAX_PER_SITE):
 # -------------------------
 def scrape_indbeasiswa(limit=MAX_PER_SITE):
     source = "indbeasiswa.com"
-    base = "https://indbeasiswa.com/"
+    base = "https://indbeasiswa.com/beasiswa-s1/" # Changed to S1 category page
     items = []
     if not allowed_by_robots(base):
         logging.info(f"[{source}] blocked in robots.txt")
         return items
     html = safe_get(base)
     if not html:
+        logging.warning(f"[{source}] Failed to fetch listing page: {base}")
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for indbeasiswa.com
     posts = soup.select("article.post-item, article.jeg_post, .jeg_post_wrapper, .post")
     
     if not posts:
-        logging.warning(f"[{source}] No general post containers found on {base}")
-        return items
+        logging.warning(f"[{source}] No specific post containers found on {base}. Trying more generic selectors.")
+        posts = soup.select("article, div.post, .entry-card") # Fallback to more generic
+        if not posts:
+            logging.warning(f"[{source}] No generic post containers found on {base} either.")
+            return items
 
     for p in posts[:limit]:
         try:
             a = p.select_one("h2.post-title a, h3.jeg_post_title a, .entry-title a, h2 a, a")
             if not a:
-                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
+                logging.debug(f"[{source}] Skipping post due to missing link or title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
             link = urljoin(base, a.get("href"))
@@ -216,6 +228,10 @@ def scrape_indbeasiswa(limit=MAX_PER_SITE):
                 det_html = safe_get(link)
                 if det_html:
                     full_data = parse_detail_page_generic(det_html, link, source)
+                else:
+                    logging.warning(f"[{source}] Failed to fetch detail page for {link}")
+            else:
+                logging.info(f"[{source}] Detail page {link} blocked by robots.txt")
             
             items.append({
                 "id": make_id(source, title, link),
@@ -246,20 +262,24 @@ def scrape_luarkampus(limit=MAX_PER_SITE):
         return items
     html = safe_get(start)
     if not html:
+        logging.warning(f"[{source}] Failed to fetch listing page: {start}")
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for luarkampus.id
-    posts = soup.select("div.elementor-posts-container article.elementor-post, article.post, .jeg_post_wrapper") 
+    posts = soup.select("div.elementor-posts-container article.elementor-post, article.post, .jeg_post_wrapper, .post-item") 
     
     if not posts:
-        logging.warning(f"[{source}] No general post containers found on {start}")
-        return items
+        logging.warning(f"[{source}] No specific post containers found on {start}. Trying more generic selectors.")
+        posts = soup.select("article, div.post, .entry-card") # Fallback to more generic
+        if not posts:
+            logging.warning(f"[{source}] No generic post containers found on {start} either.")
+            return items
 
     for p in posts[:limit]:
         try:
             a = p.select_one("h3.elementor-post__title a, h2.entry-title a, h2 a, a")
             if not a:
-                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
+                logging.debug(f"[{source}] Skipping post due to missing link or title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
             link = urljoin(base, a.get("href"))
@@ -271,6 +291,10 @@ def scrape_luarkampus(limit=MAX_PER_SITE):
                 det_html = safe_get(link)
                 if det_html:
                     full_data = parse_detail_page_generic(det_html, link, source)
+                else:
+                    logging.warning(f"[{source}] Failed to fetch detail page for {link}")
+            else:
+                logging.info(f"[{source}] Detail page {link} blocked by robots.txt")
             
             items.append({
                 "id": make_id(source, title, link),
@@ -300,20 +324,24 @@ def scrape_schoters(limit=MAX_PER_SITE):
         return items
     html = safe_get(base)
     if not html:
+        logging.warning(f"[{source}] Failed to fetch listing page: {base}")
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for schoters.com
     cards = soup.select(".jeg_post_wrapper, .post-item, article.post, .card, .elementor-post")
     
     if not cards:
-        logging.warning(f"[{source}] No general post containers found on {base}")
-        return items
+        logging.warning(f"[{source}] No specific post containers found on {base}. Trying more generic selectors.")
+        cards = soup.select("article, div.post, .entry-card") # Fallback to more generic
+        if not cards:
+            logging.warning(f"[{source}] No generic post containers found on {base} either.")
+            return items
 
     for p in cards[:limit]:
         try:
             a = p.select_one("h2 a, h3 a, .title a, a")
             if not a or not a.get("href"):
-                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
+                logging.debug(f"[{source}] Skipping post due to missing link or title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(" ", strip=True)[:240] or a.get("title","").strip()
             link = urljoin(base, a.get("href"))
@@ -325,6 +353,10 @@ def scrape_schoters(limit=MAX_PER_SITE):
                 det_html = safe_get(link)
                 if det_html:
                     full_data = parse_detail_page_generic(det_html, link, source)
+                else:
+                    logging.warning(f"[{source}] Failed to fetch detail page for {link}")
+            else:
+                logging.info(f"[{source}] Detail page {link} blocked by robots.txt")
             
             items.append({
                 "id": make_id(source, title, link),
@@ -367,6 +399,10 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
                     det_html = safe_get(link)
                     if det_html:
                         full_data = parse_detail_page_generic(det_html, link, source)
+                    else:
+                        logging.warning(f"[{source}] Failed to fetch detail page for {link} (from RSS)")
+                else:
+                    logging.info(f"[{source}] Detail page {link} (from RSS) blocked by robots.txt")
 
                 items.append({
                     "id": make_id(source, title, link),
@@ -387,20 +423,24 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
     # Fallback: do basic GET and try some selectors (best-effort)
     html = safe_get(base)
     if not html:
+        logging.warning(f"[{source}] Failed to fetch listing page: {base} (fallback)")
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for scholarshipportal.com
     posts = soup.select(".search-result-item, .card, article, .item, .listing-item")
     
     if not posts:
-        logging.warning(f"[{source}] No general post containers found on {base}")
-        return items
+        logging.warning(f"[{source}] No specific post containers found on {base} (fallback). Trying more generic selectors.")
+        posts = soup.select("article, div.post, .entry-card") # Fallback to more generic
+        if not posts:
+            logging.warning(f"[{source}] No generic post containers found on {base} (fallback) either.")
+            return items
 
     for p in posts[:limit]:
         try:
             a = p.select_one("h2 a, h3 a, .title a, a")
             if not a or not a.get("href"):
-                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
+                logging.debug(f"[{source}] Skipping post due to missing link or title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(" ", strip=True)[:240]
             link = urljoin(base, a.get("href"))
@@ -412,6 +452,10 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
                 det_html = safe_get(link)
                 if det_html:
                     full_data = parse_detail_page_generic(det_html, link, source)
+                else:
+                    logging.warning(f"[{source}] Failed to fetch detail page for {link} (fallback)")
+            else:
+                logging.info(f"[{source}] Detail page {link} (fallback) blocked by robots.txt")
 
             items.append({
                 "id": make_id(source, title, link),

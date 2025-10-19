@@ -35,8 +35,8 @@ def parse_list(html):
         title = a.get_text(strip=True)
         link = urljoin(BASE, a.get("href"))
         
-        excerpt_el = it.select_one(".entry-summary p, .post-excerpt p, .description")
-        excerpt = excerpt_el.get_text(strip=True)[:200] if excerpt_el else ""
+        # Description will be an empty string as per user request
+        excerpt = "" 
 
         results.append({"title": title, "link": link, "excerpt": excerpt})
     return results
@@ -143,7 +143,7 @@ def main():
             out.append({
                 "id": f"beasiswa_id_{i}",
                 "title": item["title"],
-                "description": item["excerpt"],
+                "description": "", # Set description to empty string
                 "category": category,
                 "date": detail["date"],
                 "location": detail["location"],

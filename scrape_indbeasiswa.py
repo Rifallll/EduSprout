@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import json, time, random
 from urllib.parse import urljoin
 import logging
-from datetime import datetime # Import datetime
+from datetime import datetime
+import re # Import regex
 
 # --------- CONFIG ---------
 BASE = "https://indbeasiswa.com"
@@ -21,20 +22,17 @@ def fetch(url):
 
 def parse_list(html):
     soup = BeautifulSoup(html, "html.parser")
-    # More robust selectors for post items on indbeasiswa.com category page
     posts = soup.select("article, .post, .loop-post, div.jeg_post, article.post-item, div.entry-card")
     results = []
     for p in posts:
-        # More specific selectors for title link
         a = p.select_one("h2 a, .jeg_post_title a, .entry-title a, .post-title a")
         if not a:
-            a = p.select_one("a") # Fallback to any link
+            a = p.select_one("a")
             if not a: continue
         
         title = a.get_text(strip=True)
         link = urljoin(BASE, a["href"])
 
-        # More specific selectors for excerpt
         excerpt_el = p.select_one(".jeg_post_excerpt p, .entry-summary p, .post-excerpt p, .description")
         excerpt = excerpt_el.get_text(strip=True)[:200] if excerpt_el else ""
 
@@ -43,31 +41,50 @@ def parse_list(html):
 
 def parse_detail(html):
     soup = BeautifulSoup(html, "html.parser")
-    content = ""
-    el = soup.select_one(".entry-content, .single-content, .post-content")
-    if el:
-        content = el.get_text(separator="\n", strip=True)
+    content_el = soup.select_one(".entry-content, .single-content, .post-content")
+    full_content = content_el.get_text(separator="\n", strip=True) if content_el else ""
     
-    date = None
-    date_el = soup.select_one("time[datetime]")
-    if date_el and date_el.has_attr("datetime"):
-        date = date_el["datetime"]
-    else:
-        date_text_el = soup.select_one(".entry-date, .post-date, .published-date, .meta-date")
-        if date_text_el:
-            date_text = date_text_el.get_text(strip=True)
-            for fmt in ["%d %B %Y", "%Y-%m-%d", "%b %d, %Y"]:
-                try:
-                    parsed_date = datetime.strptime(date_text, fmt)
-                    date = parsed_date.strftime("%Y-%m-%d")
-                    break
-                except ValueError:
-                    continue
-    
-    if not date:
-        date = datetime.now().strftime("%Y-%m-%d")
+    organizer = "Indbeasiswa.com" # Default organizer for this source
+    # Try to find "Penyelenggara:" or "Organized by:" in content
+    organizer_match = re.search(r"(?:Penyelenggara|Organized by):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
+    if organizer_match:
+        organizer = organizer_match.group(1).strip()
 
-    return {"content": content, "date": date}
+    deadline_date = "Tidak diketahui"
+    # Look for "Deadline:" or "Batas waktu pendaftaran:" in content
+    deadline_match = re.search(r"(?:Deadline|Batas waktu pendaftaran|Pendaftaran hingga|sampai dengan):\s*(\d{1,2}\s+\w+\s+\d{4})", full_content, re.IGNORECASE)
+    if deadline_match:
+        deadline_date = deadline_match.group(1).strip()
+    else:
+        # Fallback to date from time tag or general text if no specific deadline found
+        time_el = soup.select_one("time[datetime]")
+        if time_el and time_el.has_attr("datetime"):
+            deadline_date = time_el["datetime"]
+        else:
+            date_text_el = soup.select_one(".entry-date, .post-date, .published-date, .meta-date")
+            if date_text_el:
+                date_text = date_text_el.get_text(strip=True)
+                for fmt in ["%d %B %Y", "%Y-%m-%d", "%b %d, %Y"]:
+                    try:
+                        parsed_date = datetime.strptime(date_text, fmt)
+                        deadline_date = parsed_date.strftime("%d %B %Y") # Format consistently
+                        break
+                    except ValueError:
+                        continue
+    
+    location = "Tidak diketahui"
+    # Look for "Lokasi:", "Tempat:", "Negara:", "Kota:" in content
+    location_match = re.search(r"(?:Lokasi|Tempat|Negara|Kota):\s*(.*?)(?:\n|$)", full_content, re.IGNORECASE)
+    if location_match:
+        location = location_match.group(1).strip()
+    elif "online" in full_content.lower():
+        location = "Online"
+    elif "dalam negeri" in full_content.lower():
+        location = "Indonesia"
+    elif "luar negeri" in full_content.lower() or "international" in full_content.lower():
+        location = "Internasional"
+
+    return {"fullContent": full_content, "organizer": organizer, "date": deadline_date, "location": location}
 
 def main():
     logging.info("Starting scholarship scraping from Indbeasiswa.com (S1 Category)")
@@ -84,24 +101,20 @@ def main():
         logging.info(f"[{i}/{len(items[:50])}] Processing: {it['title']}")
         try:
             time.sleep(random.uniform(0.8,1.6))
-            h = fetch(it["link"])
-            d = parse_detail(h)
+            detail = parse_detail(fetch(it["link"]))
 
-            # Infer category and location
-            category = "Internasional" if "luar negeri" in it["title"].lower() or "international" in d["content"].lower() else "Lokal"
-            location = "Online" if "online" in d["content"].lower() else "Tidak diketahui"
-            organizer = "Indbeasiswa.com" # Default organizer for this source
+            category = "Internasional" if "luar negeri" in it["title"].lower() or "international" in detail["fullContent"].lower() else "Lokal"
 
             out.append({
                 "id": f"indbeasiswa_{i}",
                 "title": it["title"],
-                "description": it["excerpt"] or d["content"][:200],
+                "description": it["excerpt"] or detail["fullContent"][:200],
                 "category": category,
-                "date": d["date"] or "Tidak diketahui",
-                "location": location,
+                "date": detail["date"],
+                "location": detail["location"],
                 "link": it["link"],
-                "fullContent": d["content"],
-                "organizer": organizer,
+                "fullContent": detail["fullContent"],
+                "organizer": detail["organizer"],
             })
         except requests.exceptions.RequestException as e:
             logging.warning(f"Error fetching detail page for {it['link']}: {e}")

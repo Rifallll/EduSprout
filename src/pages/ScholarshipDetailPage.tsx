@@ -9,10 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CalendarDays, MapPin, Globe, Building2, BookOpen } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import InfoCard from "@/components/InfoCard"; // Re-use InfoCard for related scholarships
-// import { formatScholarshipContent } from "@/utils/contentFormatter"; // Removed as content is no longer displayed
+import { formatScholarshipContent } from "@/utils/contentFormatter"; // Keep this for formatting the full content
 
 // Import all scholarship data sources
-// Removed dummyScholarshipsData import
 import scrapedScholarshipsBeasiswaId from "@/data/scrapedScholarships.json";
 import scrapedScholarshipsIndbeasiswa from "@/data/scrapedIndbeasiswa.json";
 
@@ -22,7 +21,7 @@ interface ScholarshipItem {
   title: string;
   description: string;
   category: string;
-  date: string;
+  date: string; // This is the deadline
   link: string;
   location?: string;
   source?: string;
@@ -34,14 +33,11 @@ const ScholarshipDetailPage = () => {
   const { scholarshipId } = useParams<{ scholarshipId: string }>();
 
   const allScholarships: ScholarshipItem[] = useMemo(() => {
-    // Add a 'source' property to each scholarship from different files
-    // Removed dummy data mapping
     const beasiswaId = scrapedScholarshipsBeasiswaId.map(s => ({ ...s, source: "beasiswa.id" }));
     const indbeasiswa = scrapedScholarshipsIndbeasiswa.map(s => ({ ...s, source: "indbeasiswa.com" }));
     return [...beasiswaId, ...indbeasiswa];
   }, []);
 
-  // Find the scholarship by matching the end of its link with the scholarshipId
   const scholarship: ScholarshipItem | undefined = allScholarships.find((s) => 
     s.link.endsWith(scholarshipId || '') || s.id === scholarshipId
   );
@@ -60,7 +56,6 @@ const ScholarshipDetailPage = () => {
     );
   }
 
-  // Filter for related scholarships (excluding the current one)
   const relatedScholarships = allScholarships.filter(s => s.id !== scholarship.id).slice(0, 5);
 
   return (
@@ -80,12 +75,12 @@ const ScholarshipDetailPage = () => {
             </Badge>
           </div>
           <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground text-base">
-            {scholarship.date && (
+            {scholarship.date && scholarship.date !== "Tidak diketahui" && (
               <span className="flex items-center">
-                <CalendarDays className="h-4 w-4 mr-1" /> {scholarship.date}
+                <CalendarDays className="h-4 w-4 mr-1" /> Deadline: {scholarship.date}
               </span>
             )}
-            {scholarship.location && (
+            {scholarship.location && scholarship.location !== "Tidak diketahui" && (
               <span className="flex items-center">
                 <MapPin className="h-4 w-4 mr-1" /> {scholarship.location}
               </span>
@@ -105,8 +100,6 @@ const ScholarshipDetailPage = () => {
         <CardContent className="space-y-6">
           <Separator />
 
-          {/* Removed the detailed description section */}
-          {/*
           <div className="prose dark:prose-invert max-w-none text-lg leading-relaxed text-foreground">
             <h3 className="text-xl font-semibold mb-3">Deskripsi Beasiswa</h3>
             {scholarship.fullContent ? (
@@ -118,7 +111,6 @@ const ScholarshipDetailPage = () => {
               Untuk informasi lebih lanjut dan pendaftaran, silakan kunjungi tautan resmi beasiswa.
             </p>
           </div>
-          */}
 
           <div className="pt-6 border-t mt-6">
             <a href={scholarship.link} target="_blank" rel="noopener noreferrer">

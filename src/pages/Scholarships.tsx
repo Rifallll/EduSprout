@@ -407,7 +407,7 @@ const Scholarships = () => {
                   organizer={scholarshipItem.organizer || scholarshipItem.institution}
                   location={scholarshipItem.location}
                   deadline={scholarshipItem.date}
-                  link={`/scholarships/${scholarshipItem.id}`}
+                  link={scholarshipItem.link} {/* Pass the external link directly */}
                   degreeLevels={scholarshipItem.degreeLevels}
                   fundingType={scholarshipItem.fundingType}
                 />

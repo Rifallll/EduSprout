@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Bookmark, CalendarDays, MapPin } from "lucide-react";
@@ -12,7 +11,7 @@ interface ScholarshipListItemProps {
   location?: string; // Country/City
   startDate?: string; // "Mulai"
   deadline: string; // "Deadline"
-  link: string; // Internal link to detail page
+  link: string; // External link to the scholarship website
   degreeLevels?: string[]; // e.g., ["SMA", "S1", "S2"]
   fundingType?: string; // e.g., "Fully Funded"
 }
@@ -47,7 +46,8 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
           <Bookmark className="h-4 w-4" />
         </Button>
       </div>
-      <Link to={link} className="block flex-grow">
+      {/* The entire clickable area now links directly to the external scholarship website */}
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block flex-grow">
         <h3 className="text-lg font-semibold leading-snug text-foreground hover:text-primary transition-colors duration-200 line-clamp-2">
           {title}
         </h3>
@@ -58,7 +58,7 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
             <span>{location}</span>
           </div>
         )}
-      </Link>
+      </a>
       <CardContent className="flex flex-col space-y-1 text-xs text-muted-foreground p-0 pt-3 mt-3 border-t border-border">
         {startDate && (
           <div className="flex items-center">

@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import json, time, random
 from urllib.parse import urljoin
 import logging
+from datetime import datetime # Import datetime
 
 # --------- CONFIG ---------
 BASE = "https://indbeasiswa.com"
@@ -40,10 +41,26 @@ def parse_detail(html):
     el = soup.select_one(".entry-content, .single-content, .post-content")
     if el:
         content = el.get_text(separator="\n", strip=True)
-    date = ""
-    date_el = soup.select_one("time")
+    
+    date = None
+    date_el = soup.select_one("time[datetime]")
     if date_el and date_el.has_attr("datetime"):
         date = date_el["datetime"]
+    else:
+        date_text_el = soup.select_one(".entry-date, .post-date, .published-date, .meta-date")
+        if date_text_el:
+            date_text = date_text_el.get_text(strip=True)
+            for fmt in ["%d %B %Y", "%Y-%m-%d", "%b %d, %Y"]:
+                try:
+                    parsed_date = datetime.strptime(date_text, fmt)
+                    date = parsed_date.strftime("%Y-%m-%d")
+                    break
+                except ValueError:
+                    continue
+    
+    if not date:
+        date = datetime.now().strftime("%Y-%m-%d")
+
     return {"content": content, "date": date}
 
 def main():

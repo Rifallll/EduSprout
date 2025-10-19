@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/pagination";
 
 // Import all scholarship data sources
-// Removed dummyScholarshipsData import
+import dummyScholarshipsData from "@/data/dummyScholarships.json"; // Re-import dummyScholarshipsData
 import scrapedScholarshipsBeasiswaId from "@/data/scrapedScholarships.json";
 import scrapedScholarshipsIndbeasiswa from "@/data/scrapedIndbeasiswa.json";
 
@@ -65,7 +65,7 @@ const Scholarships = () => {
 
   const allScholarships: EnrichedScholarshipItem[] = useMemo(() => {
     const rawScholarships = [
-      // Removed dummyScholarshipsData
+      ...dummyScholarshipsData.map(s => ({ ...s, source: "manual" })), // Re-added dummy data
       ...scrapedScholarshipsBeasiswaId.map(s => ({ ...s, source: "beasiswa.id" })),
       ...scrapedScholarshipsIndbeasiswa.map(s => ({ ...s, source: "indbeasiswa.com" })),
     ];
@@ -344,7 +344,7 @@ const Scholarships = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Semua Sumber</SelectItem>
-                    {/* Removed manual source */}
+                    <SelectItem value="manual">Manual</SelectItem>
                     <SelectItem value="beasiswa.id">Beasiswa.id</SelectItem>
                     <SelectItem value="indbeasiswa.com">Indbeasiswa.com</SelectItem>
                   </SelectContent>

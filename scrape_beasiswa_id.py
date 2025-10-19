@@ -5,6 +5,7 @@ import time
 import random
 from urllib.parse import urljoin
 import logging
+from datetime import datetime # Import datetime
 
 # --------- CONFIG ---------
 BASE = "https://beasiswa.id"
@@ -55,9 +56,28 @@ def parse_detail(html):
         if meta:
             organizer = meta.get_text(strip=True) # Fallback to general meta text
 
-    # Extract date from detail page if available
-    date_el = soup.select_one("time[datetime], .post-date, .published-date")
-    date_posted = date_el["datetime"] if date_el and date_el.has_attr("datetime") else (date_el.get_text(strip=True) if date_el else None)
+    date_posted = None
+    # Try to get date from time tag with datetime attribute
+    time_el = soup.select_one("time[datetime]")
+    if time_el and time_el.has_attr("datetime"):
+        date_posted = time_el["datetime"]
+    else:
+        # Fallback: try to get date from text content of common date elements
+        date_text_el = soup.select_one(".post-date, .published-date, .entry-date, .meta-date")
+        if date_text_el:
+            date_text = date_text_el.get_text(strip=True)
+            # Attempt to parse common date formats (e.g., "10 November 2024", "2024-11-10")
+            for fmt in ["%d %B %Y", "%Y-%m-%d", "%b %d, %Y"]: # Add more formats if needed
+                try:
+                    parsed_date = datetime.strptime(date_text, fmt)
+                    date_posted = parsed_date.strftime("%Y-%m-%d")
+                    break
+                except ValueError:
+                    continue
+    
+    if not date_posted:
+        # Final fallback: use today's date
+        date_posted = datetime.now().strftime("%Y-%m-%d")
 
     return {"content": content, "organizer": organizer, "date_posted": date_posted}
 

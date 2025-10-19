@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, CalendarDays, MapPin, Building2, DollarSign, GraduationCap, ExternalLink } from "lucide-react";
+import { ArrowLeft, CalendarDays, MapPin, Building2, ExternalLink } from "lucide-react";
 import dummyScholarships from "@/data/scholarships";
 import { enrichScholarshipData, EnrichedScholarshipItem } from "@/utils/scholarshipUtils";
 
@@ -95,6 +95,9 @@ const ScholarshipDetailPage = () => {
                 <ExternalLink className="mr-2 h-5 w-5" /> Kunjungi Situs Resmi Beasiswa
               </Button>
             </a>
+            <p className="text-sm text-red-500 mt-2 text-center">
+              *Tautan ini adalah contoh dari data dummy dan mungkin tidak aktif atau mengarah ke halaman yang berbeda.
+            </p>
           </div>
         </CardContent>
       </Card>

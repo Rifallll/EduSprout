@@ -5,7 +5,7 @@
     "organizer": "Pemerintah Hungaria",
     "location": "Hungaria",
     "deadline": "15 Oktober 2026",
-    "link": "https://stipendiumhungaricum.hu/",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1", "S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -15,7 +15,7 @@
     "organizer": "Universitas Sumatera Utara",
     "location": "Medan, Indonesia",
     "deadline": "01 November 2026",
-    "link": "https://usu.ac.id/beasiswa",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -25,7 +25,7 @@
     "organizer": "Pemerintah Selandia Baru",
     "location": "Selandia Baru",
     "deadline": "25 November 2026",
-    "link": "https://www.mfat.govt.nz/en/aid-and-development/our-work/scholarships/",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -35,7 +35,7 @@
     "organizer": "Universitas Andalas",
     "location": "Padang, Indonesia",
     "deadline": "10 Desember 2026",
-    "link": "https://unand.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -45,7 +45,7 @@
     "organizer": "Pemerintah Korea Selatan",
     "location": "Korea Selatan",
     "deadline": "31 Desember 2026",
-    "link": "https://www.studyinkorea.go.kr/en/sub/gks/selectBoardArticle.do",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1", "S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -55,7 +55,7 @@
     "organizer": "Universitas Sriwijaya",
     "location": "Palembang, Indonesia",
     "deadline": "15 Januari 2027",
-    "link": "https://unsri.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -65,7 +65,7 @@
     "organizer": "Pemerintah Prancis",
     "location": "Prancis",
     "deadline": "01 Februari 2027",
-    "link": "https://www.campusfrance.org/en/eiffel-scholarship-program",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -75,7 +75,7 @@
     "organizer": "Universitas Riau",
     "location": "Pekanbaru, Indonesia",
     "deadline": "10 Maret 2027",
-    "link": "https://unri.ac.id/beasiswa",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -85,7 +85,7 @@
     "organizer": "Pemerintah Jepang",
     "location": "Jepang",
     "deadline": "20 Maret 2027",
-    "link": "https://www.id.emb-japan.go.jp/sch.html",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1", "S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -95,7 +95,7 @@
     "organizer": "Universitas Lampung",
     "location": "Bandar Lampung, Indonesia",
     "deadline": "05 April 2027",
-    "link": "https://unila.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -105,7 +105,7 @@
     "organizer": "Pemerintah Turki",
     "location": "Turki",
     "deadline": "15 April 2027",
-    "link": "https://www.turkiyeburslari.gov.tr/en",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1", "S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -115,7 +115,7 @@
     "organizer": "Universitas Jember",
     "location": "Jember, Indonesia",
     "deadline": "01 Mei 2027",
-    "link": "https://unej.ac.id/beasiswa",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -125,7 +125,7 @@
     "organizer": "Pemerintah Hungaria",
     "location": "Hungaria",
     "deadline": "10 Mei 2027",
-    "link": "https://stipendiumhungaricum.hu/",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1", "S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -135,7 +135,7 @@
     "organizer": "Universitas Mataram",
     "location": "Mataram, Indonesia",
     "deadline": "20 Mei 2027",
-    "link": "https://unram.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -145,7 +145,7 @@
     "organizer": "Pemerintah Kanada",
     "location": "Kanada",
     "deadline": "01 Juni 2027",
-    "link": "https://vanier.gc.ca/en/home-accueil.html",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -155,7 +155,7 @@
     "organizer": "Universitas Negeri Malang",
     "location": "Malang, Indonesia",
     "deadline": "15 Juni 2027",
-    "link": "https://um.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -165,7 +165,7 @@
     "organizer": "Pemerintah Swiss",
     "location": "Swiss",
     "deadline": "01 Juli 2027",
-    "link": "https://www.sbfi.admin.ch/sbfi/en/home/education/scholarships-and-grants/swiss-government-excellence-scholarships.html",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -175,7 +175,7 @@
     "organizer": "Universitas Negeri Surabaya",
     "location": "Surabaya, Indonesia",
     "deadline": "10 Juli 2027",
-    "link": "https://unesa.ac.id/beasiswa",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -185,7 +185,7 @@
     "organizer": "Universitas Pendidikan Indonesia",
     "location": "Bandung, Indonesia",
     "deadline": "20 Juli 2027",
-    "link": "https://upi.edu/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -195,7 +195,7 @@
     "organizer": "Gates Cambridge Trust",
     "location": "Inggris",
     "deadline": "01 Agustus 2027",
-    "link": "https://www.gatescambridge.org/",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -205,7 +205,7 @@
     "organizer": "Universitas Negeri Jakarta",
     "location": "Jakarta, Indonesia",
     "deadline": "15 Agustus 2027",
-    "link": "https://unj.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -215,7 +215,7 @@
     "organizer": "Pemerintah Australia",
     "location": "Australia",
     "deadline": "01 September 2027",
-    "link": "https://internationaleducation.gov.au/endeavour",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2", "S3"],
     "fundingType": "Fully Funded"
   },
@@ -225,7 +225,7 @@
     "organizer": "Universitas Negeri Yogyakarta",
     "location": "Yogyakarta, Indonesia",
     "deadline": "10 September 2027",
-    "link": "https://uny.ac.id/beasiswa",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["D3", "D4"],
     "fundingType": "Partially Funded"
   },
@@ -235,7 +235,7 @@
     "organizer": "Universitas Negeri Semarang",
     "location": "Semarang, Indonesia",
     "deadline": "20 September 2027",
-    "link": "https://unnes.ac.id/beasiswa-s1",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S1"],
     "fundingType": "Fully Funded"
   },
@@ -245,7 +245,7 @@
     "organizer": "Pemerintah Inggris",
     "location": "Inggris",
     "deadline": "01 Oktober 2027",
-    "link": "https://www.chevening.org/",
+    "link": "https://example.com/beasiswa-detail",
     "degreeLevels": ["S2"],
     "fundingType": "Fully Funded"
   }

@@ -7,7 +7,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
 import Events from "./pages/Events";
-import Scholarships from "./pages/Scholarships"; // Corrected import path
+import Scholarships from "./pages/Scholarships";
+import ScholarshipDetailPage from "./pages/ScholarshipDetailPage"; // Import the new ScholarshipDetailPage
 import Jobs from "./pages/Jobs";
 import NewsAndTips from "./pages/NewsAndTips";
 import LoginPage from "./pages/LoginPage";
@@ -46,6 +47,7 @@ const App = () => (
             <Route index element={<Index />} />
             <Route path="events" element={<Events />} />
             <Route path="scholarships" element={<Scholarships />} />
+            <Route path="scholarships/:scholarshipId" element={<ScholarshipDetailPage />} /> {/* New route for scholarship details */}
             <Route path="jobs" element={<Jobs />} />
             <Route path="jobs/:jobId" element={<JobDetailPage />} />
             <Route path="news-and-tips" element={<NewsAndTips />} />

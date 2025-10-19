@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -22,8 +22,8 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 
-// Import the new modular scholarship data
-import dummyScholarships from "@/data/scholarships";
+// Import the new scraped scholarship data
+import scrapedScholarships from "@/data/scrapedScholarships.json";
 
 // Import the new ScholarshipListItem component
 import ScholarshipListItem from "@/components/ScholarshipListItem";
@@ -55,8 +55,8 @@ const Scholarships = () => {
   const [scholarshipsPerPage] = useState(10); // Display 10 scholarships per page
 
   const allScholarships: EnrichedScholarshipItem[] = useMemo(() => {
-    // Use dummyScholarships directly and enrich them
-    return dummyScholarships.map(enrichScholarshipData);
+    // Use scrapedScholarships directly and enrich them
+    return scrapedScholarships.map(enrichScholarshipData);
   }, []);
 
   const allCountries = useMemo(() => {
@@ -67,6 +67,16 @@ const Scholarships = () => {
       }
     });
     return Array.from(countries).sort();
+  }, [allScholarships]);
+
+  const allSources = useMemo(() => {
+    const sources = new Set<string>();
+    allScholarships.forEach(s => {
+      if (s.source) {
+        sources.add(s.source);
+      }
+    });
+    return Array.from(sources).sort();
   }, [allScholarships]);
 
   const handleDegreeLevelChange = (level: string, checked: boolean) => {
@@ -170,9 +180,9 @@ const Scholarships = () => {
     // 8. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
-        return parseDate(b.deadline).getTime() - parseDate(a.deadline).getTime();
+        return parseDate(b.date).getTime() - parseDate(a.date).getTime();
       } else if (sortBy === "date-asc") {
-        return parseDate(a.deadline).getTime() - parseDate(b.deadline).getTime();
+        return parseDate(a.date).getTime() - parseDate(b.date).getTime();
       } else if (sortBy === "title-asc") {
         return a.title.localeCompare(b.title);
       } else if (sortBy === "title-desc") {
@@ -325,7 +335,9 @@ const Scholarships = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Semua Sumber</SelectItem>
-                    <SelectItem value="dummy">Dummy Data</SelectItem>
+                    {allSources.map(source => (
+                      <SelectItem key={source} value={source}>{source}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </AccordionContent>

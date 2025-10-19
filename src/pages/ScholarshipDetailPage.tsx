@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CalendarDays, MapPin, Building2, ExternalLink } from "lucide-react";
-import dummyScholarships from "@/data/scholarships";
+import scrapedScholarships from "@/data/scrapedScholarships.json"; // Updated import
 import { enrichScholarshipData, EnrichedScholarshipItem } from "@/utils/scholarshipUtils";
 
 const ScholarshipDetailPage = () => {
   const { scholarshipId } = useParams<{ scholarshipId: string }>();
-  const rawScholarship = dummyScholarships.find((s) => s.id === scholarshipId);
+  const rawScholarship = scrapedScholarships.find((s) => s.id === scholarshipId); // Updated data source
 
   if (!rawScholarship) {
     return (

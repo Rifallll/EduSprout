@@ -69,7 +69,7 @@ def parse_detail_page_generic(html_content, link_url, source_name):
     soup = BeautifulSoup(html_content, "html.parser")
     
     full_content = ""
-    content_el = soup.select_one(".entry-content, .post-content, .content, .single-content, div[itemprop='articleBody']")
+    content_el = soup.select_one(".entry-content, .post-content, .content, .single-content, div[itemprop='articleBody'], .td-post-content")
     if content_el:
         full_content = content_el.get_text(separator="\n", strip=True)
     
@@ -129,19 +129,24 @@ def scrape_beasiswa_id(limit=MAX_PER_SITE):
     base = "https://beasiswa.id/"
     items = []
     if not allowed_by_robots(base):
-        logging.info(f"{source} blocked in robots.txt")
+        logging.info(f"[{source}] blocked in robots.txt")
         return items
     html = safe_get(base)
     if not html:
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for beasiswa.id
-    posts = soup.select("article.jeg_post, div.jeg_post_wrapper") 
+    posts = soup.select("article.jeg_post, div.jeg_post_wrapper, .td_module_wrap, .post-item") 
     
+    if not posts:
+        logging.warning(f"[{source}] No general post containers found on {base}")
+        return items
+
     for p in posts[:limit]:
         try:
-            a = p.select_one("h3.jeg_post_title a, h2.entry-title a, h2 a, a")
+            a = p.select_one("h3.jeg_post_title a, h2.entry-title a, h2 a, .td-module-title a, a")
             if not a:
+                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
             link = urljoin(base, a.get("href"))
@@ -170,8 +175,8 @@ def scrape_beasiswa_id(limit=MAX_PER_SITE):
                 "location": full_data.get("location", "")
             })
         except Exception as e:
-            logging.exception(f"{source} parse item error: {e}")
-    logging.info(f"{source} scraped {len(items)} items")
+            logging.exception(f"[{source}] parse item error for {link}: {e}")
+    logging.info(f"[{source}] scraped {len(items)} items")
     return items
 
 # -------------------------
@@ -182,19 +187,24 @@ def scrape_indbeasiswa(limit=MAX_PER_SITE):
     base = "https://indbeasiswa.com/"
     items = []
     if not allowed_by_robots(base):
-        logging.info(f"{source} blocked in robots.txt")
+        logging.info(f"[{source}] blocked in robots.txt")
         return items
     html = safe_get(base)
     if not html:
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for indbeasiswa.com
-    posts = soup.select("article.post-item, article.jeg_post")
+    posts = soup.select("article.post-item, article.jeg_post, .jeg_post_wrapper, .post")
     
+    if not posts:
+        logging.warning(f"[{source}] No general post containers found on {base}")
+        return items
+
     for p in posts[:limit]:
         try:
             a = p.select_one("h2.post-title a, h3.jeg_post_title a, .entry-title a, h2 a, a")
             if not a:
+                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
             link = urljoin(base, a.get("href"))
@@ -219,8 +229,8 @@ def scrape_indbeasiswa(limit=MAX_PER_SITE):
                 "location": full_data.get("location", "")
             })
         except Exception as e:
-            logging.exception(f"{source} parse item error: {e}")
-    logging.info(f"{source} scraped {len(items)} items")
+            logging.exception(f"[{source}] parse item error for {link}: {e}")
+    logging.info(f"[{source}] scraped {len(items)} items")
     return items
 
 # -------------------------
@@ -228,25 +238,31 @@ def scrape_indbeasiswa(limit=MAX_PER_SITE):
 # -------------------------
 def scrape_luarkampus(limit=MAX_PER_SITE):
     source = "luarkampus.id"
-    start = "https://luarkampus.id/beasiswa/" # Corrected URL
+    base = "https://luarkampus.id"
+    start = base + "/beasiswa/" # Confirmed this is a valid category page
     items = []
     if not allowed_by_robots(start):
-        logging.info(f"{source} blocked in robots.txt")
+        logging.info(f"[{source}] blocked in robots.txt")
         return items
     html = safe_get(start)
     if not html:
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for luarkampus.id
-    posts = soup.select("div.elementor-posts-container article.elementor-post")
+    posts = soup.select("div.elementor-posts-container article.elementor-post, article.post, .jeg_post_wrapper") 
     
+    if not posts:
+        logging.warning(f"[{source}] No general post containers found on {start}")
+        return items
+
     for p in posts[:limit]:
         try:
             a = p.select_one("h3.elementor-post__title a, h2.entry-title a, h2 a, a")
             if not a:
+                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(strip=True)
-            link = urljoin(start, a.get("href"))
+            link = urljoin(base, a.get("href"))
             
             # Fetch detail page for robust fields
             full_data = {}
@@ -268,8 +284,8 @@ def scrape_luarkampus(limit=MAX_PER_SITE):
                 "location": full_data.get("location", "")
             })
         except Exception as e:
-            logging.exception(f"{source} parse item error: {e}")
-    logging.info(f"{source} scraped {len(items)} items")
+            logging.exception(f"[{source}] parse item error for {link}: {e}")
+    logging.info(f"[{source}] scraped {len(items)} items")
     return items
 
 # -------------------------
@@ -277,25 +293,30 @@ def scrape_luarkampus(limit=MAX_PER_SITE):
 # -------------------------
 def scrape_schoters(limit=MAX_PER_SITE):
     source = "schoters.com"
-    start = "https://www.schoters.com/id/beasiswa/"
+    base = "https://www.schoters.com/id/beasiswa/"
     items = []
-    if not allowed_by_robots(start):
-        logging.info(f"{source} blocked in robots.txt")
+    if not allowed_by_robots(base):
+        logging.info(f"[{source}] blocked in robots.txt")
         return items
-    html = safe_get(start)
+    html = safe_get(base)
     if not html:
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for schoters.com
-    cards = soup.select(".jeg_post_wrapper, .post-item, article.post, .card")
+    cards = soup.select(".jeg_post_wrapper, .post-item, article.post, .card, .elementor-post")
     
+    if not cards:
+        logging.warning(f"[{source}] No general post containers found on {base}")
+        return items
+
     for p in cards[:limit]:
         try:
             a = p.select_one("h2 a, h3 a, .title a, a")
             if not a or not a.get("href"):
+                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(" ", strip=True)[:240] or a.get("title","").strip()
-            link = urljoin(start, a.get("href"))
+            link = urljoin(base, a.get("href"))
             
             # Fetch detail page for robust fields
             full_data = {}
@@ -317,8 +338,8 @@ def scrape_schoters(limit=MAX_PER_SITE):
                 "location": full_data.get("location", "")
             })
         except Exception as e:
-            logging.exception(f"{source} parse item error: {e}")
-    logging.info(f"{source} scraped {len(items)} items")
+            logging.exception(f"[{source}] parse item error for {link}: {e}")
+    logging.info(f"[{source}] scraped {len(items)} items")
     return items
 
 # -------------------------
@@ -358,10 +379,10 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
                     "organizer": full_data.get("organizer", ""),
                     "location": full_data.get("location", "")
                 })
-            logging.info(f"{source} scraped {len(items)} items via RSS")
+            logging.info(f"[{source}] scraped {len(items)} items via RSS")
             return items
     except Exception as e:
-        logging.warning(f"{source} feed error: {e}")
+        logging.warning(f"[{source}] feed error: {e}")
 
     # Fallback: do basic GET and try some selectors (best-effort)
     html = safe_get(base)
@@ -369,12 +390,17 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
         return items
     soup = BeautifulSoup(html, "html.parser")
     # More robust selector for scholarshipportal.com
-    posts = soup.select(".search-result-item, .card, article, .item")
+    posts = soup.select(".search-result-item, .card, article, .item, .listing-item")
     
+    if not posts:
+        logging.warning(f"[{source}] No general post containers found on {base}")
+        return items
+
     for p in posts[:limit]:
         try:
             a = p.select_one("h2 a, h3 a, .title a, a")
             if not a or not a.get("href"):
+                logging.debug(f"[{source}] Skipping post due to missing link/title in: {p.prettify()[:200]}")
                 continue
             title = a.get_text(" ", strip=True)[:240]
             link = urljoin(base, a.get("href"))
@@ -399,8 +425,8 @@ def scrape_scholarshipportal(limit=MAX_PER_SITE):
                 "location": full_data.get("location", "")
             })
         except Exception as e:
-            logging.exception(f"{source} fallback error: {e}")
-    logging.info(f"{source} scraped {len(items)} items (fallback)")
+            logging.exception(f"[{source}] fallback error for {link}: {e}")
+    logging.info(f"[{source}] scraped {len(items)} items (fallback)")
     return items
 
 # -------------------------

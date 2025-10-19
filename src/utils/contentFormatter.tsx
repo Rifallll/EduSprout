@@ -38,17 +38,28 @@ const formatText = (text: string) => {
   formattedText = formattedText.replace(/\*(.*?)\*|_(.*?)_/g, '<em>$1$2</em>');
   // Handle links: [text](url)
   formattedText = formattedText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">$1</a>');
+  // Handle standalone URLs that are not already part of a markdown link
+  formattedText = formattedText.replace(/(?<!href=")(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">$1</a>');
   return formattedText;
 };
 
 export const formatScholarshipContent = (content: string | undefined) => {
   if (!content) return null;
 
-  const lines = content.split('\n').map(line => line.trim());
+  const lines = content.split('\n');
   const elements: JSX.Element[] = [];
   let currentList: string[] = [];
   let listType: 'ul' | 'ol' | null = null;
-  let olCounter = 0;
+  let currentParagraph: string[] = [];
+
+  const renderParagraph = () => {
+    if (currentParagraph.length > 0) {
+      elements.push(
+        <p key={`p-${elements.length}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(currentParagraph.join(' ')) }} />
+      );
+      currentParagraph = [];
+    }
+  };
 
   const renderList = () => {
     if (currentList.length > 0) {
@@ -79,79 +90,93 @@ export const formatScholarshipContent = (content: string | undefined) => {
       }
       currentList = [];
       listType = null;
-      olCounter = 0;
     }
   };
 
   lines.forEach((line, index) => {
-    const nextLine = lines[index + 1] || '';
-    const prevLine = lines[index - 1] || '';
+    const trimmedLine = line.trim();
 
-    // Check for main headings (h2) - often short, bold, and followed by a blank line or paragraph
-    const isH2 = line.length > 0 && line.length < 70 &&
-                 (line.match(/^[A-Z][a-zA-Z0-9\s&]+$/) || line.match(/^\d+\.\s+[A-Z][a-zA-Z0-9\s&]+$/)) &&
-                 (nextLine === '' || nextLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-|\d+\.)/));
-
-    // Check for sub-headings (h3) - slightly longer, or specific patterns
-    const isH3 = !isH2 && line.length > 0 && line.length < 100 &&
-                 (line.match(/^[A-Z][a-zA-Z0-9\s&]+:?$/) || line.match(/^\d+\.\s+[A-Z][a-zA-Z0-9\s&]+:?$/)) &&
-                 (nextLine === '' || nextLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-|\d+\.)/));
-
-    // Check for smaller points/titles (h4) - often starts with an icon or is very short
-    const isH4 = !isH2 && !isH3 && line.length > 0 && line.length < 80 &&
-                 line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
-
-
-    if (isH2) {
+    // Skip empty lines, but allow them to break paragraphs/lists
+    if (trimmedLine === '') {
+      renderParagraph();
       renderList();
-      elements.push(
-        <h2 key={`h2-${index}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
-      );
-    } else if (isH3) {
-      renderList();
-      elements.push(
-        <h3 key={`h3-${index}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
-      );
-    } else if (isH4) {
-      renderList();
-      elements.push(
-        <h4 key={`h4-${index}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
-      );
+      return;
     }
-    // Check for unordered list items (starting with specific icons or bullet points)
-    else if (line.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
+
+    // --- Heading Detection ---
+    // H2: Major sections, often standalone, title case, relatively short.
+    // Example: "Persyaratan Beasiswa", "Pendaftaran Beasiswa", "Jadwal Seleksi Beasiswa"
+    const isH2 = trimmedLine.length > 0 && trimmedLine.length < 50 &&
+                 trimmedLine.match(/^[A-Z][a-zA-Z0-9\s&]+$/) &&
+                 !trimmedLine.includes(':') && // Exclude "Baca Juga:"
+                 !trimmedLine.match(/^\d+\./); // Exclude numbered items
+
+    // H3: Sub-sections, can be numbered or a phrase, might end with a colon.
+    // Example: "1. Informasi yang Kami Kumpulkan", "Keamanan Data", "Tips:"
+    const isH3 = !isH2 && trimmedLine.length > 0 && trimmedLine.length < 80 &&
+                 (trimmedLine.match(/^(\d+\.\s+)?([A-Z][a-zA-Z0-9\s&]+:?)$/) || trimmedLine.match(/^[A-Z][a-zA-Z0-9\s&]+:$/));
+
+    // H4: Smaller points or titles, often starts with an icon or is very short.
+    // Example: "💡 1. Siapkan Dokumen dari Jauh-Jauh Hari", "Manfaat:"
+    const isH4 = !isH2 && !isH3 && trimmedLine.length > 0 && trimmedLine.length < 100 &&
+                 trimmedLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆)?\s*([A-Z][a-zA-Z0-9\s&]+):?$/);
+
+    // --- Special Patterns ---
+    const isBacaJuga = trimmedLine.startsWith("Baca Juga:");
+    const isKontak = trimmedLine.startsWith("Kontak:");
+
+    if (isH2 || isH3 || isH4 || isBacaJuga || isKontak) {
+      renderParagraph(); // Render any pending paragraph
+      renderList();     // Render any pending list
+
+      if (isH2) {
+        elements.push(
+          <h2 key={`h2-${index}`} className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        );
+      } else if (isH3) {
+        elements.push(
+          <h3 key={`h3-${index}`} className="text-xl md:text-2xl font-bold mt-6 mb-3 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        );
+      } else if (isH4) {
+        elements.push(
+          <h4 key={`h4-${index}`} className="text-lg font-semibold mt-4 mb-2 text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        );
+      } else if (isBacaJuga) {
+        elements.push(
+          <p key={`bacajuga-${index}`} className="mb-4 text-base text-muted-foreground italic" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        );
+      } else if (isKontak) {
+        elements.push(
+          <p key={`kontak-${index}`} className="mb-2 text-base font-semibold text-foreground" dangerouslySetInnerHTML={{ __html: formatText(trimmedLine) }} />
+        );
+      }
+    }
+    // --- List Item Detection ---
+    else if (trimmedLine.match(/^(✅|💡|📌|🎓|✨|✔️|📝|💬|📚|💼|🧠|🔁|🎯|🚀|🌟|🔥|📣|🤔|💰|👥|⏰|🏠|❤️|⬆️|🤝|🏆|\*|-)\s*(.*)/)) {
+      renderParagraph(); // Render any pending paragraph
       if (listType !== 'ul' && currentList.length > 0) {
-        renderList();
+        renderList(); // Render previous list if type changed
       }
       listType = 'ul';
-      currentList.push(line);
+      currentList.push(trimmedLine);
     }
-    // Check for ordered list items (starting with numbers)
-    else if (line.match(/^\d+\.\s*(.*)/)) {
+    else if (trimmedLine.match(/^\d+\.\s*(.*)/)) {
+      renderParagraph(); // Render any pending paragraph
       if (listType !== 'ol' && currentList.length > 0) {
-        renderList();
+        renderList(); // Render previous list if type changed
       }
       listType = 'ol';
-      currentList.push(line);
-      olCounter++;
+      currentList.push(trimmedLine);
     }
-    // Handle blank lines as separators for paragraphs
-    else if (line === '') {
-      renderList();
-      // If the previous element was not a paragraph or list, and this is a blank line,
-      // we might want to add some vertical space, but usually, paragraph margins handle this.
-      // For now, just ensure lists are rendered.
-    }
-    // Regular paragraph
+    // --- Regular Paragraph ---
     else {
-      renderList();
-      elements.push(
-        <p key={`p-${index}`} className="mb-4 text-base text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(line) }} />
-      );
+      renderList(); // Render any pending list
+      currentParagraph.push(trimmedLine); // Add to current paragraph buffer
     }
   });
 
-  renderList(); // Render any remaining list items
+  renderParagraph(); // Render any remaining paragraph
+  renderList();     // Render any remaining list items
 
   return <>{elements}</>;
 };

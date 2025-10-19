@@ -66,10 +66,7 @@ const ScholarshipListItem: React.FC<ScholarshipListItemProps> = ({
             <span>Mulai: {startDate}</span>
           </div>
         )}
-        <div className="flex items-center">
-          <CalendarDays className="h-3 w-3 mr-1 flex-shrink-0" />
-          <span>Deadline: {deadline}</span>
-        </div>
+        {/* Removed the deadline display */}
       </CardContent>
     </Card>
   );

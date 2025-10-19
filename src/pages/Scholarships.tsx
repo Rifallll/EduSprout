@@ -12,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, X, RotateCcw } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Pagination,
   PaginationContent,
@@ -42,11 +41,6 @@ const fundingTypeOptions = [
   "Pelatihan/Studi Singkat", "Self Funded", "Pendanaan Project", "Internship"
 ];
 
-const monthNames = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-];
-
 const Scholarships = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date-desc");
@@ -56,7 +50,6 @@ const Scholarships = () => {
   const [selectedFundingTypes, setSelectedFundingTypes] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("all");
   const [selectedInstitution, setSelectedInstitution] = useState(""); // For institution search
-  const [selectedMonth, setSelectedMonth] = useState("all"); // Changed default to "all"
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,7 +96,6 @@ const Scholarships = () => {
     setSelectedFundingTypes([]);
     setSelectedCountry("all");
     setSelectedInstitution("");
-    setSelectedMonth("all"); // Reset to "all"
     setCurrentPage(1);
   };
 
@@ -127,37 +119,32 @@ const Scholarships = () => {
       });
     }
 
-    // 2. Filter by Month (deadline month)
-    if (selectedMonth !== "all") {
-      filtered = filtered.filter(s => s.month === selectedMonth);
-    }
-
-    // 3. Filter by Source
+    // 2. Filter by Source
     if (selectedSource !== "all") {
       filtered = filtered.filter(s => s.source === selectedSource);
     }
 
-    // 4. Filter by Category (Lokal/Internasional)
+    // 3. Filter by Category (Lokal/Internasional)
     if (selectedCategory !== "all") {
       filtered = filtered.filter(s => s.category === selectedCategory);
     }
 
-    // 5. Filter by Degree Levels
+    // 4. Filter by Degree Levels
     if (selectedDegreeLevels.length > 0) {
       filtered = filtered.filter(s => s.degreeLevels.some(level => selectedDegreeLevels.includes(level)));
     }
 
-    // 6. Filter by Funding Types
+    // 5. Filter by Funding Types
     if (selectedFundingTypes.length > 0) {
       filtered = filtered.filter(s => s.fundingType && selectedFundingTypes.includes(s.fundingType));
     }
 
-    // 7. Filter by Country
+    // 6. Filter by Country
     if (selectedCountry !== "all") {
       filtered = filtered.filter(s => s.location === selectedCountry);
     }
 
-    // 8. Filter by Institution
+    // 7. Filter by Institution
     if (selectedInstitution) {
       const lowerCaseInstitution = selectedInstitution.toLowerCase();
       filtered = filtered.filter(s => s.institution?.toLowerCase().includes(lowerCaseInstitution));
@@ -184,7 +171,7 @@ const Scholarships = () => {
       return new Date(0);
     };
 
-    // 9. Sort
+    // 8. Sort
     filtered.sort((a, b) => {
       if (sortBy === "date-desc") {
         return parseDate(b.date).getTime() - parseDate(a.date).getTime();
@@ -201,7 +188,7 @@ const Scholarships = () => {
     return filtered;
   }, [
     searchTerm, sortBy, selectedCategory, selectedSource, selectedDegreeLevels,
-    selectedFundingTypes, selectedCountry, selectedInstitution, selectedMonth, allScholarships
+    selectedFundingTypes, selectedCountry, selectedInstitution, allScholarships
   ]);
 
   // Get current scholarships for pagination
@@ -377,25 +364,6 @@ const Scholarships = () => {
           <p className="text-lg text-center lg:text-left text-muted-foreground mb-8">
             Temukan berbagai beasiswa lokal dan internasional untuk mendukung pendidikan Anda.
           </p>
-
-          {/* Monthly Tabs */}
-          <Tabs value={selectedMonth} onValueChange={(value) => {
-            setSelectedMonth(value);
-            setCurrentPage(1);
-          }} className="w-full mb-8">
-            <TabsList className="grid w-full grid-cols-6 md:grid-cols-12 h-auto p-1 bg-muted rounded-lg">
-              <TabsTrigger key="all" value="all" className="text-sm font-medium py-2 px-1 md:px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-colors duration-200">
-                SEMUA
-              </TabsTrigger>
-              {monthNames.map((month) => (
-                <TabsTrigger key={month} value={month} className="text-sm font-medium py-2 px-1 md:px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm transition-colors duration-200">
-                  {month.substring(0, 3).toUpperCase()}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            {/* TabsContent for each month is not strictly needed if filtering is done on the main list */}
-            {/* For now, we'll just use the Tabs component for navigation/filtering */}
-          </Tabs>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {currentScholarships.length > 0 ? (

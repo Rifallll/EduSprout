@@ -48,7 +48,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <GamificationProvider>
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <BrowserRouter basename="/EduSprout" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <Routes>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Index />} />

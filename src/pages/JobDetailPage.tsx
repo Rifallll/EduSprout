@@ -4,12 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Briefcase, Building2, MapPin, CalendarDays, DollarSign, GraduationCap, Lightbulb, Zap, CheckCircle, Star, Clock, Home, Users, TrendingUp, MessageCircleQuestion } from "lucide-react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"; // Import Carousel components
-import JobCard from "@/components/JobCard"; // Re-use JobCard for related jobs
+import { ArrowLeft, Briefcase, Building2, MapPin, CalendarDays, DollarSign, GraduationCap, Lightbulb, Zap, CheckCircle, Star, Clock, Home, Users, TrendingUp, MessageCircleQuestion, Bookmark, Share2 } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import JobCard from "@/components/JobCard";
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
+import { useBookmarks, BookmarkedItem } from "@/context/BookmarkContext";
+import { useGamification } from "@/context/GamificationContext";
+import { useApplications } from "@/context/ApplicationContext";
+import { toast } from "sonner";
 
-// Define JobItem type to match the structure in scrapedJobsFromDB.json
+// Define JobItem type (ensure consistent)
 interface JobItem {
   id: string;
   source: string;
@@ -31,287 +35,296 @@ interface JobItem {
   companyDescription?: string;
   companyIndustry?: string;
   companySize?: string;
-  applicationQuestions?: { question: string; type: string; options?: string[] }[]; // Changed 'type' to string
+  applicationQuestions?: { question: string; type: string; options?: string[] }[];
   salaryMatch?: string;
   applicantCount?: string;
   skillMatch?: string;
-  companyLogoUrl?: string; // Added companyLogoUrl
+  companyLogoUrl?: string;
 }
 
 const JobDetailPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
-  const job: JobItem | undefined = scrapedJobsFromDB.find((j) => j.id === jobId);
+  const job: JobItem | undefined = scrapedJobsFromDB.find((j) => j.id === jobId) as JobItem | undefined;
+  const { isBookmarked, toggleBookmark } = useBookmarks();
+  const { checkBadge, addXp } = useGamification();
+  const { addApplication, hasApplied } = useApplications();
 
   if (!job) {
     return (
-      <div className="container py-12 text-center">
-        <h1 className="text-3xl font-bold mb-4">Lowongan Tidak Ditemukan</h1>
-        <p className="text-muted-foreground mb-6">
+      <div className="container py-20 text-center min-h-[60vh] flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-bold mb-4 gradient-text">Lowongan Tidak Ditemukan</h1>
+        <p className="text-muted-foreground mb-8 text-lg">
           Maaf, lowongan yang Anda cari tidak tersedia atau telah dihapus.
         </p>
         <Link to="/jobs">
-          <Button>Kembali ke Daftar Lowongan</Button>
+          <Button size="lg">Kembali ke Daftar Lowongan</Button>
         </Link>
       </div>
     );
   }
 
-  // Filter for related jobs (excluding the current job)
-  // For demonstration, we'll just pick a few other jobs. In a real app, this would be based on actual relevance.
-  const relatedJobs = scrapedJobsFromDB.filter(j => j.id !== jobId).slice(0, 5); // Get up to 5 related jobs
+  const isSaved = isBookmarked(job.id, 'job');
+
+  const handleBookmark = () => {
+    const item: BookmarkedItem = {
+      id: job.id,
+      type: 'job',
+      title: job.title,
+      subtitle: job.company,
+      location: job.location,
+      link: `/jobs/${job.id}`,
+      date: job.date_posted,
+      data: job
+    };
+    toggleBookmark(item);
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link disalin!", { description: "Bagikan lowongan ini ke temanmu." });
+  };
+
+  const relatedJobs = scrapedJobsFromDB.filter(j => j.id !== jobId).slice(0, 5);
 
   return (
-    <div className="container py-12">
-      <div className="mb-8">
-        <Link to="/jobs" className="inline-flex items-center text-primary hover:underline">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Kembali ke Lowongan
-        </Link>
-      </div>
+    <div className="min-h-screen bg-background pb-20 pt-24">
+      {/* Premium Header / Hero */}
+      <div className="relative border-b border-white/5 bg-white/[0.02] pb-12 mb-12">
+        <div className="container px-4 sm:px-6">
+          <div className="mb-8">
+            <Link to="/jobs" className="inline-flex items-center text-zinc-400 hover:text-white transition-colors text-sm font-medium hover:-translate-x-1 duration-200">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Kembali ke Lowongan
+            </Link>
+          </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Job Detail Card */}
-        <div className="lg:col-span-2">
-          <Card className="shadow-lg">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-3xl font-bold mb-2">{job.title}</CardTitle>
-              <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground text-base">
-                {job.company && (
-                  <span className="flex items-center">
-                    {job.companyLogoUrl && <img src={job.companyLogoUrl} alt={job.company} className="h-5 w-5 mr-2 rounded-sm object-contain" />}
-                    {!job.companyLogoUrl && <Building2 className="h-4 w-4 mr-1" />}
-                    {job.company}
-                  </span>
-                )}
-                {job.location && (
-                  <span className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-1" /> {job.location}
-                  </span>
-                )}
-                {job.date_posted && (
-                  <span className="flex items-center">
-                    <CalendarDays className="h-4 w-4 mr-1" /> Posted {job.date_posted}
-                  </span>
-                )}
-              </CardDescription>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {job.isPremium && <Badge className="bg-yellow-500 text-white hover:bg-yellow-600"><Star className="h-3 w-3 mr-1" /> Premium</Badge>}
-                {job.isHot && <Badge className="bg-red-500 text-white hover:bg-red-600"><Zap className="h-3 w-3 mr-1" /> HOT</Badge>}
-                {job.isActiveRecruiting && <Badge className="bg-green-500 text-white hover:bg-green-600"><CheckCircle className="h-3 w-3 mr-1" /> Aktif Merekrut</Badge>}
-                <Badge variant="secondary" className="capitalize bg-muted text-muted-foreground">
-                  Sumber: {job.source.replace(/-/g, " ")}
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            <div className="w-24 h-24 md:w-32 md:h-32 bg-white rounded-2xl flex items-center justify-center p-4 shadow-2xl shadow-violet-500/10 border border-white/10 flex-shrink-0">
+              {job.companyLogoUrl ? (
+                <img src={job.companyLogoUrl} alt={job.company} className="w-full h-full object-contain" />
+              ) : (
+                <Building2 className="w-12 h-12 text-zinc-800" />
+              )}
+            </div>
+
+            <div className="flex-grow space-y-4">
+              <div className="flex flex-wrap gap-3">
+                {job.isPremium && <Badge className="bg-amber-400 text-black hover:bg-amber-500 font-bold"><Star className="h-3 w-3 mr-1 fill-black" /> Premium</Badge>}
+                {job.isHot && <Badge className="bg-red-500 text-white hover:bg-red-600 font-bold"><Zap className="h-3 w-3 mr-1 fill-current" /> HOT</Badge>}
+                <Badge variant="outline" className="border-violet-500/30 text-violet-300 bg-violet-500/10">
+                  {job.jobType || "Full Time"}
                 </Badge>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <Separator />
 
-              {/* Quick Info Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                {job.salaryRange && (
-                  <div className="flex items-center p-3 bg-muted rounded-md">
-                    <DollarSign className="h-5 w-5 mr-3 text-primary" />
-                    <div>
-                      <p className="font-medium">Gaji</p>
-                      <p className="text-muted-foreground">{job.salaryRange}</p>
-                    </div>
-                  </div>
-                )}
-                {job.experience && (
-                  <div className="flex items-center p-3 bg-muted rounded-md">
-                    <Briefcase className="h-5 w-5 mr-3 text-primary" />
-                    <div>
-                      <p className="font-medium">Pengalaman</p>
-                      <p className="text-muted-foreground">{job.experience}</p>
-                    </div>
-                  </div>
-                )}
-                {job.education && (
-                  <div className="flex items-center p-3 bg-muted rounded-md">
-                    <GraduationCap className="h-5 w-5 mr-3 text-primary" />
-                    <div>
-                      <p className="font-medium">Pendidikan</p>
-                      <p className="text-muted-foreground">{job.education}</p>
-                    </div>
-                  </div>
-                )}
-                {job.jobType && (
-                  <div className="flex items-center p-3 bg-muted rounded-md">
-                    <Clock className="h-5 w-5 mr-3 text-primary" />
-                    <div>
-                      <p className="font-medium">Tipe Pekerjaan</p>
-                      <p className="text-muted-foreground">{job.jobType}</p>
-                    </div>
-                  </div>
-                )}
-                {job.workPolicy && (
-                  <div className="flex items-center p-3 bg-muted rounded-md">
-                    <Home className="h-5 w-5 mr-3 text-primary" />
-                    <div>
-                      <p className="font-medium">Kebijakan Kerja</p>
-                      <p className="text-muted-foreground">{job.workPolicy}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                {job.title}
+              </h1>
 
-              <Separator />
-
-              {/* Detailed Job Description */}
-              <div className="prose dark:prose-invert max-w-none">
-                <h3 className="text-xl font-semibold mb-3">Deskripsi Pekerjaan</h3>
-                {job.descriptionDetail ? (
-                  job.descriptionDetail.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-2">{paragraph.trim()}</p>
-                  ))
-                ) : (
-                  <p>
-                    Deskripsi pekerjaan untuk posisi {job.title} di {job.company || "perusahaan ini"} tidak tersedia secara detail.
-                    Silakan kunjungi tautan lamaran asli untuk informasi lebih lanjut.
-                  </p>
-                )}
-              </div>
-
-              {/* Qualifications */}
-              <div className="prose dark:prose-invert max-w-none">
-                <h3 className="text-xl font-semibold mt-6 mb-3">Kualifikasi</h3>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Pendidikan minimal {job.education || "S1"} di bidang terkait.</li>
-                  <li>Pengalaman kerja {job.experience || "relevan"} (jika ada).</li>
-                  <li>Kemampuan komunikasi yang baik.</li>
-                  <li>Mampu bekerja secara mandiri maupun dalam tim.</li>
-                  {job.skills && job.skills.length > 0 && (
-                    <li>
-                      Keterampilan: {job.skills.map(skill => <Badge key={skill} variant="secondary" className="mr-1 mb-1">{skill}</Badge>)}
-                    </li>
-                  )}
-                  <li>Detail kualifikasi lebih lanjut tersedia di tautan lamaran.</li>
-                </ul>
-              </div>
-
-              <div className="pt-6 border-t mt-6">
-                <a href={job.link} target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="w-full">
-                    <Briefcase className="mr-2 h-5 w-5" /> Lamar Sekarang
-                  </Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Sidebar for additional info */}
-        <div className="lg:col-span-1 space-y-8">
-          {/* Job Suitability / Match */}
-          {(job.salaryMatch || job.applicantCount || job.skillMatch) && (
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold">Lihat peluang & kecocokan kamu</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-muted-foreground">
-                {job.salaryMatch && (
-                  <div className="flex items-center">
-                    <DollarSign className="h-4 w-4 mr-2 text-primary" />
-                    <span>Kesesuaian gaji: {job.salaryMatch}</span>
-                  </div>
-                )}
-                {job.applicantCount && (
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-2 text-primary" />
-                    <span>{job.applicantCount}</span>
-                  </div>
-                )}
-                {job.skillMatch && (
-                  <div className="flex items-center">
-                    <Lightbulb className="h-4 w-4 mr-2 text-primary" />
-                    <span>{job.skillMatch}</span>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Application Questions */}
-          {job.applicationQuestions && job.applicationQuestions.length > 0 && (
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold">Pertanyaan dari perusahaan</CardTitle>
-                <CardDescription>Lamaran kamu akan mencakup pertanyaan-pertanyaan berikut:</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-muted-foreground">
-                {job.applicationQuestions.map((q, index) => (
-                  <div key={index} className="flex items-start">
-                    <MessageCircleQuestion className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" />
-                    <span>{q.question}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Company Profile */}
-          {job.companyDescription && (
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold">Profil perusahaan</CardTitle>
+              <div className="flex flex-wrap items-center gap-6 text-zinc-400 text-base">
                 {job.company && (
-                  <CardDescription className="flex items-center gap-2">
-                    {job.companyLogoUrl && <img src={job.companyLogoUrl} alt={job.company} className="h-6 w-6 rounded-full object-contain" />}
-                    <span className="font-medium text-foreground">{job.company}</span>
-                    {job.companyIndustry && <Badge variant="secondary">{job.companyIndustry}</Badge>}
-                  </CardDescription>
+                  <div className="flex items-center hover:text-white transition-colors">
+                    <Building2 className="mr-2 h-5 w-5 text-violet-400" />
+                    <span className="font-semibold">{job.company}</span>
+                  </div>
                 )}
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                {job.companyDescription.split('\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph.trim()}</p>
-                ))}
-                {job.companySize && <p>Ukuran Perusahaan: {job.companySize}</p>}
-                <Button variant="link" className="p-0 h-auto">Tampilkan selengkapnya &rarr;</Button>
-              </CardContent>
-            </Card>
-          )}
+                {job.location && (
+                  <div className="flex items-center">
+                    <MapPin className="mr-2 h-5 w-5 text-zinc-500" />
+                    <span>{job.location}</span>
+                  </div>
+                )}
+                {job.date_posted && (
+                  <div className="flex items-center">
+                    <CalendarDays className="mr-2 h-5 w-5 text-zinc-500" />
+                    <span>{job.date_posted}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex gap-3 w-full md:w-auto">
+              {/* Bookmark Button */}
+              <Button
+                size="icon"
+                variant="outline"
+                className={`h-12 w-12 rounded-xl border-white/10 ${isSaved ? 'bg-violet-500/20 text-violet-400 border-violet-500/50' : 'bg-white/5 hover:bg-white/10 text-white'}`}
+                onClick={handleBookmark}
+              >
+                <Bookmark className={`h-5 w-5 ${isSaved ? 'fill-current' : ''}`} />
+              </Button>
+
+              {/* Share Button */}
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-12 w-12 rounded-xl border-white/10 bg-white/5 hover:bg-white/10 text-white"
+                onClick={handleShare}
+              >
+                <Share2 className="h-5 w-5" />
+              </Button>
+
+              {/* Apply Button with Gamification Trigger */}
+              <a
+                href={job.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-grow md:flex-grow-0"
+                onClick={(e) => {
+                  // Always trigger gamification & history, but don't prevent default (let them go to the link)
+                  // If already applied, we just let them go to the link again without duplicating history (handled by context)
+                  if (!hasApplied(job.id)) {
+                    addApplication(job);
+                    checkBadge("apply_job");
+                    addXp(10, "Melamar Pekerjaan");
+                  }
+                }}
+              >
+                <Button
+                  size="lg"
+                  className={`w-full h-12 rounded-xl px-8 font-bold transition-all shadow-lg ${hasApplied(job.id) ? 'bg-green-500 hover:bg-green-600 text-white shadow-green-500/30' : 'bg-white text-black hover:bg-violet-400 hover:text-white hover:shadow-violet-500/30'}`}
+                >
+                  {hasApplied(job.id) ? (
+                    <>Lamaran Terkirim <CheckCircle className="ml-2 h-5 w-5" /></>
+                  ) : (
+                    <>Lamar Sekarang <Briefcase className="ml-2 h-5 w-5" /></>
+                  )}
+                </Button>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Related Jobs Section (Carousel) */}
-      {relatedJobs.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold mb-8 text-center lg:text-left">Lowongan Serupa</h2>
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {relatedJobs.map((relatedJob) => (
-                <CarouselItem key={relatedJob.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <JobCard
-                    key={relatedJob.id}
-                    id={relatedJob.id}
-                    title={relatedJob.title}
-                    company={relatedJob.company}
-                    location={relatedJob.location}
-                    source={relatedJob.source}
-                    date_posted={relatedJob.date_posted}
-                    link={`/jobs/${relatedJob.id}`} // Link to its own detail page
-                    salaryRange={relatedJob.salaryRange}
-                    experience={relatedJob.experience}
-                    education={relatedJob.education}
-                    skills={relatedJob.skills}
-                    isPremium={relatedJob.isPremium}
-                    isHot={relatedJob.isHot}
-                    isActiveRecruiting={relatedJob.isActiveRecruiting}
-                    companyLogoUrl={relatedJob.companyLogoUrl}
-                  />
-                </CarouselItem>
+      <div className="container px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-10">
+            {/* Quick Info Grid - Glass Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { icon: DollarSign, label: "Gaji", value: job.salaryRange || "Kompetitif" },
+                { icon: Briefcase, label: "Pengalaman", value: job.experience || "Sesuai level" },
+                { icon: GraduationCap, label: "Pendidikan", value: job.education || "Semua jurusan" },
+              ].map((item, i) => (
+                <div key={i} className="bg-white/[0.02] border border-white/5 p-4 rounded-2xl flex items-center space-x-4 hover:bg-white/[0.04] transition-colors">
+                  <div className="p-3 bg-white/5 rounded-xl text-violet-400">
+                    <item.icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{item.label}</p>
+                    <p className="text-sm font-semibold text-white">{item.value}</p>
+                  </div>
+                </div>
               ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </section>
-      )}
+            </div>
+
+            <Separator className="bg-white/5" />
+
+            <div className="prose prose-invert max-w-none prose-lg">
+              <h3 className="text-2xl font-bold text-white mb-6">Deskripsi Pekerjaan</h3>
+              <div className="text-zinc-300 leading-relaxed space-y-4">
+                {job.descriptionDetail ? (
+                  job.descriptionDetail.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph.trim()}</p>
+                  ))
+                ) : (
+                  <p>Informasi lengkap mengenai posisi ini dapat dilihat pada website resmi perusahaan.</p>
+                )}
+              </div>
+
+              <h3 className="text-2xl font-bold text-white mt-10 mb-6">Kualifikasi</h3>
+              <ul className="text-zinc-300 space-y-2">
+                {job.skills?.map((skill, i) => (
+                  <li key={i} className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-violet-500 mr-3 flex-shrink-0" />
+                    {skill}
+                  </li>
+                ))}
+                {!job.skills && <li>Lihat kualifikasi lengkap di website pendaftaran.</li>}
+              </ul>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-8">
+
+            {/* AI Insights Card */}
+            {(job.salaryMatch || job.applicantCount || job.skillMatch) && (
+              <div className="bg-gradient-to-b from-violet-900/20 to-transparent border border-violet-500/20 rounded-3xl p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center">
+                  <Zap className="h-5 w-5 text-violet-400 mr-2" /> AI Insights
+                </h3>
+                <div className="space-y-4">
+                  {job.applicantCount && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-zinc-400">Pelamar</span>
+                      <span className="font-bold text-white">{job.applicantCount}</span>
+                    </div>
+                  )}
+                  {job.salaryMatch && (
+                    <div>
+                      <span className="text-zinc-400 text-xs uppercase font-bold">Kesesuaian Gaji</span>
+                      <p className="text-white font-medium">{job.salaryMatch}</p>
+                    </div>
+                  )}
+                  <div className="p-3 bg-violet-500/10 rounded-xl border border-violet-500/20">
+                    <p className="text-xs text-violet-200">
+                      <strong>Tips:</strong> Lengkapi profilmu untuk meningkatkan peluang lolos seleksi hingga 40%.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Company Card */}
+            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-6">
+              <h3 className="text-lg font-bold text-white mb-6">Tentang Perusahaan</h3>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center p-2">
+                  {job.companyLogoUrl ? <img src={job.companyLogoUrl} alt={`${job.company} logo`} className="w-full h-full object-contain" /> : <Building2 className="text-black" />}
+                </div>
+                <div>
+                  <p className="font-bold text-white text-lg">{job.company}</p>
+                  {job.companyIndustry && <p className="text-sm text-zinc-500">{job.companyIndustry}</p>}
+                </div>
+              </div>
+              <p className="text-sm text-zinc-400 leading-relaxed mb-6 line-clamp-4">
+                {job.companyDescription || "Perusahaan ini bergerak di bidang inovasi dan teknologi..."}
+              </p>
+              <Button variant="outline" className="w-full border-white/10 hover:bg-white/5 text-zinc-300">
+                Lihat Profil Perusahaan
+              </Button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Similar Jobs */}
+        {relatedJobs.length > 0 && (
+          <div className="mt-20 border-t border-white/5 pt-20">
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-3xl font-bold text-white">Lowongan Serupa</h2>
+              <Link to="/jobs" className="text-violet-400 hover:text-violet-300 font-bold">Lihat Semua</Link>
+            </div>
+            <Carousel opts={{ align: "start" }} className="w-full">
+              <CarouselContent className="-ml-4">
+                {relatedJobs.map((relatedJob) => (
+                  <CarouselItem key={relatedJob.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    {/* Pass internal link to cards */}
+                    <JobCard
+                      {...relatedJob}
+                      link={`/jobs/${relatedJob.id}`}
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 };

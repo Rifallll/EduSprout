@@ -43,5 +43,140 @@
     "date": "20 Desember 2024",
     "location": "Bali",
     "link": "/events/volunteering-pantai"
+  },
+  {
+    "id": "e6",
+    "title": "Bootcamp Full-Stack Web Development",
+    "description": "Program intensif 3 bulan untuk menjadi full-stack developer profesional.",
+    "category": "Workshop",
+    "date": "15 Januari 2025",
+    "location": "Jakarta",
+    "link": "/events/bootcamp-fullstack"
+  },
+  {
+    "id": "e7",
+    "title": "Hackathon Nasional: Solusi Digital untuk UMKM",
+    "description": "Kompetisi 48 jam untuk menciptakan solusi digital yang memberdayakan UMKM Indonesia.",
+    "category": "Lomba",
+    "date": "05 Februari 2025",
+    "location": "Surabaya",
+    "link": "/events/hackathon-umkm"
+  },
+  {
+    "id": "e8",
+    "title": "Webinar: Strategi Personal Branding di Era Digital",
+    "description": "Pelajari cara membangun personal brand yang kuat di media sosial dan platform digital.",
+    "category": "Webinar",
+    "date": "18 Januari 2025",
+    "location": "Online",
+    "link": "/events/webinar-personal-branding"
+  },
+  {
+    "id": "e9",
+    "title": "Workshop Data Science dengan Python",
+    "description": "Belajar analisis data dan machine learning menggunakan Python dari nol.",
+    "category": "Workshop",
+    "date": "22 Januari 2025",
+    "location": "Online",
+    "link": "/events/workshop-data-science"
+  },
+  {
+    "id": "e10",
+    "title": "Seminar Kewirausahaan: Dari Ide ke Startup",
+    "description": "Dengarkan kisah inspiratif founder startup Indonesia yang sukses.",
+    "category": "Seminar",
+    "date": "28 Januari 2025",
+    "location": "Yogyakarta",
+    "link": "/events/seminar-startup"
+  },
+  {
+    "id": "e11",
+    "title": "Lomba Essay Pendidikan Nasional 2025",
+    "description": "Tuangkan ide dan gagasan Anda tentang masa depan pendidikan Indonesia.",
+    "category": "Lomba",
+    "date": "10 Februari 2025",
+    "location": "Online",
+    "link": "/events/lomba-essay"
+  },
+  {
+    "id": "e12",
+    "title": "Volunteering: Mengajar Anak di Pedalaman",
+    "description": "Program relawan mengajar untuk anak-anak di daerah terpencil.",
+    "category": "Volunteering",
+    "date": "01 Maret 2025",
+    "location": "Kalimantan",
+    "link": "/events/volunteering-mengajar"
+  },
+  {
+    "id": "e13",
+    "title": "Workshop Mobile App Development (Flutter)",
+    "description": "Bangun aplikasi mobile cross-platform dengan Flutter dalam 1 hari.",
+    "category": "Workshop",
+    "date": "14 Februari 2025",
+    "location": "Bandung",
+    "link": "/events/workshop-flutter"
+  },
+  {
+    "id": "e14",
+    "title": "Webinar: Mempersiapkan Karir di Industri Tech",
+    "description": "Tips dan strategi untuk memulai karir di perusahaan teknologi global.",
+    "category": "Webinar",
+    "date": "20 Februari 2025",
+    "location": "Online",
+    "link": "/events/webinar-karir-tech"
+  },
+  {
+    "id": "e15",
+    "title": "Seminar Kesehatan Mental Mahasiswa",
+    "description": "Pentingnya menjaga kesehatan mental di tengah tuntutan akademik.",
+    "category": "Seminar",
+    "date": "25 Februari 2025",
+    "location": "Semarang",
+    "link": "/events/seminar-mental-health"
+  },
+  {
+    "id": "e16",
+    "title": "Lomba Video Kreatif: Indonesia Merdeka",
+    "description": "Ciptakan video kreatif yang menginspirasi tentang Indonesia.",
+    "category": "Lomba",
+    "date": "15 Maret 2025",
+    "location": "Online",
+    "link": "/events/lomba-video"
+  },
+  {
+    "id": "e17",
+    "title": "Workshop: Public Speaking & Presentation Skills",
+    "description": "Kuasai seni berbicara di depan umum dengan percaya diri.",
+    "category": "Workshop",
+    "date": "08 Maret 2025",
+    "location": "Jakarta",
+    "link": "/events/workshop-public-speaking"
+  },
+  {
+    "id": "e18",
+    "title": "Webinar: Cyber Security Awareness",
+    "description": "Lindungi diri Anda dari ancaman keamanan siber di dunia digital.",
+    "category": "Webinar",
+    "date": "12 Maret 2025",
+    "location": "Online",
+    "link": "/events/webinar-cybersecurity"
+  },
+  {
+    "id": "e19",
+    "title": "Volunteering: Donor Darah Mahasiswa",
+    "description": "Selamatkan nyawa dengan menjadi pendonor darah sukarela.",
+    "category": "Volunteering",
+    "date": "22 Maret 2025",
+    "location": "Medan",
+    "link": "/events/volunteering-donor-darah"
+  },
+  {
+    "id": "e20",
+    "title": "Seminar: Masa Depan Artificial Intelligence",
+    "description": "Eksplorasi tren dan peluang karir di bidang AI dan machine learning.",
+    "category": "Seminar",
+    "date": "30 Maret 2025",
+    "location": "Online",
+    "link": "/events/seminar-ai"
   }
 ]

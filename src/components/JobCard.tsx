@@ -41,17 +41,17 @@ const JobCard: React.FC<JobCardProps> = ({
   companyLogoUrl,
 }) => {
   return (
-    <Card className="group flex flex-col h-full border border-border rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"> {/* Added group class for hover effects */}
-      <CardHeader className="pb-2 px-6 pt-6"> {/* Adjusted padding */}
+    <Card className="group flex flex-col h-full glass border-white/5 rounded-2xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.1)] hover:-translate-y-1 hover:border-violet-400/30 bg-transparent">
+      <CardHeader className="pb-2 px-6 pt-6">
         <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl font-bold leading-tight line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">{title}</CardTitle> {/* Ensured text-foreground */}
+          <CardTitle className="text-xl font-bold leading-tight line-clamp-2 text-white group-hover:text-violet-400 transition-colors duration-200">{title}</CardTitle>
           {salaryRange && (
-            <Badge className="bg-primary/10 text-primary font-semibold whitespace-nowrap px-3 py-1"> {/* Adjusted badge styling */}
+            <Badge className="bg-white/5 text-violet-300 border-violet-400/20 font-semibold whitespace-nowrap px-3 py-1">
               {salaryRange}
             </Badge>
           )}
         </div>
-        
+
         {/* Badges for Experience, Education, Skills */}
         <div className="flex flex-wrap gap-2 mb-3">
           {experience && <Badge variant="secondary" className="bg-muted text-muted-foreground">{experience}</Badge>}
@@ -62,7 +62,7 @@ const JobCard: React.FC<JobCardProps> = ({
         </div>
 
         {/* Company, Location, Date Posted */}
-        <CardDescription className="space-y-1 text-sm text-muted-foreground">
+        <div className="space-y-1 text-sm text-muted-foreground">
           {company && (
             <div className="flex items-center">
               {companyLogoUrl && <img src={companyLogoUrl} alt={company} className="h-5 w-5 mr-2 rounded-sm object-contain" />}
@@ -82,15 +82,15 @@ const JobCard: React.FC<JobCardProps> = ({
               <span>{date_posted}</span>
             </div>
           )}
-        </CardDescription>
+        </div>
       </CardHeader>
-      
+
       <CardContent className="pt-2 pb-4 px-6 flex flex-wrap gap-2 items-center"> {/* Adjusted padding */}
         {/* Source Badge */}
         <Badge variant="secondary" className="capitalize bg-muted text-muted-foreground">
           {source.replace(/-/g, " ")} {/* Format source name */}
         </Badge>
-        
+
         {/* Status Badges */}
         {isPremium && <Badge className="bg-yellow-500 text-white hover:bg-yellow-600"><Star className="h-3 w-3 mr-1" /> Premium</Badge>}
         {isHot && (
@@ -104,7 +104,7 @@ const JobCard: React.FC<JobCardProps> = ({
           </Badge>
         )}
       </CardContent>
-      
+
       <CardFooter className="pt-0 px-6 pb-6"> {/* Adjusted padding */}
         <Link to={link} className="w-full">
           <Button variant="secondary" className="w-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground"> {/* Changed to variant="secondary" and adjusted hover */}

@@ -10,10 +10,9 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, X, RotateCcw } from "lucide-react";
+import { Search, MapPin, X, RotateCcw, Briefcase, Filter } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -22,10 +21,10 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "@/components/ui/pagination"; // Import pagination components
+} from "@/components/ui/pagination";
 import scrapedJobsFromDB from "@/data/scrapedJobsFromDB.json";
 
-// Define JobItem type to include new fields for better type safety
+// Define JobItem type
 interface JobItem {
   id: string;
   source: string;
@@ -41,8 +40,8 @@ interface JobItem {
   isPremium?: boolean;
   isHot?: boolean;
   isActiveRecruiting?: boolean;
-  jobType?: string; // New field
-  workPolicy?: string; // New field
+  jobType?: string;
+  workPolicy?: string;
   descriptionDetail?: string;
   companyDescription?: string;
   companyIndustry?: string;
@@ -62,10 +61,10 @@ const Jobs = () => {
   const [workPolicies, setWorkPolicies] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [allJobs, setAllJobs] = useState<JobItem[]>([]);
-  
+
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(5); // Changed from 12 to 5 to ensure more pages are visible
+  const [jobsPerPage] = useState(6);
 
   useEffect(() => {
     const userPostedJobs: JobItem[] = JSON.parse(localStorage.getItem("userPostedJobs") || "[]");
@@ -87,14 +86,14 @@ const Jobs = () => {
     setJobTypes((prev) =>
       checked ? [...prev, type] : prev.filter((t) => t !== type)
     );
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
   const handleWorkPolicyChange = (policy: string, checked: boolean) => {
     setWorkPolicies((prev) =>
       checked ? [...prev, policy] : prev.filter((p) => p !== policy)
     );
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
   const handleResetFilters = () => {
@@ -104,7 +103,7 @@ const Jobs = () => {
     setJobTypes([]);
     setWorkPolicies([]);
     setSelectedLocation("all");
-    setCurrentPage(1); // Reset to first page on filter reset
+    setCurrentPage(1);
   };
 
   const filteredAndSortedJobs = useMemo(() => {
@@ -161,22 +160,17 @@ const Jobs = () => {
     return filtered;
   }, [searchTerm, sortBy, selectedSource, selectedLocation, jobTypes, workPolicies, allJobs]);
 
-  // Get current jobs for pagination
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredAndSortedJobs.slice(indexOfFirstJob, indexOfLastJob);
-
-  // Calculate total pages
   const totalPages = Math.ceil(filteredAndSortedJobs.length / jobsPerPage);
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // Generate page numbers for pagination component
   const pageNumbers = [];
-  const maxPageButtons = 5; // Max number of page buttons to show
+  const maxPageButtons = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-  let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+  const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
 
   if (endPage - startPage + 1 < maxPageButtons) {
     startPage = Math.max(1, endPage - maxPageButtons + 1);
@@ -187,191 +181,148 @@ const Jobs = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-lg rounded-b-lg">
-        <div className="container flex flex-col md:flex-row items-center gap-4">
-          <div className="relative flex-grow w-full md:w-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Cari Nama Pekerjaan, Skill, dan Perusahaan"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1); // Reset to first page on search change
-              }}
-              className="pl-9 pr-8 w-full"
-            />
-            {searchTerm && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-                onClick={() => {
-                  setSearchTerm("");
+    <div className="min-h-screen bg-background bg-pattern text-foreground selection:bg-violet-400/30 selection:text-white overflow-hidden">
+      {/* Header Section */}
+      <div className="pt-32 pb-12 overflow-hidden relative">
+        <div className="container px-4 relative z-10">
+          <div className="text-center max-w-4xl mx-auto mb-10">
+            <h1 className="display-title mb-6 reveal">
+              Peluang <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-500 to-violet-400 animate-pulse-slow">Karir</span>
+            </h1>
+            <p className="text-xl text-zinc-400 font-light reveal leading-relaxed">
+              Temukan lowongan kerja, magang, dan freelance terbaik untuk mengawali perjalanan profesionalmu.
+            </p>
+          </div>
+
+          {/* Floating Search Bar */}
+          <div className="max-w-4xl mx-auto glass p-3 rounded-2xl flex flex-col md:flex-row gap-3 shadow-2xl shadow-black/50 reveal delay-100">
+            <div className="relative flex-grow">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500" />
+              <Input
+                type="text"
+                placeholder="Cari posisi, skill, atau perusahaan..."
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
+                className="pl-12 h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-violet-400/50 rounded-xl"
+              />
+            </div>
+            <div className="relative md:w-[250px]">
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-500" />
+              <Select onValueChange={(value) => {
+                setSelectedLocation(value);
+                setCurrentPage(1);
+              }} defaultValue="all">
+                <SelectTrigger className="pl-12 h-12 bg-white/5 border-white/10 text-white rounded-xl focus:ring-violet-400/50">
+                  <SelectValue placeholder="Semua Lokasi" />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-900 border-white/10 text-white max-h-[300px]">
+                  <SelectItem value="all">Semua Lokasi</SelectItem>
+                  {allLocations.map(loc => (
+                    <SelectItem key={loc} value={loc} className="focus:bg-white/10 focus:text-violet-400 cursor-pointer">{loc}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Button className="h-12 px-8 bg-white text-black hover:bg-violet-400 hover:text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-violet-400/20">
+              Cari
+            </Button>
           </div>
-          <div className="relative w-full md:w-[200px]">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Select onValueChange={(value) => {
-              setSelectedLocation(value);
-              setCurrentPage(1); // Reset to first page on location change
-            }} defaultValue="all">
-              <SelectTrigger className="pl-9 w-full">
-                <SelectValue placeholder="Semua Lokasi" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Lokasi</SelectItem>
-                {allLocations.map(loc => (
-                  <SelectItem key={loc} value={loc}>{loc}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button className="w-full md:w-auto">Cari</Button>
         </div>
       </div>
 
-      <div className="container flex flex-col lg:flex-row gap-8 py-8">
-        {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-lg border border-border lg:sticky lg:top-[120px] self-start">
-          <h2 className="text-2xl font-bold mb-6">Filter Lowongan</h2>
+      <div className="container px-4 py-8 flex flex-col lg:flex-row gap-8">
+        {/* Sidebar Filters */}
+        <aside className="w-full lg:w-1/4 self-start space-y-8">
+          <div className="glass-dark p-6 rounded-3xl border border-white/5 sticky top-28">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold flex items-center gap-2 text-white">
+                <Filter className="w-4 h-4 text-violet-400" /> Filter
+              </h2>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleResetFilters}
+                className="text-zinc-400 hover:text-violet-400 hover:bg-transparent h-auto p-0"
+              >
+                <RotateCcw className="h-3 w-3 mr-1" /> Reset
+              </Button>
+            </div>
 
-          {/* QR Code Section */}
-          <div className="mb-8 p-4 bg-muted rounded-lg border border-border text-center shadow-sm">
-            <img src="/placeholder.svg" alt="QR Code" className="w-24 h-24 mx-auto mb-3" />
-            <p className="text-sm font-semibold text-foreground mb-1">Dapatkan notifikasi lokermu secara langsung di Aplikasi EduSprout</p>
-            <p className="text-xs text-muted-foreground">Scan kode QR untuk download</p>
+            <Accordion type="multiple" defaultValue={["prioritas", "tipe", "kebijakan"]} className="space-y-4">
+              <AccordionItem value="prioritas" className="border-white/5">
+                <AccordionTrigger className="text-white hover:text-violet-400 hover:no-underline py-3">Prioritas</AccordionTrigger>
+                <AccordionContent className="pt-2 flex gap-2">
+                  <Button
+                    variant={sortBy === "date-desc" ? "default" : "outline"}
+                    onClick={() => { setSortBy("date-desc"); setCurrentPage(1); }}
+                    className={`flex-grow h-9 text-xs ${sortBy === "date-desc" ? "bg-violet-400 text-white border-violet-400" : "bg-transparent border-white/10 text-zinc-400 hover:text-white"}`}
+                  >
+                    Terbaru
+                  </Button>
+                  <Button
+                    variant={sortBy === "title-asc" ? "default" : "outline"}
+                    onClick={() => { setSortBy("title-asc"); setCurrentPage(1); }}
+                    className={`flex-grow h-9 text-xs ${sortBy === "title-asc" ? "bg-violet-400 text-white border-violet-400" : "bg-transparent border-white/10 text-zinc-400 hover:text-white"}`}
+                  >
+                    A-Z
+                  </Button>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="tipe" className="border-white/5">
+                <AccordionTrigger className="text-white hover:text-violet-400 hover:no-underline py-3">Tipe Pekerjaan</AccordionTrigger>
+                <AccordionContent className="pt-2 space-y-3">
+                  {["Penuh Waktu", "Kontrak", "Magang", "Paruh Waktu", "Freelance"].map((type) => (
+                    <div key={type} className="flex items-center space-x-3 group">
+                      <Checkbox
+                        id={type}
+                        checked={jobTypes.includes(type)}
+                        onCheckedChange={(checked: boolean) => handleJobTypeChange(type, checked)}
+                        className="border-white/20 data-[state=checked]:bg-violet-400 data-[state=checked]:text-white data-[state=checked]:border-violet-400"
+                      />
+                      <Label htmlFor={type} className="text-zinc-400 cursor-pointer group-hover:text-violet-300 transition-colors">{type}</Label>
+                    </div>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="kebijakan" className="border-none">
+                <AccordionTrigger className="text-white hover:text-violet-400 hover:no-underline py-3">Kebijakan Kerja</AccordionTrigger>
+                <AccordionContent className="pt-2 space-y-3">
+                  {[
+                    { id: "office", label: "Work From Office", val: "Kerja di kantor" },
+                    { id: "hybrid", label: "Hybrid", val: "Kerja di kantor / rumah" },
+                    { id: "remote", label: "Remote", val: "Kerja Remote/dari rumah" }
+                  ].map((policy) => (
+                    <div key={policy.id} className="flex items-center space-x-3 group">
+                      <Checkbox
+                        id={policy.id}
+                        checked={workPolicies.includes(policy.val)}
+                        onCheckedChange={(checked: boolean) => handleWorkPolicyChange(policy.val, checked)}
+                        className="border-white/20 data-[state=checked]:bg-violet-400 data-[state=checked]:text-white data-[state=checked]:border-violet-400"
+                      />
+                      <Label htmlFor={policy.id} className="text-zinc-400 cursor-pointer group-hover:text-violet-300 transition-colors">{policy.label}</Label>
+                    </div>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            {/* Promo Card */}
+            <div className="mt-8 p-5 bg-gradient-to-br from-violet-400/10 to-transparent rounded-2xl border border-violet-400/20 text-center">
+              <Briefcase className="w-8 h-8 text-violet-400 mx-auto mb-3" />
+              <p className="text-sm font-medium text-white mb-1">Upload CV Anda</p>
+              <p className="text-xs text-zinc-500 mb-3">Dapatkan tawaran kerja yang sesuai dengan profil Anda.</p>
+              <Button size="sm" className="w-full bg-white text-black hover:bg-violet-400 hover:text-white font-bold text-xs h-8">Upload Sekarang</Button>
+            </div>
           </div>
-
-          <Accordion type="multiple" defaultValue={["prioritas", "tipe-pekerjaan", "kebijakan-kerja", "sumber"]}>
-            {/* Prioritas Filter */}
-            <AccordionItem value="prioritas" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Prioritas</AccordionTrigger>
-              <AccordionContent className="flex gap-2 pt-2">
-                <Button
-                  variant={sortBy === "date-desc" ? "default" : "outline"}
-                  onClick={() => {
-                    setSortBy("date-desc");
-                    setCurrentPage(1);
-                  }}
-                  className="flex-grow"
-                >
-                  Terbaru
-                </Button>
-                <Button
-                  variant={sortBy === "title-asc" ? "default" : "outline"}
-                  onClick={() => {
-                    setSortBy("title-asc");
-                    setCurrentPage(1);
-                  }}
-                  className="flex-grow"
-                >
-                  Judul (A-Z)
-                </Button>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Tipe Pekerjaan Filter */}
-            <AccordionItem value="tipe-pekerjaan" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Tipe Pekerjaan</AccordionTrigger>
-              <AccordionContent className="space-y-2 pt-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="full-time" checked={jobTypes.includes("Penuh Waktu")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Penuh Waktu", checked)} />
-                  <Label htmlFor="full-time">Penuh Waktu</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="contract" checked={jobTypes.includes("Kontrak")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Kontrak", checked)} />
-                  <Label htmlFor="contract">Kontrak</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="internship" checked={jobTypes.includes("Magang")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Magang", checked)} />
-                  <Label htmlFor="internship">Magang</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="part-time" checked={jobTypes.includes("Paruh Waktu")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Paruh Waktu", checked)} />
-                  <Label htmlFor="part-time">Paruh Waktu</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="freelance" checked={jobTypes.includes("Freelance")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Freelance", checked)} />
-                  <Label htmlFor="freelance">Freelance</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="daily" checked={jobTypes.includes("Harian")} onCheckedChange={(checked: boolean) => handleJobTypeChange("Harian", checked)} />
-                  <Label htmlFor="daily">Harian</Label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Kebijakan Kerja Filter */}
-            <AccordionItem value="kebijakan-kerja" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Kebijakan Kerja</AccordionTrigger>
-              <AccordionContent className="space-y-2 pt-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="office" checked={workPolicies.includes("Kerja di kantor")} onCheckedChange={(checked: boolean) => handleWorkPolicyChange("Kerja di kantor", checked)} />
-                  <Label htmlFor="office">Kerja di kantor</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="hybrid" checked={workPolicies.includes("Kerja di kantor / rumah")} onCheckedChange={(checked: boolean) => handleWorkPolicyChange("Kerja di kantor / rumah", checked)} />
-                  <Label htmlFor="hybrid">Kerja di kantor / rumah</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remote" checked={workPolicies.includes("Kerja Remote/dari rumah")} onCheckedChange={(checked: boolean) => handleWorkPolicyChange("Kerja Remote/dari rumah", checked)} />
-                  <Label htmlFor="remote">Kerja Remote/dari rumah</Label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Sumber Filter */}
-            <AccordionItem value="sumber" className="pb-4">
-              <AccordionTrigger className="text-lg font-semibold">Sumber Lowongan</AccordionTrigger>
-              <AccordionContent className="pt-2">
-                <Select onValueChange={(value) => {
-                  setSelectedSource(value);
-                  setCurrentPage(1); // Reset to first page on source change
-                }} defaultValue="all">
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Filter Sumber" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Semua Sumber</SelectItem>
-                    <SelectItem value="lokerbandung">Loker Bandung</SelectItem>
-                    <SelectItem value="getredy">GetRedy</SelectItem>
-                    <SelectItem value="jooble">Jooble</SelectItem>
-                    <SelectItem value="jobstreet">JobStreet</SelectItem>
-                    <SelectItem value="lokerid">Loker.id</SelectItem>
-                    <SelectItem value="freelance">Freelance</SelectItem>
-                    <SelectItem value="lokal">Lokal</SelectItem>
-                    <SelectItem value="user-posted">Diposting Pengguna</SelectItem>
-                  </SelectContent>
-                </Select>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-
-          {/* Reset Filters Button */}
-          <Button
-            variant="outline"
-            onClick={handleResetFilters}
-            className="w-full mt-8 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" /> Reset Filter
-          </Button>
         </aside>
 
-        {/* Job Listings */}
+        {/* Main Content */}
         <main className="flex-grow lg:w-3/4">
-          <h1 className="text-4xl font-bold mb-4 text-center lg:text-left">Lowongan Kerja di Indonesia</h1>
-          <p className="text-lg text-center lg:text-left text-muted-foreground mb-8">
-            Dapatkan informasi lowongan pekerjaan dan peluang karir terbaru dari berbagai perusahaan.
-          </p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {currentJobs.length > 0 ? (
               currentJobs.map((jobItem) => (
@@ -395,48 +346,50 @@ const Jobs = () => {
                 />
               ))
             ) : (
-              <p className="col-span-full text-center text-muted-foreground py-12">Tidak ada lowongan yang ditemukan.</p>
+              <div className="col-span-full py-20 text-center glass-dark rounded-3xl border border-white/5">
+                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-zinc-500" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Tidak ada lowongan ditemukan</h3>
+                <p className="text-zinc-500 mb-6">Coba ubah kata kunci atau filter pencarian Anda.</p>
+                <Button onClick={handleResetFilters} variant="outline" className="border-white/10 text-white hover:bg-white/5">
+                  Reset Filter
+                </Button>
+              </div>
             )}
           </div>
 
-          {/* Pagination Controls */}
+          {/* Pagination */}
           {totalPages > 1 && (
-            <Pagination className="mt-12">
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    onClick={() => paginate(Math.max(1, currentPage - 1))}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
-                  />
-                </PaginationItem>
-                {startPage > 1 && (
+            <div className="mt-12">
+              <Pagination>
+                <PaginationContent>
                   <PaginationItem>
-                    <PaginationEllipsis />
+                    <PaginationPrevious
+                      onClick={() => paginate(Math.max(1, currentPage - 1))}
+                      className={`text-white hover:text-violet-400 hover:bg-white/5 ${currentPage === 1 ? "pointer-events-none opacity-30" : "cursor-pointer"}`}
+                    />
                   </PaginationItem>
-                )}
-                {pageNumbers.map((number) => (
-                  <PaginationItem key={number}>
-                    <PaginationLink
-                      onClick={() => paginate(number)}
-                      isActive={number === currentPage}
-                    >
-                      {number}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                {endPage < totalPages && (
+                  {pageNumbers.map((number) => (
+                    <PaginationItem key={number} className="hidden sm:inline-block">
+                      <PaginationLink
+                        onClick={() => paginate(number)}
+                        isActive={number === currentPage}
+                        className={`cursor-pointer ${number === currentPage ? "bg-violet-400 text-white border-violet-400 font-bold hover:bg-violet-500 hover:text-white" : "text-white hover:bg-white/5 hover:text-violet-400 border-transparent"}`}
+                      >
+                        {number}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
                   <PaginationItem>
-                    <PaginationEllipsis />
+                    <PaginationNext
+                      onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                      className={`text-white hover:text-violet-400 hover:bg-white/5 ${currentPage === totalPages ? "pointer-events-none opacity-30" : "cursor-pointer"}`}
+                    />
                   </PaginationItem>
-                )}
-                <PaginationItem>
-                  <PaginationNext
-                    onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
-                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+                </PaginationContent>
+              </Pagination>
+            </div>
           )}
         </main>
       </div>

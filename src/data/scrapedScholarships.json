@@ -1,1 +1,480 @@
-[]
+[
+    {
+        "id": "schol-1",
+        "title": "Beasiswa LPDP Reguler 2024",
+        "organizer": "LPDP Kementerian Keuangan",
+        "location": "Indonesia & Luar Negeri",
+        "date": "2024-12-31",
+        "link": "https://lpdp.kemenkeu.go.id/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Beasiswa penuh dari pemerintah Indonesia untuk pemuda-pemudi terbaik bangsa yang ingin lanjut S2/S3.",
+        "institution": "Berbagai Universitas Top Dunia"
+    },
+    {
+        "id": "schol-2",
+        "title": "Fulbright Master's Degree Scholarship",
+        "organizer": "AMINEF",
+        "location": "Amerika Serikat",
+        "date": "2024-04-15",
+        "link": "https://www.aminef.or.id/",
+        "degreeLevels": [
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa bergengsi untuk studi S2 di Amerika Serikat bagi warga negara Indonesia.",
+        "institution": "Universitas di Amerika Serikat"
+    },
+    {
+        "id": "schol-3",
+        "title": "Chevening Scholarship",
+        "organizer": "Pemerintah Inggris",
+        "location": "Inggris",
+        "date": "2024-11-05",
+        "link": "https://www.chevening.org/",
+        "degreeLevels": [
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa penuh untuk mengambil gelar S2 selama satu tahun di universitas mana pun di Inggris.",
+        "institution": "Universitas di Inggris"
+    },
+    {
+        "id": "schol-4",
+        "title": "Beasiswa Unggulan Kemendikbud",
+        "organizer": "Kemendikbud Ristek",
+        "location": "Indonesia",
+        "date": "2024-08-10",
+        "link": "https://beasiswaunggulan.kemdikbud.go.id/",
+        "degreeLevels": [
+            "S1",
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Beasiswa bagi masyarakat berprestasi dan pegawai Kemendikbud untuk studi di PTN/PTS terbaik.",
+        "institution": "PTN/PTS Indonesia"
+    },
+    {
+        "id": "schol-5",
+        "title": "Australia Awards Scholarship",
+        "organizer": "Pemerintah Australia",
+        "location": "Australia",
+        "date": "2024-04-30",
+        "link": "https://www.australiaawardsindonesia.org/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa internasional bergengsi yang didanai oleh Pemerintah Australia untuk masa depan global.",
+        "institution": "Universitas di Australia"
+    },
+    {
+        "id": "schol-6",
+        "title": "Beasiswa Djarum Plus",
+        "organizer": "Djarum Foundation",
+        "location": "Indonesia",
+        "date": "2024-05-20",
+        "link": "https://djarumbeasiswaplus.org/",
+        "degreeLevels": [
+            "S1",
+            "D4"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Lokal",
+        "description": "Program beasiswa prestasi yang memberikan pelatihan soft skills bagi mahasiswa berprestasi.",
+        "institution": "Mitra Perguruan Tinggi Djarum"
+    },
+    {
+        "id": "schol-7",
+        "title": "MEXT Scholarship (Monbukagakusho)",
+        "organizer": "Pemerintah Jepang",
+        "location": "Jepang",
+        "date": "2024-05-15",
+        "link": "https://www.id.emb-japan.go.jp/",
+        "degreeLevels": [
+            "S1",
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa dari Kementerian Pendidikan, Budaya, Olahraga, Ilmu Pengetahuan dan Teknologi Jepang.",
+        "institution": "Universitas di Jepang"
+    },
+    {
+        "id": "schol-8",
+        "title": "Erasmus+ Scholarship",
+        "organizer": "Uni Eropa",
+        "location": "Eropa",
+        "date": "2024-02-15",
+        "link": "https://erasmus-plus.ec.europa.eu/",
+        "degreeLevels": [
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Program beasiswa Uni Eropa untuk pendidikan, pelatihan, pemuda, dan olahraga.",
+        "institution": "Berbagai Universitas Eropa"
+    },
+    {
+        "id": "schol-9",
+        "title": "Beasiswa Bank Indonesia",
+        "organizer": "Bank Indonesia",
+        "location": "Indonesia",
+        "date": "2024-03-01",
+        "link": "https://www.bi.go.id/",
+        "degreeLevels": [
+            "S1",
+            "D3",
+            "D4"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Lokal",
+        "description": "Beasiswa bagi mahasiswa jenjang sarjana dan vokasi di PTN/PTS terpilih maupun terpilih unggulan.",
+        "institution": "PTN/PTS Mitra BI"
+    },
+    {
+        "id": "schol-10",
+        "title": "Global Korea Scholarship (GKS)",
+        "organizer": "Pemerintah Korea Selatan",
+        "location": "Korea Selatan",
+        "date": "2024-03-10",
+        "link": "https://www.studyinkorea.go.kr/",
+        "degreeLevels": [
+            "S1",
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Kesempatan bagi pelajar internasional untuk menempuh pendidikan tinggi di institusi pendidikan di Korea.",
+        "institution": "Universitas di Korea Selatan"
+    },
+    {
+        "id": "schol-11",
+        "title": "DAAD Scholarship",
+        "organizer": "Pemerintah Jerman",
+        "location": "Jerman",
+        "date": "2024-11-15",
+        "link": "https://www.daad.de/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa dari layanan pertukaran akademik Jerman untuk studi pascasarjana di universitas Jerman.",
+        "institution": "Universitas di Jerman"
+    },
+    {
+        "id": "schol-12",
+        "title": "Swiss Government Excellence Scholarships",
+        "organizer": "Pemerintah Swiss",
+        "location": "Swiss",
+        "date": "2024-12-01",
+        "link": "https://www.sbfi.admin.ch/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa penelitian dan pascasarjana untuk mahasiswa internasional di Swiss.",
+        "institution": "Universitas di Swiss"
+    },
+    {
+        "id": "schol-13",
+        "title": "Orange Tulip Scholarship",
+        "organizer": "Neso Indonesia",
+        "location": "Belanda",
+        "date": "2024-04-01",
+        "link": "https://www.nesoindonesia.or.id/",
+        "degreeLevels": [
+            "S1",
+            "S2"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Internasional",
+        "description": "Program beasiswa untuk pelajar Indonesia yang ingin kuliah di Belanda.",
+        "institution": "Universitas di Belanda"
+    },
+    {
+        "id": "schol-14",
+        "title": "Beasiswa Bidikmisi (KIP Kuliah)",
+        "organizer": "Kemendikbud Ristek",
+        "location": "Indonesia",
+        "date": "2024-06-30",
+        "link": "https://kip-kuliah.kemdikbud.go.id/",
+        "degreeLevels": [
+            "S1",
+            "D3",
+            "D4"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Bantuan biaya pendidikan bagi lulusan SMA/SMK/MA yang memiliki potensi akademik baik namun kurang mampu.",
+        "institution": "PTN/PTS se-Indonesia"
+    },
+    {
+        "id": "schol-15",
+        "title": "Beasiswa Kartu Prakerja",
+        "organizer": "Kementerian Koordinator Bidang Perekonomian",
+        "location": "Indonesia",
+        "date": "2024-12-31",
+        "link": "https://www.prakerja.go.id/",
+        "degreeLevels": [
+            "Non-Degree"
+        ],
+        "fundingType": "Pelatihan/Studi Singkat",
+        "category": "Lokal",
+        "description": "Program pelatihan online dan offline untuk meningkatkan kompetensi kerja.",
+        "institution": "Platform Mitra Prakerja"
+    },
+    {
+        "id": "schol-16",
+        "title": "Beasiswa Tanoto Foundation",
+        "organizer": "Tanoto Foundation",
+        "location": "Indonesia",
+        "date": "2024-07-15",
+        "link": "https://tanotofoundation.org/",
+        "degreeLevels": [
+            "S1"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Beasiswa untuk mahasiswa berprestasi di universitas mitra Tanoto Foundation.",
+        "institution": "IPB, ITB, Unand, Unri, USU"
+    },
+    {
+        "id": "schol-17",
+        "title": "Chinese Government Scholarship",
+        "organizer": "Pemerintah China",
+        "location": "China",
+        "date": "2024-03-31",
+        "link": "https://www.campuschina.org/",
+        "degreeLevels": [
+            "S1",
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa penuh dari pemerintah China untuk kuliah di berbagai universitas top di China.",
+        "institution": "Universitas di China"
+    },
+    {
+        "id": "schol-18",
+        "title": "Taiwan ICDF Scholarship",
+        "organizer": "Taiwan ICDF",
+        "location": "Taiwan",
+        "date": "2024-03-20",
+        "link": "https://www.icdf.org.tw/",
+        "degreeLevels": [
+            "S1",
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa dari International Cooperation and Development Fund untuk studi di Taiwan.",
+        "institution": "Universitas di Taiwan"
+    },
+    {
+        "id": "schol-19",
+        "title": "Beasiswa Baznas",
+        "organizer": "Badan Amil Zakat Nasional",
+        "location": "Indonesia",
+        "date": "2024-09-01",
+        "link": "https://baznas.go.id/",
+        "degreeLevels": [
+            "S1",
+            "D3"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Lokal",
+        "description": "Beasiswa untuk mahasiswa kurang mampu yang berprestasi dari dana zakat.",
+        "institution": "Berbagai PTN/PTS"
+    },
+    {
+        "id": "schol-20",
+        "title": "New Zealand ASEAN Scholars Awards",
+        "organizer": "Pemerintah Selandia Baru",
+        "location": "Selandia Baru",
+        "date": "2024-10-15",
+        "link": "https://www.studyinnewzealand.govt.nz/",
+        "degreeLevels": [
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa pascasarjana untuk mahasiswa ASEAN di universitas Selandia Baru.",
+        "institution": "Universitas di Selandia Baru"
+    },
+    {
+        "id": "schol-21",
+        "title": "Beasiswa Sampoerna Foundation",
+        "organizer": "Sampoerna Foundation",
+        "location": "Indonesia",
+        "date": "2024-08-31",
+        "link": "https://www.sampoernafoundation.org/",
+        "degreeLevels": [
+            "S1"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Beasiswa pendidikan tinggi untuk lulusan SMA berprestasi dengan latar belakang kurang mampu.",
+        "institution": "Universitas Mitra SF"
+    },
+    {
+        "id": "schol-22",
+        "title": "Turkey Scholarships (Türkiye Bursları)",
+        "organizer": "Pemerintah Turki",
+        "location": "Turki",
+        "date": "2024-02-20",
+        "link": "https://www.turkiyeburslari.gov.tr/",
+        "degreeLevels": [
+            "S1",
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa penuh pemerintah Turki untuk kuliah di berbagai universitas di Turki.",
+        "institution": "Universitas di Turki"
+    },
+    {
+        "id": "schol-23",
+        "title": "Beasiswa Orbit Hasri Ainun Habibie",
+        "organizer": "Yayasan Habibie & Ainun",
+        "location": "Indonesia",
+        "date": "2024-05-31",
+        "link": "https://www.habibiecenter.or.id/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Lokal",
+        "description": "Beasiswa untuk studi lanjut bidang sains dan teknologi di dalam dan luar negeri.",
+        "institution": "Berbagai Universitas"
+    },
+    {
+        "id": "schol-24",
+        "title": "Swedish Institute Scholarships",
+        "organizer": "Swedish Institute",
+        "location": "Swedia",
+        "date": "2024-01-15",
+        "link": "https://si.se/",
+        "degreeLevels": [
+            "S2"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa untuk program master di universitas-universitas Swedia.",
+        "institution": "Universitas di Swedia"
+    },
+    {
+        "id": "schol-25",
+        "title": "Commonwealth Scholarship",
+        "organizer": "Commonwealth Scholarship Commission",
+        "location": "Inggris",
+        "date": "2024-10-31",
+        "link": "https://cscuk.fcdo.gov.uk/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa untuk warga negara Commonwealth untuk studi di Inggris.",
+        "institution": "Universitas di Inggris"
+    },
+    {
+        "id": "schol-26",
+        "title": "Beasiswa Astra",
+        "organizer": "Astra International",
+        "location": "Indonesia",
+        "date": "2024-09-15",
+        "link": "https://www.astra.co.id/",
+        "degreeLevels": [
+            "SMA",
+            "D3",
+            "S1"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Program beasiswa untuk siswa SMA dan mahasiswa vokasi/sarjana bidang teknik.",
+        "institution": "SMK dan Politeknik Mitra"
+    },
+    {
+        "id": "schol-27",
+        "title": "Vanier Canada Graduate Scholarships",
+        "organizer": "Pemerintah Kanada",
+        "location": "Kanada",
+        "date": "2024-11-01",
+        "link": "https://vanier.gc.ca/",
+        "degreeLevels": [
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa doktoral bergengsi dari pemerintah Kanada untuk mahasiswa internasional.",
+        "institution": "Universitas di Kanada"
+    },
+    {
+        "id": "schol-28",
+        "title": "Beasiswa Unggulan Dosen Indonesia (BUDI)",
+        "organizer": "LPDP",
+        "location": "Indonesia & Luar Negeri",
+        "date": "2024-07-31",
+        "link": "https://lpdp.kemenkeu.go.id/",
+        "degreeLevels": [
+            "S2",
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Lokal",
+        "description": "Beasiswa LPDP khusus untuk dosen dan tenaga pendidik dalam rangka meningkatkan kualitas SDM.",
+        "institution": "Universitas Dalam/Luar Negeri"
+    },
+    {
+        "id": "schol-29",
+        "title": "Singapore International Graduate Award",
+        "organizer": "A*STAR Singapore",
+        "location": "Singapura",
+        "date": "2024-06-01",
+        "link": "https://www.a-star.edu.sg/",
+        "degreeLevels": [
+            "S3"
+        ],
+        "fundingType": "Fully Funded",
+        "category": "Internasional",
+        "description": "Beasiswa riset doktoral di Singapura dengan stipend bulanan dan biaya penelitian.",
+        "institution": "NUS, NTU, SUTD"
+    },
+    {
+        "id": "schol-30",
+        "title": "Beasiswa Tahfidz Indonesia",
+        "organizer": "Lembaga Tahfidz Indonesia",
+        "location": "Indonesia",
+        "date": "2024-08-20",
+        "link": "https://tahfidzindonesia.id/",
+        "degreeLevels": [
+            "SMA",
+            "S1"
+        ],
+        "fundingType": "Partially Funded",
+        "category": "Lokal",
+        "description": "Beasiswa bagi penghafal Al-Quran untuk melanjutkan pendidikan tinggi.",
+        "institution": "Berbagai PTN/PTS Islam"
+    }
+]

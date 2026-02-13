@@ -3,10 +3,19 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import FloatingWhatsAppButton from "../FloatingWhatsAppButton"; // Import the new component
+import ScrollProgressBar from "../ScrollProgressBar";
+import CustomCursor from "../CustomCursor";
+import SearchCommand from "../SearchCommand";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const MainLayout = () => {
+  useScrollReveal();
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-mesh text-white selection:bg-primary/30 selection:text-white">
+      <ScrollProgressBar />
+      <CustomCursor />
+      <SearchCommand />
       <Header />
       <main className="flex-grow">
         <Outlet />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Calendar,
@@ -9,295 +8,275 @@ import {
   BookOpen,
   Image,
   GraduationCap,
-  Plane,
-  Megaphone,
-  Award,
+  Briefcase,
+  ArrowRight,
+  Newspaper,
   Upload,
   Handshake,
-  Briefcase,
+  Award,
+  Plane,
+  Megaphone
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
-import { useCountUp } from "@/hooks/useCountUp";
-import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json"; // Import scraped news data
+import NewsSkeleton from "@/components/NewsSkeleton";
+import scrapedNewsAndTips from "@/data/scrapedNewsAndTips.json";
 
 const Index = () => {
-  const totalEvents = useCountUp({ end: 17556, duration: 3000 });
-  const partnersRating = useCountUp({ end: 3997, duration: 3000 });
-  const registeredStudents = useCountUp({ end: 2548852, duration: 3000 });
-
   // Array of hero image paths
-  const heroImages = ["/1.jpg", "/2.jpg", "/3.jpg"]; // Diperbarui dengan jalur gambar yang baru
+  const heroImages = ["/1.jpg", "/2.jpg", "/3.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 60000); // Ganti gambar setiap 60 detik (1 menit)
+    }, 60000);
 
-    return () => clearInterval(interval); // Bersihkan interval saat komponen di-unmount
+    return () => clearInterval(interval);
   }, [heroImages.length]);
 
   // Use a slice of scrapedNewsAndTips for the homepage display
   const homepageNews = scrapedNewsAndTips.slice(0, 3);
 
+  const [isLoadingNews, setIsLoadingNews] = useState(true);
+
+  useEffect(() => {
+    // Simulate data fetching
+    const timer = setTimeout(() => setIsLoadingNews(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-background bg-pattern text-foreground selection:bg-violet-400/30 selection:text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-24 md:py-40 text-center overflow-hidden min-h-screen flex items-center justify-center">
-        {/* Background Image */}
-        <img
-          src={heroImages[currentImageIndex]} // Menggunakan gambar dari state
-          alt="Hero Background"
-          className="absolute inset-0 w-full h-full object-cover" // Menghapus kelas transisi opacity
-        />
-        {/* Overlay for text readability */}
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="container relative z-10">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-white animate-fade-in-up">
-            Platform Informasi Mahasiswa & Pelajar
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20 px-4">
+        {/* Clean Background with Subtle Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={heroImages[currentImageIndex]}
+            alt="EduSprout Hero"
+            className="w-full h-full object-cover scale-105 opacity-50 transition-opacity duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background"></div>
+        </div>
+
+        {/* Hero Content - Minimalist & Centered */}
+        <div className="container relative z-10 text-center max-w-5xl">
+          <div className="inline-flex items-center px-5 py-2 mb-8 text-xs font-bold tracking-[0.2em] uppercase border border-white/10 rounded-full bg-white/[0.03] text-zinc-300 animate-fade-in backdrop-blur-md shadow-lg shadow-black/20">
+            <span className="w-2 h-2 rounded-full bg-violet-400 mr-3 animate-pulse"></span>
+            Portal Edukasi No. 1 Indonesia
+          </div>
+
+          <h1 className="display-title mb-8 animate-fade-in-up text-white">
+            Navigasi Masa Depan <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-violet-400 to-violet-200 animate-pulse-slow drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">Emasmu.</span>
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-4xl mx-auto text-white opacity-0 animate-fade-in-up delay-200">
-            Jelajahi peluang tanpa batas: event, beasiswa, lowongan, dan banyak lagi untuk masa depan cerahmu!
+
+          <p className="text-lg md:text-xl mb-12 text-zinc-400 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-200 font-light">
+            Akses ribuan peluang beasiswa, kompetisi nasional, dan pengembangan karir dalam satu ekosistem yang terintegrasi.
           </p>
-          {/* Tombol "Jelajahi EduSprout" dihapus */}
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
+            <Link to="/events">
+              <Button size="lg" className="rounded-full px-10 h-14 text-base font-bold bg-white text-black hover:bg-primary hover:text-white hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] min-w-[200px]">
+                Mulai Eksplorasi
+              </Button>
+            </Link>
+            <Link to="/scholarships">
+              <Button size="lg" variant="outline" className="rounded-full px-10 h-14 text-base font-bold border-white/10 text-white hover:bg-white/10 hover:border-primary/50 transition-all duration-300 min-w-[200px] bg-transparent backdrop-blur-sm">
+                Cari Beasiswa
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Layanan Kami Section */}
-      <section className="container py-16 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Layanan Kami</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
-            <Calendar className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Event</CardTitle>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
-              Daftar ke 2,000+ event pilihan (webinar, lomba, volunteering, dsb).
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
-            <MessageSquare className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Forum Diskusi</CardTitle>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
-              Tempat buat kamu sharing dan diskusi, tanpa perlu difollback & ga pake antri.
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
-            <BookOpen className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Booku</CardTitle>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
-              200+ ringkasan non-fiksi untuk perluas wawasanmu di mana pun, kapan pun. Ada versi audio & teks, dalam 2 bahasa!
-            </CardContent>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
-            <Image className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Twibbon</CardTitle>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 flex-grow">
-              Peserta acara mau buat twibbon? Lagi ngadain kampanye? Ini pabrik twibbon terbesar anak muda Indonesia!
-            </CardContent>
-          </Card>
+      {/* Stats Section - Clean Typography */}
+      <section className="py-20 border-y border-white/5 bg-white/[0.01]">
+        <div className="container px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+            {[
+              { val: "50K+", label: "Member Aktif" },
+              { val: "500+", label: "Peluang Beasiswa" },
+              { val: "200+", label: "Event Nasional" },
+              { val: "100+", label: "Mitra Industri" },
+            ].map((s, i) => (
+              <div key={i} className="text-center group cursor-default">
+                <div className="text-4xl md:text-5xl font-bold mb-2 text-white/90 group-hover:text-violet-400 transition-colors duration-300">{s.val}</div>
+                <div className="text-xs font-medium tracking-widest uppercase text-zinc-500 group-hover:text-zinc-300 transition-colors duration-300">{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="bg-muted py-16 text-center">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Maju Bersama EduSprout</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="animate-fade-in-up">
-              <p className="text-5xl font-extrabold text-primary mb-2">{totalEvents.toLocaleString()}</p>
-              <p className="text-lg text-muted-foreground">Total Event Terdaftar</p>
+      {/* Bento Services Section - Clean Glass Cards */}
+      <section className="py-32 relative reveal">
+        <div className="container px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-white">Layanan <span className="text-zinc-500">Terintegrasi</span></h2>
+              <p className="text-lg text-zinc-400 font-light">Satu platform untuk semua kebutuhan akademik dan karirmu.</p>
             </div>
-            <div className="animate-fade-in-up delay-100">
-              <p className="text-5xl font-extrabold text-primary mb-2">{partnersRating.toLocaleString()}</p>
-              <p className="text-lg text-muted-foreground">Partners Memberikan 5 Bintang</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr">
+            {/* Bento Item 1 */}
+            <div className="flex flex-col items-center justify-center text-center p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-violet-500/20 hover:shadow-[0_0_30px_rgba(139,92,246,0.1)] transition-all duration-300 group">
+              <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-all duration-300 border border-white/5 group-hover:border-violet-400/30 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                <Calendar className="h-8 w-8 group-hover:text-violet-400 transition-colors" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-violet-200 transition-colors">Event & Lomba</h3>
+              <p className="text-zinc-400 mb-8 leading-relaxed max-w-xs mx-auto">Temukan kompetisi bergengsi tingkat nasional dan internasional untuk mengasah bakatmu.</p>
+              <Link to="/events" className="mt-auto inline-flex items-center text-sm font-bold text-white hover:text-violet-400 transition-colors bg-white/5 px-6 py-3 rounded-full hover:bg-white/10 border border-white/5 hover:border-violet-400/30">
+                Jelajahi Event <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
-            <div className="animate-fade-in-up delay-200">
-              <p className="text-5xl font-extrabold text-primary mb-2">{registeredStudents.toLocaleString()}</p>
-              <p className="text-lg text-muted-foreground">Mahasiswa & Pelajar Terdaftar</p>
+
+            {/* Bento Item 2 */}
+            <div className="flex flex-col items-center justify-center text-center p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-violet-500/20 hover:shadow-[0_0_30px_rgba(139,92,246,0.1)] transition-all duration-300 group">
+              <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-all duration-300 border border-white/5 group-hover:border-violet-400/30 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                <GraduationCap className="h-8 w-8 group-hover:text-violet-400 transition-colors" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-violet-200 transition-colors">Beasiswa</h3>
+              <p className="text-zinc-400 mb-8 leading-relaxed max-w-xs mx-auto">Akses informasi beasiswa dalam dan luar negeri yang terverifikasi dan terupdate.</p>
+              <Link to="/scholarships" className="mt-auto inline-flex items-center text-sm font-bold text-white hover:text-violet-400 transition-colors bg-white/5 px-6 py-3 rounded-full hover:bg-white/10 border border-white/5 hover:border-violet-400/30">
+                Cari Beasiswa <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+
+            {/* Bento Item 3 */}
+            <div className="flex flex-col items-center justify-center text-center p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-violet-500/20 hover:shadow-[0_0_30px_rgba(139,92,246,0.1)] transition-all duration-300 group">
+              <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-white border border-white/5 group-hover:border-violet-400/30 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                <Briefcase className="h-7 w-7 group-hover:text-violet-400 transition-colors" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-white group-hover:text-violet-200">Karir</h3>
+              <p className="text-sm text-zinc-400 leading-relaxed mb-6">Lowongan magang dan kerja full-time.</p>
+              <Link to="/jobs" className="mt-auto inline-flex items-center text-xs font-bold text-white/70 hover:text-violet-400 transition-colors">
+                Lihat Lowongan <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+            </div>
+
+            {/* Bento Item 4 */}
+            <div className="flex flex-col items-center justify-center text-center p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-violet-500/20 hover:shadow-[0_0_30px_rgba(139,92,246,0.1)] transition-all duration-300 group md:col-span-1.5 lg:col-span-1">
+              <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 text-white border border-white/5 group-hover:border-violet-400/30 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                <Newspaper className="h-7 w-7 group-hover:text-violet-400 transition-colors" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-white group-hover:text-violet-200">Berita</h3>
+              <p className="text-sm text-zinc-400 leading-relaxed mb-6">Tips pendidikan dan berita terkini.</p>
+              <Link to="/news-and-tips" className="mt-auto inline-flex items-center text-xs font-bold text-white/70 hover:text-violet-400 transition-colors">
+                Baca Berita <ArrowRight className="ml-1 h-3 w-3" />
+              </Link>
+            </div>
+
+            {/* Bento Item 5 (CTA) */}
+            <div className="flex flex-col items-center justify-center text-center p-8 rounded-3xl bg-gradient-to-br from-violet-900/20 to-purple-900/20 border border-violet-500/20 hover:border-violet-500/40 hover:shadow-[0_0_40px_rgba(139,92,246,0.2)] transition-all duration-300 group md:col-span-2">
+              <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-violet-200">Bergabung Sekarang</h3>
+              <p className="text-zinc-300 text-sm mb-6 max-w-md mx-auto">Dapatkan akses eksklusif ke semua fitur EduSprout dan mulai perjalanan suksesmu hari ini.</p>
+              <Link to="/signup">
+                <Button className="rounded-full px-8 h-12 text-base font-bold bg-white text-black hover:bg-violet-400 hover:text-white transition-all shadow-lg hover:shadow-violet-400/30">
+                  Buat Akun Gratis
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Partnership & Career CTAs */}
-      <section className="container py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Card 1: Upload Event */}
-          <Link to="/upload-event" className="block">
-            <Card className="p-8 flex flex-col items-center text-center h-full hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
-              <Upload className="h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-2xl font-bold mb-2">Upload Event di EduSprout</CardTitle>
-              <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                Pantau penjualan tiket dan data peserta dengan mudah. Rata-rata pendaftar 112 orang per event! Mau acaramu ramai?
-              </p>
-              {/* Button removed, entire card is now clickable */}
-            </Card>
-          </Link>
-
-          {/* Card 2: Brand & General Partnership */}
-          <Link to="/partnership" className="block">
-            <Card className="p-8 flex flex-col items-center text-center h-full hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
-              <Handshake className="h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-2xl font-bold mb-2">Brand & General Partnership</CardTitle>
-              <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                Platform anak muda terbesar Indonesia. Mulai dari ramein acara, perkenalkan produk, perbagus brand equity, EduSprout bisa bantu semuanya!
-              </p>
-              {/* Button removed, entire card is now clickable */}
-            </Card>
-          </Link>
-
-          {/* Card 3: Bangun Karir di EduSprout */}
-          <Link to="/career" className="block">
-            <Card className="p-8 flex flex-col items-center text-center h-full hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
-              <Briefcase className="h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-2xl font-bold mb-2">Bangun Karir di EduSprout</CardTitle>
-              <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                Dampak kami nyata dalam merevolusi pendidikan & generasi muda Indonesia. Sudah siap berkontribusi?
-              </p>
-              {/* Button removed, entire card is now clickable */}
-            </Card>
-          </Link>
-        </div>
-      </section>
-
-      {/* Berita & Tips Edukasi Section */}
-      <section className="container py-16 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Berita & Tips Edukasi</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {homepageNews.map((newsItem) => (
-            <NewsCard key={newsItem.id} {...newsItem} />
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Link to="/news-and-tips">
-            <Button variant="outline" className="text-primary hover:bg-primary hover:text-primary-foreground">Lihat Semua Berita & Tips &rarr;</Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="bg-muted py-16 text-center">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Bagaimana Pengalaman Mereka?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Naomi Dominique H." />
-                <AvatarFallback>NDH</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Naomi Dominique H.</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Pancasila, Event Organizer</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “Recommended parah! Awalnya ragu untuk share event di EduSprout karena mikir takut banyak yang hanya scroll dan sekadar lihat. Ternyata nggak! Banyak yang ikut & nggak zonk sama sekali. Aku sangat menyarankan para event organizer untuk upload event di EduSprout. Ketemu aplikasi ini kayak ketemu harta karun yang harus banget diambil!”
-              </CardContent>
-            </Card>
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Destilova" />
-                <AvatarFallback>D</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Destilova</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Negeri Semarang, Pengguna Aplikasi</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “Yang aku paling suka dari EduSprout adalah pas aku daftar ke event itu jelas, mudah dimengerti & tidak ribet. Aplikasi ini cocok untuk siswa maupun mahasiswa karena menyediakan banyak acara pengembangan diri dan lomba yang bisa diikuti anak muda, biar bisa mengembangkan softskill dan pastinya mempercantik CV mereka!”
-              </CardContent>
-            </Card>
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Zharfan Akbar" />
-                <AvatarFallback>ZA</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Zharfan Akbar</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Diponegoro, Software Engineer</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “Bekerja di EduSprout tidak mudah, tapi pasti bermanfaat. Kamu akan bekerja dengan rekan-rekan yang membantumu bertumbuh & jadi versi terbaik diri. Semua orang bersemangat dalam bekerja & punya rasa kepemilikan yang tinggi. Jika kamu suka mempelajari hal baru & menyukai tantangan, EduSprout tempat yang cocok untukmu.”
-              </CardContent>
-            </Card>
+      {/* News Section */}
+      <section className="py-32 bg-white/[0.02] border-y border-white/5 reveal">
+        <div className="container px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-white">Wawasan <span className="text-zinc-500">Terbaru</span></h2>
+              <p className="text-lg text-zinc-400 font-light">Informasi terkini seputar dunia kampus, prestasi, dan karir nasional.</p>
+            </div>
+            <Link to="/news-and-tips">
+              <Button variant="outline" className="rounded-full px-8 h-12 border-white/10 hover:border-violet-400/30 transition-all font-medium text-white bg-transparent hover:text-violet-400">
+                Lihat Semua Berita <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {isLoadingNews ? (
+              <>
+                <NewsSkeleton />
+                <NewsSkeleton />
+                <NewsSkeleton />
+              </>
+            ) : (
+              homepageNews.map((newsItem) => (
+                <div key={newsItem.id} className="hover:-translate-y-2 transition-transform duration-500">
+                  <NewsCard {...newsItem} />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* Program Tahunan Section */}
-      <section className="container py-16 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Program Tahunan Kami</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up">
-            <GraduationCap className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Student Leaders Forum (SLF)</CardTitle>
-            <p className="text-xs text-muted-foreground mb-2">Diselenggarakan Setiap Januari–April</p>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
-              Perayaan semangat dalam aksi, prestasi, dan kolaborasi pemimpin muda dari seluruh Indonesia dalam rangkaian sesi talkshow penuh makna. Siap terinspirasi?
-            </CardContent>
-            <Button variant="link" className="mt-auto">Segera Hadir</Button>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-100">
-            <Award className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Beasiswa EduSprout (BES)</CardTitle>
-            <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 3x Setahun</p>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
-              Dapatkan dukungan untuk meringankan biaya pendidikan dan siapkan dirimu untuk masa depan cemerlang. Kesempatan ini menantimu.
-            </CardContent>
-            <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
-            <Plane className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Future Leaders Program (FLP)</CardTitle>
-            <p className="text-xs text-muted-foreground mb-2">Diselenggarakan 2x Setahun</p>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
-              100% Fully-Funded International Leadership Trip ke destinasi terbaik luar negeri selama 6 hari 5 malam. Siap mengikuti perjalanan yang mengubah hidup?
-            </CardContent>
-            <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
-          </Card>
-          <Card className="p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
-            <Megaphone className="h-12 w-12 text-primary mb-4" />
-            <CardTitle className="text-xl font-semibold mb-2">Festival Mahasiswa Baru & Pelajar Indonesia (FMBPI)</CardTitle>
-            <p className="text-xs text-muted-foreground mb-2">Diselenggarakan Setiap Juni–Agustus</p>
-            <CardContent className="text-muted-foreground text-sm px-0 pt-2 mb-4 flex-grow">
-              Rangkaian sesi talkshow inspiratif dengan pembicara tokoh nasional terbaik, kesempatan lomba, dan dana penunjang pendidikan. Jangan lewatkan!
-            </CardContent>
-            <Button variant="link" className="mt-auto">Lihat Selengkapnya</Button>
-          </Card>
+      {/* Annual Programs - Minimal */}
+      <section className="py-32 relative reveal">
+        <div className="container px-4 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-20 tracking-tight text-white">Program <span className="text-zinc-500 italic">Eksklusif</span></h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: GraduationCap,
+                title: "Student Leaders",
+                date: "Januari – April",
+                desc: "Ajang kolaborasi pemimpin muda dari seluruh penjuru negeri.",
+              },
+              {
+                icon: Award,
+                title: "Beasiswa EduSprout",
+                date: "3x Dalam Setahun",
+                desc: "Dukungan dana untuk meringankan beban biaya pendidikanmu.",
+              },
+              {
+                icon: Plane,
+                title: "Future Leaders",
+                date: "Internasional Trip",
+                desc: "6 hari 5 malam perjalanan kepemimpinan 100% dibiayai penuh.",
+              },
+              {
+                icon: Megaphone,
+                title: "Festival FMBPI",
+                date: "Juni – Agustus",
+                desc: "Talkshow inspiratif bersama tokoh-tokoh besar nasional.",
+              }
+            ].map((p, i) => (
+              <div key={i} className="bento-item p-8 hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center bg-white/[0.02] hover:border-violet-400/20">
+                <div className={`w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 border border-white/5 text-white group-hover:border-violet-400/30 group-hover:text-violet-400 transition-colors`}>
+                  <p.icon className={`h-6 w-6`} />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-violet-200 transition-colors">{p.title}</h3>
+                <p className={`text-xs text-zinc-500 font-bold uppercase tracking-widest mb-4 group-hover:text-zinc-400`}>{p.date}</p>
+                <p className="text-zinc-400 text-sm leading-relaxed">{p.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Program Testimonials Section */}
-      <section className="bg-muted py-16 text-center">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 animate-fade-in-up">Apa Kata Mereka Tentang Program Kami?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Dimas Putra Adzie" />
-                <AvatarFallback>DPA</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Dimas Putra Adzie</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Universitas Lampung, Awardee BES 2021</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “BES merupakan program anti-mainstream. Tidak hanya memberi dana, program ini mampu mengembangkan jejaring penerima beasiswa lewat kegiatan diskusi dan grup virtual. Sangat bersyukur bisa menjadi penerima dan saya merekomendasikan program ini ke seluruh pelajar Indonesia!”
-              </CardContent>
-            </Card>
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-100">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Fatma Oryza" />
-                <AvatarFallback>FO</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Fatma Oryza</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">UIN Sunan Ampel Surabaya, Pemenang FLP 2020</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “FLP memberikan pengalaman luar biasa mengelilingi megahnya New York dan merasakan atmosfer belajar di Harvard dan MIT, Boston. Plus, aku melakukannya sambil berjejaring dengan putra-putri terbaik bangsa. Segera daftarkan dirimu di FLP selanjutnya untuk merasakan yang sama!”
-              </CardContent>
-            </Card>
-            <Card className="p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
-              <Avatar className="h-20 w-20 mb-4">
-                <AvatarImage src="/placeholder.svg" alt="Indah Nurfirmanillah" />
-                <AvatarFallback>IN</AvatarFallback>
-              </Avatar>
-              <CardTitle className="text-lg font-semibold">Indah Nurfirmanillah</CardTitle>
-              <p className="text-sm text-muted-foreground mb-4">Sekolah Tinggi Manajemen PPM, Peserta FMBPI 2021</p>
-              <CardContent className="text-sm italic text-gray-700 dark:text-gray-300 px-0 pt-2 flex-grow">
-                “Jujur, acara FMBPI kemaren super keren banget, diisi oleh pembicara yang sangat luar biasa, dan banyak banget ilmu yang didapat. Aku sangat menunggu berbagai event kece EduSprout yang akan datang! Temen-teman jangan sampe ketinggalan juga ya! Sukses terus EduSprout ❤️”
-              </CardContent>
-            </Card>
+      {/* CTA Section - Minimal */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container relative z-10 text-center max-w-3xl px-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">Siap Memulai Perjalananmu?</h2>
+          <p className="text-lg text-zinc-400 mb-10 font-light">
+            Satu akun untuk akses tak terbatas ke semua fitur EduSprout.
+            <br className="hidden md:block" /> Mulai langkah pertamamu hari ini.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/signup">
+              <Button size="lg" className="w-full sm:w-auto rounded-full px-8 h-12 text-base font-semibold bg-white text-black hover:bg-violet-400 hover:text-white transition-colors">
+                Buat Akun Gratis
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-8 h-12 text-base font-medium border-white/10 bg-transparent text-white hover:bg-white/5 backdrop-blur-sm">
+                Hubungi Kami
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, X, RotateCcw } from "lucide-react";
 import {
-  Pagination,
+  Pagination, // Pagination component
   PaginationContent,
   PaginationItem,
   PaginationLink,
@@ -156,7 +156,6 @@ const Scholarships = () => {
       filtered = filtered.filter(s => s.institution?.toLowerCase().includes(lowerCaseInstitution));
     }
 
-    // Helper function to parse date strings
     const parseDate = (dateString: string) => {
       const deadlineMatch = dateString.match(/(\d{1,2})\s*(\w+)\s*(\d{4})/i);
       if (deadlineMatch) {
@@ -206,13 +205,16 @@ const Scholarships = () => {
   const totalPages = Math.ceil(filteredAndSortedScholarships.length / scholarshipsPerPage);
 
   // Change page
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Generate page numbers for pagination component
   const pageNumbers = [];
   const maxPageButtons = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-  let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+  const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
 
   if (endPage - startPage + 1 < maxPageButtons) {
     startPage = Math.max(1, endPage - maxPageButtons + 1);
@@ -223,141 +225,88 @@ const Scholarships = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Top Search Bar */}
-      <div className="sticky top-14 z-40 bg-background border-b py-4 shadow-lg rounded-b-lg">
-        <div className="container flex flex-col md:flex-row items-center gap-4">
-          <div className="relative flex-grow w-full md:w-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Cari Beasiswa, Institusi, atau Negara"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="pl-9 pr-8 w-full"
-            />
-            {searchTerm && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-                onClick={() => {
-                  setSearchTerm("");
-                  setCurrentPage(1);
-                }}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
+    <div className="min-h-screen">
+      {/* Header Section */}
+      {/* Header Section */}
+      <div className="pt-32 pb-12 overflow-hidden">
+        <div className="container px-4">
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h1 className="display-title mb-6 reveal">
+              Eksplorasi <span className="text-primary italic">Beasiswa</span>
+            </h1>
+            <p className="text-xl text-white/50 font-medium reveal">
+              Daftar beasiswa terlengkap dari dalam dan luar negeri untuk mendukung perjalanan akademikmu meraih mimpi.
+            </p>
           </div>
-          <div className="relative w-full md:w-[200px]">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Select onValueChange={(value) => {
-              setSelectedCountry(value);
-              setCurrentPage(1);
-            }} defaultValue="all">
-              <SelectTrigger className="pl-9 w-full">
-                <SelectValue placeholder="Semua Negara" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Negara</SelectItem>
-                {allCountries.map(country => (
-                  <SelectItem key={country} value={country}>{country}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button className="w-full md:w-auto">Cari</Button>
         </div>
       </div>
 
-      <div className="container flex flex-col lg:flex-row gap-8 py-8">
-        {/* Sidebar */}
-        <aside className="w-full lg:w-1/4 p-6 bg-card rounded-lg shadow-lg border border-border lg:sticky lg:top-[120px] self-start">
-          <h2 className="text-2xl font-bold mb-6">Filter Beasiswa</h2>
+      {/* Main Content */}
+      <div className="container flex flex-col lg:flex-row gap-8 py-12 px-4">
+        {/* Sidebar Filters */}
+        <aside className="w-full lg:w-1/4 p-8 glass-dark border-white/5 rounded-3xl lg:sticky lg:top-28 self-start">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xl font-bold">Filter Pencarian</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleResetFilters}
+              className="text-primary hover:bg-primary/10 h-8 px-2"
+            >
+              <RotateCcw className="h-4 w-4 mr-2" /> Reset
+            </Button>
+          </div>
 
-          <Button
-            variant="outline"
-            onClick={handleResetFilters}
-            className="w-full mb-6 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" /> Reset Filter
-          </Button>
-
-          <Accordion type="multiple" defaultValue={["jenjang", "tipe", "sumber", "kategori"]}>
-            {/* Jenjang Filter */}
-            <AccordionItem value="jenjang" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Jenjang</AccordionTrigger>
-              <AccordionContent className="space-y-2 pt-2">
+          <Accordion type="multiple" defaultValue={["jenjang", "tipe", "negara"]} className="space-y-4">
+            <AccordionItem value="jenjang" className="border-none">
+              <AccordionTrigger className="text-base font-bold hover:no-underline py-2">Jenjang Pendidikan</AccordionTrigger>
+              <AccordionContent className="pt-4 grid grid-cols-2 gap-3">
                 {degreeLevelOptions.map((level) => (
-                  <div key={level} className="flex items-center space-x-2">
+                  <div key={level} className="flex items-center space-x-2 group">
                     <Checkbox
                       id={`degree-${level}`}
                       checked={selectedDegreeLevels.includes(level)}
                       onCheckedChange={(checked: boolean) => handleDegreeLevelChange(level, checked)}
+                      className="border-white/20 data-[state=checked]:bg-primary"
                     />
-                    <Label htmlFor={`degree-${level}`}>{level}</Label>
+                    <Label htmlFor={`degree-${level}`} className="text-sm cursor-pointer group-hover:text-primary transition-colors">{level}</Label>
                   </div>
                 ))}
               </AccordionContent>
             </AccordionItem>
 
-            {/* Tipe Filter */}
-            <AccordionItem value="tipe" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Tipe</AccordionTrigger>
-              <AccordionContent className="space-y-2 pt-2">
+            <AccordionItem value="tipe" className="border-none">
+              <AccordionTrigger className="text-base font-bold hover:no-underline py-2">Tipe Pendanaan</AccordionTrigger>
+              <AccordionContent className="pt-4 space-y-3">
                 {fundingTypeOptions.map((type) => (
-                  <div key={type} className="flex items-center space-x-2">
+                  <div key={type} className="flex items-center space-x-2 group">
                     <Checkbox
                       id={`funding-${type}`}
                       checked={selectedFundingTypes.includes(type)}
                       onCheckedChange={(checked: boolean) => handleFundingTypeChange(type, checked)}
+                      className="border-white/20 data-[state=checked]:bg-primary"
                     />
-                    <Label htmlFor={`funding-${type}`}>{type}</Label>
+                    <Label htmlFor={`funding-${type}`} className="text-sm cursor-pointer group-hover:text-primary transition-colors">{type}</Label>
                   </div>
                 ))}
               </AccordionContent>
             </AccordionItem>
 
-            {/* Sumber Filter */}
-            <AccordionItem value="sumber" className="border-b pb-4 mb-4">
-              <AccordionTrigger className="text-lg font-semibold">Sumber</AccordionTrigger>
-              <AccordionContent className="pt-2">
+            <AccordionItem value="negara" className="border-none">
+              <AccordionTrigger className="text-base font-bold hover:no-underline py-2">Lokasi Studi</AccordionTrigger>
+              <AccordionContent className="pt-4">
                 <Select onValueChange={(value) => {
-                  setSelectedSource(value);
+                  setSelectedCountry(value);
                   setCurrentPage(1);
-                }} defaultValue="all">
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Semua Sumber" />
+                }} value={selectedCountry}>
+                  <SelectTrigger className="glass border-white/10 h-10">
+                    <SelectValue placeholder="Semua Negara" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Semua Sumber</SelectItem>
-                    {allSources.map(source => (
-                      <SelectItem key={source} value={source}>{source}</SelectItem>
+                  <SelectContent className="glass-dark border-white/10 max-h-60">
+                    <SelectItem value="all">Semua Negara</SelectItem>
+                    {allCountries.map(country => (
+                      <SelectItem key={country} value={country}>{country}</SelectItem>
                     ))}
-                  </SelectContent>
-                </Select>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Kategori Filter (Lokal/Internasional) */}
-            <AccordionItem value="kategori" className="pb-4">
-              <AccordionTrigger className="text-lg font-semibold">Kategori</AccordionTrigger>
-              <AccordionContent className="pt-2">
-                <Select onValueChange={(value) => {
-                  setSelectedCategory(value);
-                  setCurrentPage(1);
-                }} defaultValue="all">
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Semua Kategori" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Semua Kategori</SelectItem>
-                    <SelectItem value="Lokal">Lokal</SelectItem>
-                    <SelectItem value="Internasional">Internasional</SelectItem>
                   </SelectContent>
                 </Select>
               </AccordionContent>
@@ -365,12 +314,33 @@ const Scholarships = () => {
           </Accordion>
         </aside>
 
-        {/* Main Content Area */}
+        {/* List of Scholarships */}
         <main className="flex-grow lg:w-3/4">
-          <h1 className="text-4xl font-bold mb-4 text-center lg:text-left">Info Beasiswa EduSprout</h1>
-          <p className="text-lg text-center lg:text-left text-muted-foreground mb-8">
-            Temukan berbagai beasiswa lokal dan internasional untuk mendukung pendidikan Anda.
-          </p>
+          <div className="glass p-4 rounded-2xl border-white/5 mb-8 flex flex-col md:flex-row gap-4">
+            <div className="relative flex-grow">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Cari beasiswa atau universitas..."
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="pl-11 h-12 glass border-none focus-visible:ring-primary"
+              />
+            </div>
+            <Select onValueChange={(value) => setSortBy(value)} value={sortBy}>
+              <SelectTrigger className="w-full md:w-[200px] h-12 glass border-none">
+                <SelectValue placeholder="Urutkan" />
+              </SelectTrigger>
+              <SelectContent className="glass-dark border-white/10">
+                <SelectItem value="date-desc">Batas Waktu Terlama</SelectItem>
+                <SelectItem value="date-asc">Batas Waktu Terdekat</SelectItem>
+                <SelectItem value="title-asc">Nama (A-Z)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {currentScholarships.length > 0 ? (
@@ -388,44 +358,38 @@ const Scholarships = () => {
                 />
               ))
             ) : (
-              <p className="col-span-full text-center text-muted-foreground py-12">Tidak ada beasiswa yang ditemukan.</p>
+              <div className="col-span-full py-32 text-center glass-dark rounded-3xl">
+                <p className="text-xl text-muted-foreground mb-4">Kami belum menemukan beasiswa tersebut.</p>
+                <Button onClick={handleResetFilters} variant="outline" className="glass">Reset Filter</Button>
+              </div>
             )}
           </div>
 
-          {/* Pagination Controls */}
+          {/* Pagination */}
           {totalPages > 1 && (
             <Pagination className="mt-12">
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={() => paginate(Math.max(1, currentPage - 1))}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
+                    className={currentPage === 1 ? "pointer-events-none opacity-30" : "cursor-pointer"}
                   />
                 </PaginationItem>
-                {startPage > 1 && (
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                )}
                 {pageNumbers.map((number) => (
                   <PaginationItem key={number}>
                     <PaginationLink
                       onClick={() => paginate(number)}
                       isActive={number === currentPage}
+                      className="cursor-pointer"
                     >
                       {number}
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-                {endPage < totalPages && (
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                )}
                 <PaginationItem>
                   <PaginationNext
                     onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
-                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-30" : "cursor-pointer"}
                   />
                 </PaginationItem>
               </PaginationContent>

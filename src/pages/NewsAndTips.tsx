@@ -40,57 +40,63 @@ const NewsAndTips = () => {
   }, []);
 
   return (
-    <div className="container py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Berita & Tips Edukasi</h1>
-      <p className="text-lg text-center text-muted-foreground mb-8">
-        Dapatkan informasi terbaru, panduan, dan tips untuk mendukung perjalanan pendidikan dan karir Anda.
-      </p>
+    <div className="min-h-screen pt-28 pb-12 overflow-hidden">
+      <div className="container px-4">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <h1 className="display-title mb-6 reveal">
+            Berita & <span className="text-primary italic">Tips</span>
+          </h1>
+          <p className="text-xl text-white/50 font-medium reveal">
+            Dapatkan informasi terbaru, panduan, dan tips eksklusif untuk mendukung perjalanan pendidikan dan karir gemilangmu.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Sidebar */}
-        <aside className="lg:col-span-1 space-y-8">
-          <NewsSidebarCard
-            title="Event Pilihan"
-            items={featuredEvents.map(event => ({
-              id: event.id,
-              label: event.title,
-              link: event.link,
-              metadata: event.date,
-            }))}
-          />
-        </aside>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Left Sidebar */}
+          <aside className="lg:col-span-1 space-y-8">
+            <NewsSidebarCard
+              title="Event Pilihan"
+              items={featuredEvents.map(event => ({
+                id: event.id,
+                label: event.title,
+                link: event.link,
+                metadata: event.date,
+              }))}
+            />
+          </aside>
 
-        {/* Main Content Area */}
-        <main className="lg:col-span-2">
-          <Tabs defaultValue="for-you" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
-              <TabsTrigger value="for-you" className="text-base">Untuk Anda</TabsTrigger>
-              <TabsTrigger value="featured" className="text-base">Pilihan Editor</TabsTrigger>
-            </TabsList>
-            <TabsContent value="for-you" className="space-y-6">
-              {actualNewsAndTips.map((newsItem) => (
-                <NewsListItem key={newsItem.id} {...newsItem} />
-              ))}
-            </TabsContent>
-            <TabsContent value="featured" className="space-y-6">
-              {featuredNews.map((newsItem) => (
-                <NewsListItem key={newsItem.id} {...newsItem} />
-              ))}
-            </TabsContent>
-          </Tabs>
-        </main>
+          {/* Main Content Area */}
+          <main className="lg:col-span-2">
+            <Tabs defaultValue="for-you" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
+                <TabsTrigger value="for-you" className="text-base">Untuk Anda</TabsTrigger>
+                <TabsTrigger value="featured" className="text-base">Pilihan Editor</TabsTrigger>
+              </TabsList>
+              <TabsContent value="for-you" className="space-y-6">
+                {actualNewsAndTips.map((newsItem) => (
+                  <NewsListItem key={newsItem.id} {...newsItem} />
+                ))}
+              </TabsContent>
+              <TabsContent value="featured" className="space-y-6">
+                {featuredNews.map((newsItem) => (
+                  <NewsListItem key={newsItem.id} {...newsItem} />
+                ))}
+              </TabsContent>
+            </Tabs>
+          </main>
 
-        {/* Right Sidebar */}
-        <aside className="lg:col-span-1 space-y-8">
-          <NewsSidebarCard
-            title="Berita Populer"
-            items={popularNews}
-          />
-          <NewsSidebarCard
-            title="Kategori Berita"
-            items={newsCategories}
-          />
-        </aside>
+          {/* Right Sidebar */}
+          <aside className="lg:col-span-1 space-y-8">
+            <NewsSidebarCard
+              title="Berita Populer"
+              items={popularNews}
+            />
+            <NewsSidebarCard
+              title="Kategori Berita"
+              items={newsCategories}
+            />
+          </aside>
+        </div>
       </div>
     </div>
   );

@@ -70,11 +70,11 @@ const NewsDetailPage = () => {
           <div className="flex items-center justify-between mb-4"> {/* Increased bottom margin */}
             <Badge className="bg-primary/10 text-primary font-semibold text-sm px-3 py-1 hover:bg-primary/20 transition-colors duration-200"> {/* Enhanced badge styling */}
               {news.category}
-            </Badge>            
+            </Badge>
           </div>
 
           <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-foreground">{news.title}</CardTitle> {/* Larger, bolder title */}
-          <CardDescription className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted-foreground text-base"> {/* Increased gap */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted-foreground text-base"> {/* Increased gap */}
             <div className="flex items-center text-sm font-medium text-foreground"> {/* Author info more prominent */}
               <Avatar className="h-7 w-7 mr-2"> {/* Larger avatar */}
                 <AvatarImage src={news.authorAvatarUrl || "https://api.dicebear.com/8.x/initials/svg?seed=ES"} alt={news.author || "EduSprout Team"} />
@@ -94,7 +94,7 @@ const NewsDetailPage = () => {
             <span className="flex items-center text-sm text-muted-foreground">
               <MessageSquare className="h-4 w-4 mr-1" /> 0 comments
             </span>
-          </CardDescription>
+          </div>
         </CardHeader>
         <CardContent className="space-y-8 p-6"> {/* Increased spacing and padding */}
           {news.imageUrl && (
@@ -119,22 +119,22 @@ const NewsDetailPage = () => {
           {/* Share Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-4">
             <span className="text-lg font-semibold text-foreground mb-2 sm:mb-0">Bagikan:</span>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
               <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-600 hover:text-white transition-colors duration-200">
                 <Facebook className="h-5 w-5" />
               </Button>
             </a>
-            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
               <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-400 hover:text-white transition-colors duration-200">
                 <Twitter className="h-5 w-5" />
               </Button>
             </a>
-            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(news.title)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(news.title)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
               <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-blue-700 hover:text-white transition-colors duration-200">
                 <Linkedin className="h-5 w-5" />
               </Button>
             </a>
-            <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + currentUrl)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
               <Button variant="outline" size="icon" className="h-10 w-10 hover:bg-green-500 hover:text-white transition-colors duration-200">
                 <Phone className="h-5 w-5" />
               </Button>
@@ -192,7 +192,7 @@ const NewsDetailPage = () => {
                     imageUrl={relatedNewsItem.imageUrl}
                     author={relatedNewsItem.author}
                     authorAvatarUrl={relatedNewsItem.authorAvatarUrl}
-                    // views and comments will now default to 0 from NewsListItem
+                  // views and comments will now default to 0 from NewsListItem
                   />
                 </CarouselItem>
               ))}

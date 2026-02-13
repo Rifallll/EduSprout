@@ -152,7 +152,7 @@ Build output akan ada di folder `dist/`
 
 3. **Website akan live di:**
 
-   ```
+   ```text
    https://[username].github.io/EduSprout/
    ```
 
@@ -171,7 +171,7 @@ export default defineConfig({
 
 ## 📂 Struktur Project
 
-```
+```text
 EduSprout/
 ├── src/
 │   ├── components/       # Reusable components
@@ -280,7 +280,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👤 Author
 
-**Rifal Azhar Permana**
+### Rifal Azhar Permana
 
 - GitHub: [@Rifallll](https://github.com/Rifallll)
 - Email: <125524926+Rifallll@users.noreply.github.com>
@@ -319,12 +319,10 @@ Jika kamu menemukan bug atau punya saran:
 
 ---
 
-<div align="center">
+---
 
-**Made with ❤️ for Indonesian Students**
+### Made with ❤️ for Indonesian Students
 
 ⭐ Star this repo if you find it helpful!
 
 [Live Demo](https://rifallll.github.io/EduSprout/) • [Report Bug](https://github.com/Rifallll/EduSprout/issues) • [Request Feature](https://github.com/Rifallll/EduSprout/issues)
-
-</div>

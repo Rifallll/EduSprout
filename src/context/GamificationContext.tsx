@@ -57,9 +57,8 @@ export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
                     ...parsed,
                     badges: mergedBadges
                 });
-            } catch (e) {
-                console.error("Failed to parse gamification data", e);
-                // If error, reset to default is safer or just keep default
+            } catch {
+                // Silently handle JSON parse error
             }
         }
     }, []);

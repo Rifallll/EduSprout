@@ -42,8 +42,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (saved) {
             try {
                 setUser({ ...defaultUser, ...JSON.parse(saved) });
-            } catch (e) {
-                console.error("Failed to load user profile", e);
+            } catch {
+                // Silently handle JSON parse error - use default user profile
             }
         }
     }, []);

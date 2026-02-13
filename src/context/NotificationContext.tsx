@@ -36,8 +36,8 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
         if (saved) {
             try {
                 setNotifications(JSON.parse(saved));
-            } catch (e) {
-                console.error("Failed to parse notifications", e);
+            } catch {
+                // Silently handle JSON parse error
             }
         } else {
             // Seed a welcome notification if empty

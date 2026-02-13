@@ -38,8 +38,8 @@ export const ApplicationProvider: React.FC<{ children: ReactNode }> = ({ childre
         if (saved) {
             try {
                 setApplications(JSON.parse(saved));
-            } catch (e) {
-                console.error("Failed to load applications", e);
+            } catch {
+                // Silently handle JSON parse error
             }
         }
     }, []);
